@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/RobotScene.unity
+  isLoaded: 1
+  isActive: 1

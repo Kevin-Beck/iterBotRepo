@@ -11,21 +11,27 @@ public class RobotArrayGeneration : MonoBehaviour {
     // The block represents a single cell of the organism, it holds information about the actual individual cells and who/where they are connected
     public class Connection
     {
-        private int conType;
+        private GameObject conType;
+        private bool isFixedJoint;
         private float conStr;
         private float conSpeed;
 
         // Constructor
         public Connection()
         {
-            conType = -1;
+            conType = null;
+            isFixedJoint = false;
             conStr = 0;
             conSpeed = 0;
         }
         // Setter
-        public void SetConType(int type)
+        public void SetConType(GameObject type)
         {
             conType = type;
+        }
+        public void SetFixedJoint(bool state) 
+        {
+            isFixedJoint = state;
         }
         public void SetConStr(float strength)
         {
@@ -36,9 +42,13 @@ public class RobotArrayGeneration : MonoBehaviour {
             conSpeed = speed;
         }
         // Getter
-        public int GetConType()
+        public GameObject GetConType()
         {
             return conType;
+        }
+        public bool GetIsFixedJoint() 
+        {
+            return isFixedJoint;
         }
         public float GetConStr()
         {
@@ -52,7 +62,7 @@ public class RobotArrayGeneration : MonoBehaviour {
     public class Block
     {
         private Vector3 blockPosition;
-        private GameObject blockType;  // this will define the type of the game object used for the segment, -1 is nothing, 0 is a block
+        private GameObject blockType; 
         private float blockWeight;
         private bool stabilized;
 
@@ -191,6 +201,7 @@ public class RobotArrayGeneration : MonoBehaviour {
         // Function to Instantiate a DNA Object into the Unity World
         public void InstantiateDNAasUnityCreature(Vector3 instantiationPosition) 
         {            
+            // Creating the blocks and instantiating them
             for (int i = 0; i < SizeXReference; i++)
             {
                 for (int j = 0; j < SizeYReference; j++)
@@ -201,17 +212,58 @@ public class RobotArrayGeneration : MonoBehaviour {
                         if(arrayOfBlocks[i,j,k].GetBlockType() != null)
                         {
                             GameObject tempSegment = arrayOfBlocks[i, j, k].InstantiateBlock(instantiationVector);
+                            tempSegment.name = "x" + i + "y" + j + "z" + k;
+                            if(arrayOfBlocks[i,j,k].GetBlockStabilized() == true)
+                            {
+                                Rigidbody stablebody = tempSegment.GetComponent<Rigidbody>();
+                                stablebody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+                            }
                         }
                     }
                 }
             }
-        }
-        // Function to DEBUG a DNA 3d Array, print representation to screen or whatever
+            // Jointing the objects in the world
+            for (int i = 0; i < SizeXReference; i++)
+            {
+                for (int j = 0; j < SizeYReference; j++)
+                {
+                    for (int k = 0; k < SizeZReference; k++)
+                    {
+                        //Fixed X joint
+                        if(arrayOfBlocks[i,j,k].GetPosXCon().GetIsFixedJoint() == true)
+                        {
+                            int temp = i + 1;
+                            string name = "x" + i + "y" + j + "z" + k;
+                            string name2 = "x" + temp + "y" + j + "z" + k;
+                            GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
+                        }else if(arrayOfBlocks[i,j,k].GetPosXCon().GetConType() != null)
+                        {
+                            // Put in the stuff for a moving hinge joint here
+                        }
 
-        // DNA needs to be even more robust, more functionality of each joint
+
+                        if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint() == true)
+                        {
+                            int temp = j + 1;
+                            string name = "x" + i + "y" + j + "z" + k;
+                            string name2 = "x" + i + "y" + temp + "z" + k;
+                            GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
+                        }
+                        if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint() == true)
+                        {
+                            int temp = k + 1;
+                            string name = "x" + i + "y" + j + "z" + k;
+                            string name2 = "x" + i+ "y" + j + "z" + temp;
+                            GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
+                        }
+                    }
+                }
+            }
+
+        }
 
         // Constructor
-        public DNA(int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float minWeight, float maxWeight, float minStr, float maxStr,
+        public DNA(int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr,
             float minSpeed, float maxSpeed, GameObject[] segtypes, GameObject[] jointtypes)
         {
             arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
@@ -220,6 +272,7 @@ public class RobotArrayGeneration : MonoBehaviour {
             SizeZReference = ArrayZ;
             
             // Set up if the blocks in the dna are there or not
+            // ALso sets up the block weight, position, and type
             for (int i = 0; i < ArrayX; i++)
             {
                 for (int j = 0; j < ArrayY; j++)
@@ -232,7 +285,10 @@ public class RobotArrayGeneration : MonoBehaviour {
                             arrayOfBlocks[i, j, k].SetBlockType(segtypes[Random.Range(0,segtypes.Length)]); // this is a block that exists    
                             arrayOfBlocks[i, j, k].SetBlockWeight(Random.Range(minWeight, maxWeight));
                             arrayOfBlocks[i, j, k].SetBlockPosition(new Vector3(i, j, k));
-                            // TODO maybe make the skin of the block reflect the color of the thing
+                            if (Random.Range(0f, 1f) < stabilizedChance)
+                            {
+                                arrayOfBlocks[i, j, k].SetBlockStabilized(true);
+                            }
                         }
                     }
                 }
@@ -253,67 +309,51 @@ public class RobotArrayGeneration : MonoBehaviour {
                             {
                                 if (arrayOfBlocks[i + 1, j, k].GetBlockType() != null)
                                 {
-                                    arrayOfBlocks[i, j, k].GetPosXCon().SetConType(0); // TEMP
-                                    /*
-                                     * Todo:
-                                     * Code that sets up the *****FIXED***joint in the positive x direction
-                                     */
+                                    arrayOfBlocks[i, j, k].GetPosXCon().SetFixedJoint(true);                                    
                                 }
-                                else if (i + 2 < ArrayX)
+                                else if (i + 2 < ArrayX) // If the block is two spaces away we add a mechanical joint to the block in the posx direction
                                 {
                                     if (arrayOfBlocks[i + 2, j, k].GetBlockType() != null)
                                     {
-                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConType(1);
-                                        /*
-                                        * Todo:
-                                        * Code that sets up the *****NON FIXED***joint in the positive Y direction
-                                        */
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConType(jointtypes[Random.Range(0, jointtypes.Length)]);
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConStr(Random.Range(minStr, maxStr));
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeed(Random.Range(minSpeed, maxSpeed));
                                     }
                                 }
-
-                            }
-                            
+                            }                            
                             // This is the code for if there is a block in the ypos direction
                             // we check to make sure we dont go off the array
                             if (j + 1 < ArrayY)
                             {
                                 if (arrayOfBlocks[i, j + 1, k].GetBlockType() != null)
                                 {
-                                    arrayOfBlocks[i, j, k].GetPosYCon().SetConType(0); // temp
-                                    /*
-                                     * Todo:
-                                     * Code that sets up the *****FIXED***joint in the positive Y direction
-                                     */
+                                    arrayOfBlocks[i, j, k].GetPosYCon().SetFixedJoint(true);
                                 }
                                 else if (j + 2 < ArrayY)
                                 {
                                     if (arrayOfBlocks[i, j + 2, k].GetBlockType() != null)
                                     {
-                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConType(1); // temp
-                                        //todo make the code for non fixed
+                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConType(jointtypes[Random.Range(0, jointtypes.Length)]);
+                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConStr(Random.Range(minStr, maxStr));
+                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeed(Random.Range(minSpeed, maxSpeed));
                                     }
                                 }
-                            }
-                            
+                            }                            
                             // This is the code for if there is a block in the zpos direction
                             // we check to make sure wedont go off the array
                             if (k + 1 < ArrayZ)
                             {
                                 if (arrayOfBlocks[i, j, k + 1].GetBlockType() != null)
                                 {
-                                    arrayOfBlocks[i, j, k].GetPosZCon().SetConType(0); // temp
-                                    /*
-                                     * Todo:
-                                     * Code that sets up the *****FIXED***joint in the positive Z direction
-                                     */
+                                    arrayOfBlocks[i, j, k].GetPosZCon().SetFixedJoint(true);
                                 }
                                 else if (k + 2 < ArrayZ) // check to see if we go off the array again
                                 {
                                     if (arrayOfBlocks[i, j, k + 2].GetBlockType() != null)
                                     {
-                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConType(1); // temp
-                                       // make the code that sets up the *****NON FIXED***joint in the positive Z direction
-                                                                                         
+                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConType(jointtypes[Random.Range(0, jointtypes.Length)]);
+                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConStr(Random.Range(minStr, maxStr));
+                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeed(Random.Range(minSpeed, maxSpeed));
                                     }
                                 }
                             }                            
@@ -327,7 +367,7 @@ public class RobotArrayGeneration : MonoBehaviour {
     void Start()
     {       
       //  DNA me = new DNA(4, 4, 4, .8f, 1, 5, 300, 500, 200, 1000, SegmentTypeList, JointTypeList);
-        DNA Ryan = new DNA(2, 6, 8, .3f, 1f, 2f, 400f, 500f, 1000f, 2000f, SegmentTypeList, JointTypeList);
+        DNA Ryan = new DNA(20, 10, 3, .3f, .1f, 1f, 2f, 400f, 500f, 1000f, 2000f, SegmentTypeList, JointTypeList);
         Ryan.InstantiateDNAasUnityCreature(new Vector3(0, 0, 0));
 
     } // end of start code

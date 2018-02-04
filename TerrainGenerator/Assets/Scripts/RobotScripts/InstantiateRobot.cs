@@ -25,11 +25,11 @@ public class InstantiateRobot : MonoBehaviour {
 
     private void Start()
     {
-        /*
+        
         GameObject starter = Instantiate(basecomponent, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
         x = Random.Range(0, maxnumx); // SETS THE RANDOM RANGE FOR THE THING
         StartCoroutine(Generate(starter, x));
-        */
+        
     }
 
     // Use this for initialization
@@ -168,11 +168,12 @@ public class InstantiateRobot : MonoBehaviour {
     IEnumerator GenerateZ(GameObject Y1, int repeat)
     {
         repeat--;
+
         int dir = Random.Range(1, 4);
         HingeJoint j1a = Y1.AddComponent<HingeJoint>();
-
-        Vector3 directionVector = Vector3.zero;
-        switch (dir)
+        Vector3 directionVector = new Vector3(1, 0, 0);
+   /*
+     switch (dir)
         {
             case 1:
                 directionVector = new Vector3(1, 0, 0);
@@ -186,10 +187,10 @@ public class InstantiateRobot : MonoBehaviour {
             default:
                 break;
         }
+        */
         j1a.axis = directionVector;
         j1a.autoConfigureConnectedAnchor = true;
         JointMotor j1ajm = j1a.motor;
-
 
         j1ajm.force = Random.Range(minstr, maxstr);
         j1ajm.targetVelocity = Random.Range(targetspeedmin, targetspeedmax);

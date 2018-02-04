@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9bf107586c4a5843b29451e91747c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basecomponent: {fileID: 1718420913747178, guid: b19ab4ef3ca5a38448063bc91f0ff896,
+  basecomponent: {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6,
     type: 2}
   jointcomponent: {fileID: 1774834108258830, guid: ad1ae151f3f14354f91d67cd8706ea85,
     type: 2}
@@ -1260,9 +1260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SegmentTypeList:
   - {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6, type: 2}
-  - {fileID: 1012679517801010, guid: bade8626b41b52d42b6553fddafb1d4c, type: 2}
   JointTypeList:
-  - {fileID: 1774834108258830, guid: ad1ae151f3f14354f91d67cd8706ea85, type: 2}
+  - {fileID: 1501067322059026, guid: dae7583c98a78d945a4ba475edbeabb6, type: 2}
 --- !u!1 &194673155
 GameObject:
   m_ObjectHideFlags: 0
@@ -4974,8 +4973,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 884064157}
-  m_LocalRotation: {x: -0.15455669, y: 0.83968216, z: -0.31062523, w: -0.41780144}
-  m_LocalPosition: {x: 18.428623, y: 13.723959, z: 9.216987}
+  m_LocalRotation: {x: -0.24245088, y: -0.18007417, z: 0.045849375, w: -0.9522021}
+  m_LocalPosition: {x: -3.8322914, y: 9.162155, z: -9.906206}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

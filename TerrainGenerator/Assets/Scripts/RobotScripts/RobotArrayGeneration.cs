@@ -6,7 +6,9 @@ public class RobotArrayGeneration : MonoBehaviour {
     // Editable members of the segment/joint population
     public GameObject[] SegmentTypeList;
     public GameObject[] JointTypeList;
-     
+    int temp;
+    int loopcounter;
+    DNA a;
         
     // The block represents a single cell of the organism, it holds information about the actual individual cells and who/where they are connected
     public class Connection
@@ -157,6 +159,8 @@ public class RobotArrayGeneration : MonoBehaviour {
         private int SizeYReference;
         private int SizeZReference;
 
+        string CreatureName;
+
         // Function to get block objects
         public Block getBlock(int x, int y, int z)
         {
@@ -211,11 +215,14 @@ public class RobotArrayGeneration : MonoBehaviour {
         {
             return s += c;
         }
-
+        private void ParentChild(GameObject par, GameObject child) {
+            child.transform.parent = par.transform;
+        }
 
         // Function to Instantiate a DNA Object into the Unity World
         public void InstantiateDNAasUnityCreature(Vector3 instantiationPosition) 
-        {            
+        {
+            GameObject CreatureParentObject = new GameObject(CreatureName);
             // Creating the blocks and instantiating them
             for (int i = 0; i < SizeXReference; i++)
             {
@@ -229,12 +236,15 @@ public class RobotArrayGeneration : MonoBehaviour {
                             GameObject tempSegment = arrayOfBlocks[i, j, k].InstantiateBlock(instantiationVector);
                             tempSegment.name = "x" + i + "y" + j + "z" + k;
                             tempSegment.GetComponent<Rigidbody>().mass = arrayOfBlocks[i, j, k].GetBlockWeight();
+                            //TODO change color to match weight
+                            ParentChild(CreatureParentObject, tempSegment);
                             if(arrayOfBlocks[i,j,k].GetBlockStabilized() == true)
                             {
                                 Rigidbody stablebody = tempSegment.GetComponent<Rigidbody>();
                                 stablebody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
                             }
                         }
+
                     }
                 }
             }
@@ -282,6 +292,8 @@ public class RobotArrayGeneration : MonoBehaviour {
 
                             xPosHJ.motor = xPosMotor;
                             xPosHJ.useMotor = true;
+
+                            ParentChild(CreatureParentObject, xconnectionobject);
                         }
 
                         // Fixed Y Joint
@@ -325,6 +337,8 @@ public class RobotArrayGeneration : MonoBehaviour {
 
                             yPosHJ.motor = yPosMotor;
                             yPosHJ.useMotor = true;
+
+                            ParentChild(CreatureParentObject, yconnectionobject);
                         }
 
                         //Fixed Z Joint
@@ -367,20 +381,27 @@ public class RobotArrayGeneration : MonoBehaviour {
 
                             zPosHJ.motor = zPosMotor;
                             zPosHJ.useMotor = true;
+
+                            ParentChild(CreatureParentObject, zconnectionobject);
                         }
                     }
                 }
             }
         }
 
+        public void SelfDestruct() {
+            Destroy(GameObject.Find(CreatureName));
+        }
+
         // Constructor
-        public DNA(int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr,
+        public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr,
             float minSpeed, float maxSpeed, GameObject[] segtypes, GameObject[] jointtypes)
         {
             arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
             SizeXReference = ArrayX;
             SizeYReference = ArrayY;
             SizeZReference = ArrayZ;
+            CreatureName = name;
             
             // Set up if the blocks in the dna are there or not
             // ALso sets up the block weight, position, and type
@@ -430,7 +451,7 @@ public class RobotArrayGeneration : MonoBehaviour {
                                         arrayOfBlocks[i, j, k].GetPosXCon().SetConType(jointtypes[Random.Range(0, jointtypes.Length)]);
                                         arrayOfBlocks[i, j, k].GetPosXCon().SetConStr(Random.Range(minStr, maxStr));
                                         arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeed(Random.Range(minSpeed, maxSpeed));
-                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConAxis(new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2)));
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConAxis(new Vector3(Random.Range(-1, 2), Random.Range(-1, 2), Random.Range(-1, 2)));
                                     }
                                 }
                             }                            
@@ -479,9 +500,30 @@ public class RobotArrayGeneration : MonoBehaviour {
         }
     }
 
+    private void FixedUpdate() {
+        temp++;
+       
+        if(temp > 1000)
+        {
+            loopcounter++;
+            name = name + loopcounter;
+            a.SelfDestruct();
+
+            a = new DNA(name, 7, 7, 7, .2f, .1f, 2f, 5f, 500f, 800f, 200f, 800f, SegmentTypeList, JointTypeList);
+            a.InstantiateDNAasUnityCreature(Vector3.zero);
+            temp = 0;
+        }
+    }
     void Start()
     {
-        DNA a = new DNA(5, 5, 5, .2f, .1f, 2f, 5f, 500f, 800f, 200f, 800f, SegmentTypeList, JointTypeList);
-        a.InstantiateDNAasUnityCreature(Vector3.zero);        
+        temp = 0;
+        loopcounter = 0;
+        string name = "creature";
+
+        a = new DNA(name, 7, 7, 7, .2f, .1f, 2f, 5f, 500f, 800f, 200f, 800f, SegmentTypeList, JointTypeList);
+        a.InstantiateDNAasUnityCreature(Vector3.zero);
+        Time.timeScale = 3;
+        
+        // TODO mutation - eliminate stagnant pieces as part of the mutation process
     } // end of start code
 }

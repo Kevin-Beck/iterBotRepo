@@ -1144,7 +1144,6 @@ GameObject:
   - component: {fileID: 193943683}
   - component: {fileID: 193943682}
   - component: {fileID: 193943687}
-  - component: {fileID: 193943686}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1212,41 +1211,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 193943681}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.414, z: 0}
+  m_LocalPosition: {x: 210, y: -3.414, z: 209}
   m_LocalScale: {x: 50, y: 1, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &193943686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 193943681}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9bf107586c4a5843b29451e91747c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  basecomponent: {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6,
-    type: 2}
-  jointcomponent: {fileID: 1774834108258830, guid: ad1ae151f3f14354f91d67cd8706ea85,
-    type: 2}
-  x: 0
-  y: 0
-  z: 0
-  maxnumx: 5
-  maxnumy: 5
-  maxnumz: 5
-  targetspeedmax: 1000
-  targetspeedmin: 200
-  maxstr: 800
-  minstr: 200
-  minmass: 3
-  maxmass: 13
-  ChanceToSpawnLegs: 75
-  ChancetoFreezeXYZ: 10
 --- !u!114 &193943687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,6 +1228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cda5c2476544d14a9e0764eae01b522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fitness: 0
   SegmentTypeList:
   - {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6, type: 2}
   JointTypeList:
@@ -4973,8 +4944,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 884064157}
-  m_LocalRotation: {x: 0.016775966, y: 0.484157, z: 0.009283546, w: -0.87477106}
-  m_LocalPosition: {x: 36.394363, y: 4.828804, z: -20.337706}
+  m_LocalRotation: {x: -0.21322784, y: 0.78329116, z: -0.45247433, w: -0.3691284}
+  m_LocalPosition: {x: 191.27783, y: 174.91205, z: 158.74443}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

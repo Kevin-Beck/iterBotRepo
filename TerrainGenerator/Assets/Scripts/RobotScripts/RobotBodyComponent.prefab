@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 65824239413293012}
   - component: {fileID: 23387015368843158}
   - component: {fileID: 54897529762254702}
-  - component: {fileID: 114811786354814922}
   m_Layer: 0
   m_Name: RobotBodyComponent
   m_TagString: Untagged
@@ -57,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b1d17727ce641644ab2aa1fc12c96ad0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,30 +109,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114811786354814922
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1718420913747178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9bf107586c4a5843b29451e91747c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  basecomponent: {fileID: 0}
-  jointcomponent: {fileID: 0}
-  x: 0
-  y: 0
-  z: 0
-  maxnumx: 0
-  maxnumy: 0
-  maxnumz: 0
-  targetspeedmax: 0
-  targetspeedmin: 0
-  maxstr: 0
-  minstr: 0
-  minmass: 0
-  maxmass: 0
-  ChanceToSpawnLegs: 0
-  ChancetoFreezeXYZ: 0

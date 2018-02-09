@@ -1228,7 +1228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cda5c2476544d14a9e0764eae01b522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fitness: 0
+  numOfCreatures: 1
+  sizeOfCreatures: 8
   SegmentTypeList:
   - {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6, type: 2}
   JointTypeList:
@@ -4944,8 +4945,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 884064157}
-  m_LocalRotation: {x: -0.21322784, y: 0.78329116, z: -0.45247433, w: -0.3691284}
-  m_LocalPosition: {x: 191.27783, y: 174.91205, z: 158.74443}
+  m_LocalRotation: {x: 0.18630542, y: 0.31907934, z: -0.06412445, w: 0.9270204}
+  m_LocalPosition: {x: -10.4762745, y: 16.782307, z: -10.6888275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

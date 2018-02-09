@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class RobotArrayGeneration : MonoBehaviour {
 
-    public float fitness = 0; // temp
+
+    public int numOfCreatures = 25;
+    public int sizeOfCreatures = 5;
     // Editable members of the segment/joint population
     public GameObject[] SegmentTypeList;
     public GameObject[] JointTypeList;
-        
-    // The block represents a single cell of the organism, it holds information about the actual individual cells and who/where they are connected
+
     public class Connection
     {
         private GameObject conType;
@@ -161,8 +162,8 @@ public class RobotArrayGeneration : MonoBehaviour {
     public class DNA
     {
         private Block[,,] arrayOfBlocks;
-
         string CreatureName;
+        float fitness;
 
         // Function to get block objects
         public Block getBlock(int x, int y, int z)
@@ -218,9 +219,11 @@ public class RobotArrayGeneration : MonoBehaviour {
         {
             return s += c;
         }
+        // Parents a child object by sending both objects
         private void ParentChild(GameObject par, GameObject child) {
             child.transform.parent = par.transform;
         }
+        // gets the name of the object
         public string GetCreatureName() {
             return CreatureName;
         }
@@ -229,35 +232,29 @@ public class RobotArrayGeneration : MonoBehaviour {
         {
             GameObject CreatureParentObject = new GameObject(CreatureName);
             // Creating the blocks and instantiating them
-            for (int i = 0; i < arrayOfBlocks.GetLength(0); i++)
+            foreach (Block blockObject in arrayOfBlocks)
             {
-                for (int j = 0; j < arrayOfBlocks.GetLength(1); j++)
+                Vector3 instantiationVector = blockObject.GetBlockPosition() + instantiationPosition;
+                if (blockObject.GetBlockType() != null)
                 {
-                    for (int k = 0; k < arrayOfBlocks.GetLength(2); k++)
+                    GameObject tempSegment = blockObject.InstantiateBlock(instantiationVector);
+                    tempSegment.name = CreatureName + "x" + blockObject.GetBlockPosition().x + "y" + blockObject.GetBlockPosition().y + "z" + blockObject.GetBlockPosition().z;
+                    tempSegment.GetComponent<Rigidbody>().mass = blockObject.GetBlockWeight();
+
+                    // Change color                            
+                    tempSegment.GetComponent<Renderer>().material.SetColor("_Color", blockObject.GetBlockColor());
+                    
+                    // Parent it
+                    ParentChild(CreatureParentObject, tempSegment);
+
+                    if (blockObject.GetBlockStabilized() == true)
                     {
-                        Vector3 instantiationVector = arrayOfBlocks[i, j, k].GetBlockPosition() + instantiationPosition;
-                        if(arrayOfBlocks[i,j,k].GetBlockType() != null)
-                        {
-                            GameObject tempSegment = arrayOfBlocks[i, j, k].InstantiateBlock(instantiationVector);
-                            tempSegment.name = CreatureName+"x" + i + "y" + j + "z" + k;
-                            tempSegment.GetComponent<Rigidbody>().mass = arrayOfBlocks[i, j, k].GetBlockWeight();
-
-                            // Change color                            
-                            tempSegment.GetComponent<Renderer>().material.SetColor("_Color", arrayOfBlocks[i,j,k].GetBlockColor());
-                            
-
-                            // Parent it
-                            ParentChild(CreatureParentObject, tempSegment);
-
-                            if(arrayOfBlocks[i,j,k].GetBlockStabilized() == true)
-                            {
-                                Rigidbody stablebody = tempSegment.GetComponent<Rigidbody>();
-                                stablebody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-                            }
-                        }
+                        Rigidbody stablebody = tempSegment.GetComponent<Rigidbody>();
+                        stablebody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
                     }
                 }
-            }
+            }        
+            
             // Jointing the objects in the world
             for (int i = 0; i < arrayOfBlocks.GetLength(0); i++)
             {
@@ -398,23 +395,30 @@ public class RobotArrayGeneration : MonoBehaviour {
                 }
             }
         }
-
+        // Removes the object from the unity world by finding the parenting object, and deleting it
         public void SelfDestruct() {
             Destroy(GameObject.Find(CreatureName));
         }
+        // Function to create the data for the individual block data, based on information based into the DNA constructor
         private void InitializeDNABlockData(int x, int y, int z, float density, float minW, float maxW, float chanceOfStabilization, GameObject[] SegmentTypes) {
             arrayOfBlocks[x, y, z] = new Block();
             arrayOfBlocks[x, y, z].SetBlockPosition(new Vector3(x, y, z));
 
+            // Decide if block exists
             if (Random.Range(0f, 1f) < density)
             {
-                arrayOfBlocks[x, y, z].SetBlockType(SegmentTypes[Random.Range(0, SegmentTypes.Length)]); // this is a block that exists    
+                // Choose Segment Type
+                arrayOfBlocks[x, y, z].SetBlockType(SegmentTypes[Random.Range(0, SegmentTypes.Length)]);
+
+                // Choose Segment Weight
                 arrayOfBlocks[x, y, z].SetBlockWeight(Random.Range(minW, maxW));
 
-
+                // Determine the segment's Color
                 float weightColorMod = (arrayOfBlocks[x, y, z].GetBlockWeight() - minW) / (maxW - minW);
                 string colorname = weightColorMod.ToString();
                 arrayOfBlocks[x, y, z].SetBlockColor(new Color(weightColorMod, weightColorMod, weightColorMod, 1));
+
+                // Choose if Segment is Stabalized, meaning the block will not rotate around any axis
                 if (Random.Range(0f, 1f) < chanceOfStabilization)
                 {
                     arrayOfBlocks[x, y, z].SetBlockStabilized(true);
@@ -427,9 +431,7 @@ public class RobotArrayGeneration : MonoBehaviour {
         {
             arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
             CreatureName = name;
-            
-            // Set up if the blocks in the dna are there or not
-            // ALso sets up the block weight, position, and type
+  
             for (int i = 0; i < ArrayX; i++)
             {
                 for (int j = 0; j < ArrayY; j++)
@@ -511,78 +513,75 @@ public class RobotArrayGeneration : MonoBehaviour {
                 }
             }
             // Purge the system of solo blocks
-            
-            for (int i = 0; i < ArrayX; i++)
+            foreach (Block blockObject in arrayOfBlocks)
             {
-                for(int j = 0; j < ArrayY; j++)
+                int i = (int)blockObject.GetBlockPosition().x;
+                int j = (int)blockObject.GetBlockPosition().y;
+                int k = (int)blockObject.GetBlockPosition().z;
+
+                if (arrayOfBlocks[i, j, k].GetBlockType() != null)
                 {
-                    for(int k = 0; k < ArrayZ; k++)
+                    bool die = true;
+                    // xdirection checks
+                    if (i - 2 >= 0)
                     {
-                        if (arrayOfBlocks[i,j,k].GetBlockType() != null)
+                        if (arrayOfBlocks[i - 2, j, k].GetBlockType() != null)
                         {
-                            bool die = true;
-                            // xdirection checks
-                            if (i - 2 >= 0)
-                            {
-                                if (arrayOfBlocks[i - 2, j, k].GetBlockType() != null)
-                                {
-                                    die = false;
-                                }
-                            }
-                            if (i - 1 >= 0)
-                            {
-                                if (arrayOfBlocks[i - 1, j, k].GetBlockType() != null)
-                                {
-                                    die = false;
-                                }
-                            }
-                            if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null)
-                            {
-                                die = false;
-                            }
-                            // ydirection
-                            if (j - 2 >= 0)
-                            {
-                                if (arrayOfBlocks[i, j - 2, k].GetBlockType() != null)
-                                {
-                                    die = false;
-                                }
-                            }
-                            if (j - 1 >= 0)
-                            {
-                                if (arrayOfBlocks[i, j - 1, k].GetBlockType() != null)
-                                {
-                                    die = false;
-                                }
-                            }
-                            if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null)
-                            {
-                                die = false;
-                            }
-                            // zposistion
-                            if (k - 2 >= 0)
-                            {
-                                if (arrayOfBlocks[i, j, k - 2].GetBlockType() != null)
-                                {
-                                    die = false;
-                                }
-                            }
-                            if (k - 1 >= 0)
-                            {
-                                if (arrayOfBlocks[i, j, k - 1].GetBlockType() != null)
-                                {
-                                    die = false;
-                                }
-                            }
-                            if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null)
-                            {
-                                die = false;
-                            }
-                            if(die == true)
-                            {
-                                arrayOfBlocks[i, j, k] = new Block();
-                            }
+                            die = false;
                         }
+                    }
+                    if (i - 1 >= 0)
+                    {
+                        if (arrayOfBlocks[i - 1, j, k].GetBlockType() != null)
+                        {
+                            die = false;
+                        }
+                    }
+                    if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null)
+                    {
+                        die = false;
+                    }
+                    // ydirection
+                    if (j - 2 >= 0)
+                    {
+                        if (arrayOfBlocks[i, j - 2, k].GetBlockType() != null)
+                        {
+                            die = false;
+                        }
+                    }
+                    if (j - 1 >= 0)
+                    {
+                        if (arrayOfBlocks[i, j - 1, k].GetBlockType() != null)
+                        {
+                            die = false;
+                        }
+                    }
+                    if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null)
+                    {
+                        die = false;
+                    }
+                    // zposistion
+                    if (k - 2 >= 0)
+                    {
+                        if (arrayOfBlocks[i, j, k - 2].GetBlockType() != null)
+                        {
+                            die = false;
+                        }
+                    }
+                    if (k - 1 >= 0)
+                    {
+                        if (arrayOfBlocks[i, j, k - 1].GetBlockType() != null)
+                        {
+                            die = false;
+                        }
+                    }
+                    if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null)
+                    {
+                        die = false;
+                    }
+                    if (die == true)
+                    {
+                        arrayOfBlocks[i, j, k] = new Block();
                     }
                 }
             }
@@ -590,25 +589,26 @@ public class RobotArrayGeneration : MonoBehaviour {
     }
     void Start()
     {
-
-        DNA[] Creatures = new DNA[25];
+        DNA[] Creatures = new DNA[numOfCreatures];
 
         for(int i = 0; i < Creatures.GetLength(0); i++)
         {
-            Creatures[i] = new DNA("Creature"+i.ToString(), 5, 4, 5, .2f, .1f, 2f, 5f, 500f, 800f, 200f, 800f, SegmentTypeList, JointTypeList);
+            Creatures[i] = new DNA("Creature"+i.ToString(), sizeOfCreatures, sizeOfCreatures, sizeOfCreatures, .2f, .1f, 2f, 5f, 500f, 800f, 200f, 800f, SegmentTypeList, JointTypeList);
         }
 
         int k = 0;
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
         {
-            for(int j = 0; j < 5; j++)
+            for(int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
             {
                 Creatures[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
                 k++;
             }
         }
-        Time.timeScale = 1;        
-        
+        Time.timeScale = 10;
+        Time.fixedDeltaTime = 0.02F * Time.timeScale;
+
         // TODO mutation - eliminate stagnant pieces as part of the mutation process
     } // end of start code
+
 }

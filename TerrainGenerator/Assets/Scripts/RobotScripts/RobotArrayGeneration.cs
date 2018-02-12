@@ -3,18 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RobotArrayGeneration : MonoBehaviour {
-
-
+    public int delay;
+    public int NumberOfGenerationsToDo = 0;
     public int numOfCreatures = 25;
-    public int sizeOfCreatures = 5;
+    public int sizeOfCreaturesX = 5;
+    public int sizeOfCreaturesY = 5;
+    public int sizeOfCreaturesZ = 5;
+    public float densityOfBlocks = 0.2f;
+    public float stabilizationChance = 0.1f;
+    public float minimumWeight = 2f;
+    public float maximumWeight = 5f;
+    public float minimumJointForce = 500f;
+    public float maximumJointForce = 800f;
+    public float minimumJointSpeed = 200f;
+    public float maximumJointSpeed = 800f;
+    
     // Editable members of the segment/joint population
     public GameObject[] SegmentTypeList;
     public GameObject[] JointTypeList;
 
+    int GenerationCount = 0;
+    
+    DNA[] Creatures;
+    List<DNA> WinningCreatures = new List<DNA>();
+
     public class Connection
     {
         private GameObject conType;
-        private bool isFixedJoint;
+        private bool isFixedJoint; // Special condition if the joint is a fixed joint
         private float conStr;
         private float conSpeed;
         private Vector3 conAxis;
@@ -161,18 +177,17 @@ public class RobotArrayGeneration : MonoBehaviour {
     }
     public class DNA
     {
-        private Block[,,] arrayOfBlocks;
+        public Block[,,] arrayOfBlocks;
         string CreatureName;
         float fitness;
+        private Vector3 startingPosition;
 
         // Function to get block objects
-        public Block getBlock(int x, int y, int z)
-        {
+        public Block getBlock(int x, int y, int z) {
             return arrayOfBlocks[x, y, z];
         }
         // Function to print a DNA object to a string.
-        public string GenerateGeneticString()
-        {
+        public string GenerateGeneticString() {
 
             string geneOpen = "{";
             string geneClose = "}";
@@ -185,12 +200,12 @@ public class RobotArrayGeneration : MonoBehaviour {
             string gs = "";
             Concat(gs, geneOpen); // Start off the gene
             Concat(gs, "x" + arrayOfBlocks.GetLength(0) + "y" + arrayOfBlocks.GetLength(1) + "z" + arrayOfBlocks.GetLength(2)); // save the size of the DNA Array
-            
+
             for (int i = 0; i < arrayOfBlocks.GetLength(0); i++)
             {
-                for(int j = 0; j < arrayOfBlocks.GetLength(1); j++)
+                for (int j = 0; j < arrayOfBlocks.GetLength(1); j++)
                 {
-                    for(int k = 0; k < arrayOfBlocks.GetLength(2); k++)
+                    for (int k = 0; k < arrayOfBlocks.GetLength(2); k++)
                     {
                         // Code for the block
                         Concat(gs, blockOpen);
@@ -207,16 +222,15 @@ public class RobotArrayGeneration : MonoBehaviour {
                         Concat(gs, arrayOfBlocks[i, j, k].GetBlockStabilized().ToString());
                         Concat(gs, setClose);
                         Concat(gs, blockClose);
-                       // todo, None of the above works at all!
-                       // todo, loop through all the blocks and build a big string with all data
+                        // todo, None of the above works at all!
+                        // todo, loop through all the blocks and build a big string with all data
                     }
                 }
             }
             Concat(gs, geneClose);
             return gs;
         }
-        private string Concat(string s, string c)
-        {
+        private string Concat(string s, string c) {
             return s += c;
         }
         // Parents a child object by sending both objects
@@ -227,10 +241,18 @@ public class RobotArrayGeneration : MonoBehaviour {
         public string GetCreatureName() {
             return CreatureName;
         }
+        public void SetCreatureName(string name) {
+            CreatureName = name;
+        }
+        public Vector3 GetStartingPosition() {
+            return startingPosition;
+        }
         // Function to Instantiate a DNA Object into the Unity World
-        public void InstantiateDNAasUnityCreature(Vector3 instantiationPosition) 
-        {
+        public void InstantiateDNAasUnityCreature(Vector3 instantiationPosition) {
             GameObject CreatureParentObject = new GameObject(CreatureName);
+            CreatureParentObject.GetComponent<Transform>().position = instantiationPosition;
+            startingPosition = instantiationPosition; // This is used to score the robot
+
             // Creating the blocks and instantiating them
             foreach (Block blockObject in arrayOfBlocks)
             {
@@ -243,7 +265,7 @@ public class RobotArrayGeneration : MonoBehaviour {
 
                     // Change color                            
                     tempSegment.GetComponent<Renderer>().material.SetColor("_Color", blockObject.GetBlockColor());
-                    
+
                     // Parent it
                     ParentChild(CreatureParentObject, tempSegment);
 
@@ -253,8 +275,8 @@ public class RobotArrayGeneration : MonoBehaviour {
                         stablebody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
                     }
                 }
-            }        
-            
+            }
+
             // Jointing the objects in the world
             for (int i = 0; i < arrayOfBlocks.GetLength(0); i++)
             {
@@ -263,22 +285,23 @@ public class RobotArrayGeneration : MonoBehaviour {
                     for (int k = 0; k < arrayOfBlocks.GetLength(2); k++)
                     {
                         //Fixed X Joint
-                        if(arrayOfBlocks[i,j,k].GetPosXCon().GetIsFixedJoint() == true)
+                        if (arrayOfBlocks[i, j, k].GetPosXCon().GetIsFixedJoint() == true)
                         {
                             int temp = i + 1;
-                            string name = CreatureName+"x" + i + "y" + j + "z" + k;
-                            string name2 = CreatureName+"x" + temp + "y" + j + "z" + k;
+                            string name = CreatureName + "x" + i + "y" + j + "z" + k;
+                            string name2 = CreatureName + "x" + temp + "y" + j + "z" + k;
                             GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
-                            
-                        }else if(arrayOfBlocks[i,j,k].GetPosXCon().GetConType() != null)
+
+                        }
+                        else if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null)
                         {
                             // Non-Fixed X Joint
-                            string curBlockName = CreatureName+"x" + i + "y" + j + "z" + k;
+                            string curBlockName = CreatureName + "x" + i + "y" + j + "z" + k;
                             int temp = i + 2;
-                            string blockToBeConnectedName = CreatureName+"x" + temp + "y" + j + "z" + k;
+                            string blockToBeConnectedName = CreatureName + "x" + temp + "y" + j + "z" + k;
                             // instantiate the joint object at the vector below, this is the location of where the next block would be if it existed.
                             Vector3 instantiationVector = arrayOfBlocks[i + 1, j, k].GetBlockPosition() + instantiationPosition;
-                
+
 
                             // The connectionobject is the actual joint object, which has a hinge joint on it
                             GameObject xconnectionobject = arrayOfBlocks[i, j, k].GetPosXCon().InstantiateConnection(instantiationVector, Quaternion.Euler(new Vector3(0, 0, 90)));
@@ -302,27 +325,27 @@ public class RobotArrayGeneration : MonoBehaviour {
 
                             ParentChild(CreatureParentObject, xconnectionobject);
                         }
-
                         // Fixed Y Joint
                         if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint() == true)
                         {
-                            
+
                             int temp = j + 1;
                             string name = CreatureName + "x" + i + "y" + j + "z" + k;
                             string name2 = CreatureName + "x" + i + "y" + temp + "z" + k;
                             GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
-                            
-                        }else if(arrayOfBlocks[i,j,k].GetPosYCon().GetConType() != null)
+
+                        }
+                        else if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null)
                         {
                             // Non-Fixed Y Joint
                             //   string name = "x" + i + "y" + j + "z" + k;
                             //   Vector3 instantiationVector = arrayOfBlocks[i+1, j, k].GetBlockPosition() + instantiationPosition;
                             // Non-Fixed X Joint
-                            string curBlockName = CreatureName+"x" + i + "y" + j + "z" + k;
+                            string curBlockName = CreatureName + "x" + i + "y" + j + "z" + k;
                             int temp = j + 2;
-                            string blockToBeConnectedName = CreatureName+"x" + i + "y" + temp + "z" + k;
+                            string blockToBeConnectedName = CreatureName + "x" + i + "y" + temp + "z" + k;
                             // instantiate the joint object at the vector below, this is the location of where the next block would be if it existed.
-                            Vector3 instantiationVector = arrayOfBlocks[i, j+1, k].GetBlockPosition() + instantiationPosition;
+                            Vector3 instantiationVector = arrayOfBlocks[i, j + 1, k].GetBlockPosition() + instantiationPosition;
 
 
                             // The connectionobject is the actual joint object, which has a hinge joint on it
@@ -351,22 +374,23 @@ public class RobotArrayGeneration : MonoBehaviour {
                         //Fixed Z Joint
                         if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint() == true)
                         {
-                            
+
                             int temp = k + 1;
-                            string name = CreatureName+"x" + i + "y" + j + "z" + k;
-                            string name2 = CreatureName+"x" + i+ "y" + j + "z" + temp;
+                            string name = CreatureName + "x" + i + "y" + j + "z" + k;
+                            string name2 = CreatureName + "x" + i + "y" + j + "z" + temp;
                             GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
-                            
-                        }else if(arrayOfBlocks[i,j,k].GetPosZCon().GetConType() != null)
+
+                        }
+                        else if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null)
                         {
                             // Non-Fixed Z Joint
                             //  string name = "x" + i + "y" + j + "z" + k;
                             // Non-Fixed X Joint
-                            string curBlockName = CreatureName+"x" + i + "y" + j + "z" + k;
+                            string curBlockName = CreatureName + "x" + i + "y" + j + "z" + k;
                             int temp = k + 2;
-                            string blockToBeConnectedName = CreatureName+ "x" + i + "y" + j + "z" + temp;
+                            string blockToBeConnectedName = CreatureName + "x" + i + "y" + j + "z" + temp;
                             // instantiate the joint object at the vector below, this is the location of where the next block would be if it existed.
-                            Vector3 instantiationVector = arrayOfBlocks[i, j, k+1].GetBlockPosition() + instantiationPosition;
+                            Vector3 instantiationVector = arrayOfBlocks[i, j, k + 1].GetBlockPosition() + instantiationPosition;
 
 
                             // The connectionobject is the actual joint object, which has a hinge joint on it
@@ -415,8 +439,7 @@ public class RobotArrayGeneration : MonoBehaviour {
 
                 // Determine the segment's Color
                 float weightColorMod = (arrayOfBlocks[x, y, z].GetBlockWeight() - minW) / (maxW - minW);
-                string colorname = weightColorMod.ToString();
-                arrayOfBlocks[x, y, z].SetBlockColor(new Color(weightColorMod, weightColorMod, weightColorMod, 1));
+                arrayOfBlocks[x, y, z].SetBlockColor(new Color(1 - weightColorMod, 1 - weightColorMod, 1 - weightColorMod, 1));
 
                 // Choose if Segment is Stabalized, meaning the block will not rotate around any axis
                 if (Random.Range(0f, 1f) < chanceOfStabilization)
@@ -425,20 +448,25 @@ public class RobotArrayGeneration : MonoBehaviour {
                 }
             }
         }
+        public float GetFitness() {
+            return fitness;
+        }
+        public void SetFitness(float fitnessScore) {
+            fitness = fitnessScore;
+        }
         // Constructor
         public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr,
-            float minSpeed, float maxSpeed, GameObject[] segtypes, GameObject[] jointtypes)
-        {
+            float minSpeed, float maxSpeed, GameObject[] segtypes, GameObject[] jointtypes) {
             arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
             CreatureName = name;
-  
+
             for (int i = 0; i < ArrayX; i++)
             {
                 for (int j = 0; j < ArrayY; j++)
                 {
                     for (int k = 0; k < ArrayZ; k++)
                     {
-                        InitializeDNABlockData(i,j,k, densityOfBlocks, minWeight, maxWeight, stabilizedChance, segtypes);                        
+                        InitializeDNABlockData(i, j, k, densityOfBlocks, minWeight, maxWeight, stabilizedChance, segtypes);
                     }
                 }
             }
@@ -457,7 +485,7 @@ public class RobotArrayGeneration : MonoBehaviour {
                             {
                                 if (arrayOfBlocks[i + 1, j, k].GetBlockType() != null)
                                 {
-                                    arrayOfBlocks[i, j, k].GetPosXCon().SetFixedJoint(true);                                    
+                                    arrayOfBlocks[i, j, k].GetPosXCon().SetFixedJoint(true);
                                 }
                                 else if (i + 2 < ArrayX) // If the block is two spaces away we add a mechanical joint to the block in the posx direction
                                 {
@@ -469,7 +497,7 @@ public class RobotArrayGeneration : MonoBehaviour {
                                         arrayOfBlocks[i, j, k].GetPosXCon().SetConAxis(new Vector3(Random.Range(-1, 2), Random.Range(-1, 2), Random.Range(-1, 2)));
                                     }
                                 }
-                            }                            
+                            }
                             // This is the code for if there is a block in the ypos direction
                             // we check to make sure we dont go off the array
                             if (j + 1 < ArrayY)
@@ -488,7 +516,7 @@ public class RobotArrayGeneration : MonoBehaviour {
                                         arrayOfBlocks[i, j, k].GetPosYCon().SetConAxis(new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2)));
                                     }
                                 }
-                            }                            
+                            }
                             // This is the code for if there is a block in the zpos direction
                             // we check to make sure wedont go off the array
                             if (k + 1 < ArrayZ)
@@ -507,7 +535,7 @@ public class RobotArrayGeneration : MonoBehaviour {
                                         arrayOfBlocks[i, j, k].GetPosZCon().SetConAxis(new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2)));
                                     }
                                 }
-                            }                              
+                            }
                         }
                     }
                 }
@@ -589,26 +617,91 @@ public class RobotArrayGeneration : MonoBehaviour {
     }
     void Start()
     {
+        Time.timeScale = 3;
+        Creatures = CreateRandomGeneration();
+        int i = 0;
+        StartCoroutine(Example(delay));
+
+
+        //Time.fixedDeltaTime = 0.02F * Time.timeScale;
+
+        // TODO mutation - eliminate stagnant pieces as part of the mutation process
+    } // end of start code
+    public void Round() {
+        Creatures = CreateRandomGeneration();
+        StartCoroutine(Example(delay));
+    }
+    public DNA[] CreateRandomGeneration()
+    {
+
         DNA[] Creatures = new DNA[numOfCreatures];
-
-        for(int i = 0; i < Creatures.GetLength(0); i++)
+        for (int i = 0; i < Creatures.GetLength(0); i++)
         {
-            Creatures[i] = new DNA("Creature"+i.ToString(), sizeOfCreatures, sizeOfCreatures, sizeOfCreatures, .2f, .1f, 2f, 5f, 500f, 800f, 200f, 800f, SegmentTypeList, JointTypeList);
+            Creatures[i] = new DNA("Creature" + i.ToString(), sizeOfCreaturesX, sizeOfCreaturesY, sizeOfCreaturesZ, densityOfBlocks, stabilizationChance, minimumWeight, maximumWeight, minimumJointForce,
+                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList, JointTypeList);
         }
-
         int k = 0;
-        for(int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
+        for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
         {
-            for(int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
+            for (int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
             {
                 Creatures[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
                 k++;
             }
         }
-        Time.timeScale = 10;
-        Time.fixedDeltaTime = 0.02F * Time.timeScale;
+        return Creatures;
+    }
+    private DNA GradeAllCreatures() {
+        DNA winner = null;
+        float WinnerWork = 0;
+        foreach (DNA individual in Creatures)
+        {
+            Vector3 startTemp = individual.GetStartingPosition();
+            float maxWork = 0;
+            foreach (Transform child in GameObject.Find(individual.GetCreatureName()).transform)
+            {
+                maxWork = child.GetComponent<Rigidbody>().mass * (child.position.z - startTemp.z);                 // Judgement Vector for grading the fitness
+            }
 
-        // TODO mutation - eliminate stagnant pieces as part of the mutation process
-    } // end of start code
+            individual.SetFitness(maxWork);
+            if (individual.GetFitness() > WinnerWork)
+            {
+                winner = individual;
+                WinnerWork = individual.GetFitness();
+            }
+            individual.SelfDestruct();
+        }
 
+        return winner;
+    }
+    private void PresentWinningCreatures() {
+        int counter = 0;
+        foreach( DNA indiv in WinningCreatures)
+        {
+            indiv.SetCreatureName("Winner" + counter);
+            counter++;
+        }
+        int k = 0;
+        DNA[] array = WinningCreatures.ToArray();
+        for (int i = 0; i < Mathf.Sqrt(array.Length); i++)
+        {
+            for (int j = 0; j < Mathf.Sqrt(array.Length); j++)
+            {
+                array[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
+                k++;
+            }
+        }
+    }
+    IEnumerator Example(int numberOfSeconds) {
+        yield return new WaitForSeconds(numberOfSeconds);
+        WinningCreatures.Add(GradeAllCreatures());
+        GenerationCount++;
+        if(GenerationCount < NumberOfGenerationsToDo)
+        {
+            Round();
+        }else
+        {
+            PresentWinningCreatures();
+        }
+    }
 }

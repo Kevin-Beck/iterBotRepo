@@ -1143,7 +1143,6 @@ GameObject:
   - component: {fileID: 193943684}
   - component: {fileID: 193943683}
   - component: {fileID: 193943682}
-  - component: {fileID: 193943687}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1212,28 +1211,11 @@ Transform:
   m_GameObject: {fileID: 193943681}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 210, y: -3.414, z: 209}
-  m_LocalScale: {x: 50, y: 1, z: 50}
+  m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &193943687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 193943681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cda5c2476544d14a9e0764eae01b522, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numOfCreatures: 1
-  sizeOfCreatures: 8
-  SegmentTypeList:
-  - {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6, type: 2}
-  JointTypeList:
-  - {fileID: 1501067322059026, guid: dae7583c98a78d945a4ba475edbeabb6, type: 2}
 --- !u!1 &194673155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,29 +1492,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 242608534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4337232c2b5f14a9c16c3663aa3011, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cda5c2476544d14a9e0764eae01b522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segmentBarsMin: 1
-  segmentBarsMax: 10
-  weightBarsMin: 1
-  weightBarsMax: 4
-  upperLengthBarsMin: 0.5
-  upperLengthBarsMax: 5
-  upperStrengthBarsMin: 0.5
-  upperStrengthBarsMax: 10
-  upperROMBarsMin: 10
-  upperROMBarsMax: 90
-  lowerLengthBarsMin: 0.5
-  lowerLengthBarsMax: 5
-  lowerStrengthBarsMin: 0.5
-  lowerStrengthBarsMax: 10
-  lowerROMBarsMin: 10
-  lowerROMBarsMax: 90
-  carryingWeightMin: 0
-  carryingWeightMax: 10
-  dragWeightMin: 0
-  dragWeightMax: 10
+  delay: 21
+  NumberOfGenerationsToDo: 25
+  numOfCreatures: 64
+  sizeOfCreaturesX: 5
+  sizeOfCreaturesY: 5
+  sizeOfCreaturesZ: 5
+  densityOfBlocks: 0.2
+  stabilizationChance: 0.1
+  minimumWeight: 2
+  maximumWeight: 5
+  minimumJointForce: 500
+  maximumJointForce: 800
+  minimumJointSpeed: 200
+  maximumJointSpeed: 800
+  SegmentTypeList:
+  - {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6, type: 2}
+  JointTypeList:
+  - {fileID: 1501067322059026, guid: dae7583c98a78d945a4ba475edbeabb6, type: 2}
 --- !u!4 &242608536
 Transform:
   m_ObjectHideFlags: 0
@@ -4945,8 +4925,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 884064157}
-  m_LocalRotation: {x: 0.18630542, y: 0.31907934, z: -0.06412445, w: 0.9270204}
-  m_LocalPosition: {x: -10.4762745, y: 16.782307, z: -10.6888275}
+  m_LocalRotation: {x: -0.21029685, y: -0.36030588, z: 0.083727255, w: -0.9049556}
+  m_LocalPosition: {x: -72.98772, y: 52.926895, z: -86.32564}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6102,7 +6082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7081bd4347b97d14f9c5254df6c4e985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Controller: {fileID: 242608535}
+  Controller: {fileID: 0}
   segmentsMinSlider: {fileID: 854151292}
   segmentsMaxSlider: {fileID: 1324632274}
   weightMinSlider: {fileID: 1427337253}

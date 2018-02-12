@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 521}
+  m_MinSize: {x: 950, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -106,10 +106,10 @@ MonoBehaviour:
     y: 30
     width: 1707
     height: 827
-  m_MinSize: {x: 711, y: 471}
-  m_MaxSize: {x: 18006, y: 14021}
+  m_MinSize: {x: 679, y: 321}
+  m_MaxSize: {x: 12006, y: 8021}
   vertical: 0
-  controlID: 9
+  controlID: 33
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -130,10 +130,10 @@ MonoBehaviour:
     y: 0
     width: 1346
     height: 827
-  m_MinSize: {x: 436, y: 471}
-  m_MaxSize: {x: 14006, y: 14021}
+  m_MinSize: {x: 404, y: 321}
+  m_MaxSize: {x: 8006, y: 8021}
   vertical: 0
-  controlID: 10
+  controlID: 34
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -154,8 +154,8 @@ MonoBehaviour:
     y: 0
     width: 350
     height: 827
-  m_MinSize: {x: 232, y: 471}
-  m_MaxSize: {x: 10002, y: 14021}
+  m_MinSize: {x: 200, y: 321}
+  m_MaxSize: {x: 4002, y: 8021}
   vertical: 1
   controlID: 35
 --- !u!114 &8
@@ -201,14 +201,14 @@ MonoBehaviour:
     y: 465
     width: 350
     height: 362
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 14}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 14}
   - {fileID: 15}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -365,23 +365,23 @@ MonoBehaviour:
     height: 444
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0e270000
-    m_LastClickedID: 9998
-    m_ExpandedIDs: 0a0bf9ff861cf9ff1afcffff00000000
+    m_SelectedIDs: 32270000
+    m_LastClickedID: 10034
+    m_ExpandedIDs: 4851f3ff845df9ff283dfdff44befeff0426ffffc6d7ffff1afcfffff4ffffff000000000e270000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Creature3
+      m_OriginalName: Creature3
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: -938432
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
@@ -493,9 +493,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 32270000
+    m_LastClickedInstanceID: 10034
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -576,14 +576,14 @@ MonoBehaviour:
     width: 992
     height: 806
   m_SceneLighting: 1
-  lastFramingTime: 424.12502318456893
+  lastFramingTime: 12527.582898203626
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -5.6278033, y: 7.5439186, z: -3.606873}
+    m_Target: {x: 17.228771, y: 23.012024, z: 16.376137}
     speed: 2
-    m_Value: {x: -5.6278033, y: 7.5439186, z: -3.606873}
+    m_Value: {x: 17.228771, y: 23.012024, z: 16.376137}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -606,13 +606,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.2196992, y: 0.29728827, z: -0.070494495, w: 0.9264893}
+    m_Target: {x: -0.20093282, y: -0.34352237, z: 0.07549406, w: -0.9142861}
     speed: 2
-    m_Value: {x: 0.21969922, y: 0.2972883, z: -0.0704945, w: 0.92648935}
+    m_Value: {x: -0.20093282, y: -0.34352237, z: 0.07549406, w: -0.9142861}
   m_Size:
-    m_Target: 4.1207237
+    m_Target: 75.4491
     speed: 2
-    m_Value: 4.1207237
+    m_Value: 75.4491
   m_Ortho:
     m_Target: 0
     speed: 2

@@ -100,6 +100,8 @@ public class RobotArrayGeneration : MonoBehaviour {
     }
     public class Block
     {
+
+        private string blockName;
         private Vector3 blockPosition;
         private GameObject blockType; 
         private float blockWeight;
@@ -108,8 +110,8 @@ public class RobotArrayGeneration : MonoBehaviour {
         private Color blockColor;
         private float minWeight;
         private float maxWeight;
-
-
+        private Vector3 instantiatedBlockObjectStartingLocation;
+        
         private Connection posXCon;
         private Connection posYCon;
         private Connection posZCon;
@@ -128,6 +130,8 @@ public class RobotArrayGeneration : MonoBehaviour {
             posYCon = new Connection();
             posZCon = new Connection();
             blockColor = new Color(1, 1, 1, 1);
+            blockName = "";
+            instantiatedBlockObjectStartingLocation = Vector3.zero;
         }
         // Instantiator
         public GameObject InstantiateBlock(Vector3 position) {
@@ -166,6 +170,12 @@ public class RobotArrayGeneration : MonoBehaviour {
         }
         public void SetBlockStabilizedChance(float stbl) {
             stabilizedChance = stbl;
+        }
+        public void SetBlockName(string name) {
+            blockName = name;
+        }
+        public void SetInstantiatedObjectStartingLocation(Vector3 start) {
+            instantiatedBlockObjectStartingLocation = start;
         }
 
         // Getter
@@ -208,6 +218,12 @@ public class RobotArrayGeneration : MonoBehaviour {
         }
         public float GetBlockStabilizedChance() {
             return stabilizedChance;
+        }
+        public Vector3 GetInstantiatedObjectStartingLocation() {
+            return instantiatedBlockObjectStartingLocation;
+        }
+        public string GetBlockName() {
+            return blockName;
         }
     }
     public class DNA
@@ -291,11 +307,21 @@ public class RobotArrayGeneration : MonoBehaviour {
             // Creating the blocks and instantiating them
             foreach (Block blockObject in arrayOfBlocks)
             {
+                // instantiation vector is the blockposition within the DNA added to the insantiation position of the DNA itself
                 Vector3 instantiationVector = blockObject.GetBlockPosition() + instantiationPosition;
                 if (blockObject.GetBlockType() != null)
                 {
+                    // Set the instantiated block object starting position
+                    blockObject.SetInstantiatedObjectStartingLocation(instantiationVector);
+
+                    // Actually instante the block
                     GameObject tempSegment = blockObject.InstantiateBlock(instantiationVector);
                     tempSegment.name = CreatureName + "x" + blockObject.GetBlockPosition().x + "y" + blockObject.GetBlockPosition().y + "z" + blockObject.GetBlockPosition().z;
+
+                    // This stores the value of the unity objects name in the refered to block object inside the DNA
+                    blockObject.SetBlockName(tempSegment.name);
+
+                    // Set the weight of the object
                     tempSegment.GetComponent<Rigidbody>().mass = blockObject.GetBlockWeight();
 
                     // Change color                            
@@ -689,7 +715,7 @@ public class RobotArrayGeneration : MonoBehaviour {
     void Start()
     {
         Time.timeScale = timescale;
-        Creatures = CreateRandomGeneration();
+        Creatures = InstantiateRandomGeneration();
         StartCoroutine(Iterate(delay));
 
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
@@ -697,10 +723,10 @@ public class RobotArrayGeneration : MonoBehaviour {
         // TODO mutation - eliminate stagnant pieces as part of the mutation process
     } // end of start code
     public void Round() {
-        Creatures = CreateRandomGeneration();
+        Creatures = InstantiateRandomGeneration();
         StartCoroutine(Iterate(delay));
     }
-    public DNA[] CreateRandomGeneration()
+    public DNA[] InstantiateRandomGeneration()
     {
         DNA[] Creatures = new DNA[numOfCreatures];
         for (int i = 0; i < Creatures.GetLength(0); i++)
@@ -720,28 +746,38 @@ public class RobotArrayGeneration : MonoBehaviour {
         return Creatures;
     }
     private DNA GradeAllCreatures() {
+        Debug.Log("GRADEALLCREATURES PHASE");
         DNA winner = null;
         float WinnerWork = 0;
         foreach (DNA individual in Creatures)
         {
             Vector3 startTemp = individual.GetStartingPosition();
-            float maxWork = 0;
-            foreach (Transform child in GameObject.Find(individual.GetCreatureName()).transform)
+            float Work = 0;
+            
+            foreach (Block blockObject in individual.arrayOfBlocks)
             {
-                
-                Vector3 travelVector = Vector3.Project(child.position, fitnessVector);  // Judgement Vector for grading the fitness
-                maxWork = child.GetComponent<Rigidbody>().mass * (travelVector.magnitude);                
+                if(blockObject.GetBlockType() != null)
+                {
+                    
+                    GameObject curSegment = GameObject.Find(blockObject.GetBlockName());
+                    Vector3 travelVector = Vector3.Project((curSegment.transform.position-blockObject.GetInstantiatedObjectStartingLocation()), fitnessVector);
+                    if(travelVector.normalized != fitnessVector.normalized)
+                    {
+                        travelVector = Vector3.zero;
+                    }
+                    Work = curSegment.GetComponent<Rigidbody>().mass * (travelVector.magnitude);
+                }
             }
 
-            individual.SetFitness(maxWork);
+            individual.SetFitness(Work);
             if (individual.GetFitness() > WinnerWork)
             {
                 winner = individual;
                 WinnerWork = individual.GetFitness();
+                Debug.Log(individual.GetCreatureName() + "  " + WinnerWork);
             }
             individual.SelfDestruct();
         }
-
         return winner;
     }
     private void PresentWinningCreatures() {
@@ -765,6 +801,7 @@ public class RobotArrayGeneration : MonoBehaviour {
     IEnumerator Iterate(int numberOfSeconds) {
         yield return new WaitForSeconds(numberOfSeconds);
         WinningCreatures.Add(GradeAllCreatures());
+        Debug.Log("NEXT GEN");
         GenerationCount++;
         if(GenerationCount < NumberOfGenerationsToDo)
         {

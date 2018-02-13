@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RobotArrayGeneration : MonoBehaviour {
+    public float timescale = 1;
     public int delay;
     public int NumberOfGenerationsToDo = 0;
     public int numOfCreatures = 25;
@@ -17,12 +18,17 @@ public class RobotArrayGeneration : MonoBehaviour {
     public float maximumJointForce = 800f;
     public float minimumJointSpeed = 200f;
     public float maximumJointSpeed = 800f;
+    public Vector3 fitnessVector = new Vector3(1, 0, 0);
+    public float blockMutationMagnitude = 0.3f;
+    public float blockMutationChance = 0.2f;
+    public float jointMutationMagnitude = 0.5f;
+    public float jointMutationChance = 0.2f;
     
     // Editable members of the segment/joint population
     public GameObject[] SegmentTypeList;
     public GameObject[] JointTypeList;
 
-    int GenerationCount = 0;
+    public int GenerationCount = 0;
     
     DNA[] Creatures;
     List<DNA> WinningCreatures = new List<DNA>();
@@ -97,8 +103,12 @@ public class RobotArrayGeneration : MonoBehaviour {
         private Vector3 blockPosition;
         private GameObject blockType; 
         private float blockWeight;
+        private float stabilizedChance;
         private bool stabilized;
         private Color blockColor;
+        private float minWeight;
+        private float maxWeight;
+
 
         private Connection posXCon;
         private Connection posYCon;
@@ -110,6 +120,9 @@ public class RobotArrayGeneration : MonoBehaviour {
             blockPosition = Vector3.zero;
             blockType = null;
             blockWeight = 0;
+            minWeight = 0;
+            maxWeight = 0;
+            stabilizedChance = 0;
             stabilized = false;
             posXCon = new Connection();
             posYCon = new Connection();
@@ -120,6 +133,10 @@ public class RobotArrayGeneration : MonoBehaviour {
         public GameObject InstantiateBlock(Vector3 position) {
             GameObject block = Instantiate(blockType, position, new Quaternion(0, 0, 0, 0));
             return block;
+        }
+        public void CalculateBlockColor() {
+            float weightColorMod = (blockWeight - minWeight) / (maxWeight - minWeight);
+           blockColor = (new Color(1 - weightColorMod, 1 - weightColorMod, 1 - weightColorMod, 1));
         }
         // Setters
         public void SetBlockType(GameObject type)
@@ -140,6 +157,15 @@ public class RobotArrayGeneration : MonoBehaviour {
         }
         public void SetBlockColor(Color a) {
             blockColor = a;
+        }
+        public void SetBlockMinWeight(float minw) {
+            minWeight = minw;
+        }
+        public void SetBlockMaxWeight(float maxw) {
+            maxWeight = maxw;
+        }
+        public void SetBlockStabilizedChance(float stbl) {
+            stabilizedChance = stbl;
         }
 
         // Getter
@@ -173,6 +199,15 @@ public class RobotArrayGeneration : MonoBehaviour {
         } 
         public Color GetBlockColor() {
             return blockColor;
+        }
+        public float GetBlockMinWeight() {
+            return minWeight;
+        }
+        public float GetBlockMaxWeight() {
+            return maxWeight;
+        }
+        public float GetBlockStabilizedChance() {
+            return stabilizedChance;
         }
     }
     public class DNA
@@ -423,6 +458,35 @@ public class RobotArrayGeneration : MonoBehaviour {
         public void SelfDestruct() {
             Destroy(GameObject.Find(CreatureName));
         }
+        // Mutator Functions change the values of the blocks, should be used during the iterative process of changing genes
+        private void MutateBlock(float BlockMutationMagnitude, float BlockMutationChance) {
+            foreach (Block blockObject in arrayOfBlocks)
+            {
+                if (blockObject.GetBlockType() != null)
+                {
+                    //Block Weight
+                    if (Random.Range(0f, 1f) < BlockMutationChance)
+                    {
+                        blockObject.SetBlockWeight(Random.Range(blockObject.GetBlockMinWeight(), blockObject.GetBlockMaxWeight()));
+                        blockObject.CalculateBlockColor();
+                    }
+                    if(Random.Range(0f, 1f) < BlockMutationChance)
+                    {
+                        if(Random.Range(0f, 1f) >  blockObject.GetBlockStabilizedChance())
+                        {
+                            blockObject.SetBlockStabilized(!blockObject.GetBlockStabilized());
+                        }
+                    }
+                }
+            }
+        }
+        private void MutateJoint(float JointMutationRate, float JointMutationChance) {
+
+        }
+        public void MutateDNA(float BlockChance, float BlockMag, float JointChance, float JointMag) {
+            MutateBlock(BlockMag, BlockChance);
+            MutateJoint(JointMag, JointChance);
+        }
         // Function to create the data for the individual block data, based on information based into the DNA constructor
         private void InitializeDNABlockData(int x, int y, int z, float density, float minW, float maxW, float chanceOfStabilization, GameObject[] SegmentTypes) {
             arrayOfBlocks[x, y, z] = new Block();
@@ -434,14 +498,21 @@ public class RobotArrayGeneration : MonoBehaviour {
                 // Choose Segment Type
                 arrayOfBlocks[x, y, z].SetBlockType(SegmentTypes[Random.Range(0, SegmentTypes.Length)]);
 
+                // Set the min/max of the block weights allowance
+                arrayOfBlocks[x, y, z].SetBlockMinWeight(minW);
+                arrayOfBlocks[x, y, z].SetBlockMaxWeight(maxW);
+
                 // Choose Segment Weight
                 arrayOfBlocks[x, y, z].SetBlockWeight(Random.Range(minW, maxW));
 
                 // Determine the segment's Color
+                arrayOfBlocks[x, y, z].CalculateBlockColor();
+
                 float weightColorMod = (arrayOfBlocks[x, y, z].GetBlockWeight() - minW) / (maxW - minW);
                 arrayOfBlocks[x, y, z].SetBlockColor(new Color(1 - weightColorMod, 1 - weightColorMod, 1 - weightColorMod, 1));
 
-                // Choose if Segment is Stabalized, meaning the block will not rotate around any axis
+                // Choose if Segment is Stabilized, meaning the block will not rotate around any axis
+                arrayOfBlocks[x, y, z].SetBlockStabilizedChance(chanceOfStabilization);
                 if (Random.Range(0f, 1f) < chanceOfStabilization)
                 {
                     arrayOfBlocks[x, y, z].SetBlockStabilized(true);
@@ -617,11 +688,9 @@ public class RobotArrayGeneration : MonoBehaviour {
     }
     void Start()
     {
-        Time.timeScale = 3;
+        Time.timeScale = timescale;
         Creatures = CreateRandomGeneration();
-        int i = 0;
-        StartCoroutine(Example(delay));
-
+        StartCoroutine(Iterate(delay));
 
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
 
@@ -629,11 +698,10 @@ public class RobotArrayGeneration : MonoBehaviour {
     } // end of start code
     public void Round() {
         Creatures = CreateRandomGeneration();
-        StartCoroutine(Example(delay));
+        StartCoroutine(Iterate(delay));
     }
     public DNA[] CreateRandomGeneration()
     {
-
         DNA[] Creatures = new DNA[numOfCreatures];
         for (int i = 0; i < Creatures.GetLength(0); i++)
         {
@@ -660,7 +728,9 @@ public class RobotArrayGeneration : MonoBehaviour {
             float maxWork = 0;
             foreach (Transform child in GameObject.Find(individual.GetCreatureName()).transform)
             {
-                maxWork = child.GetComponent<Rigidbody>().mass * (child.position.z - startTemp.z);                 // Judgement Vector for grading the fitness
+                
+                Vector3 travelVector = Vector3.Project(child.position, fitnessVector);  // Judgement Vector for grading the fitness
+                maxWork = child.GetComponent<Rigidbody>().mass * (travelVector.magnitude);                
             }
 
             individual.SetFitness(maxWork);
@@ -692,7 +762,7 @@ public class RobotArrayGeneration : MonoBehaviour {
             }
         }
     }
-    IEnumerator Example(int numberOfSeconds) {
+    IEnumerator Iterate(int numberOfSeconds) {
         yield return new WaitForSeconds(numberOfSeconds);
         WinningCreatures.Add(GradeAllCreatures());
         GenerationCount++;
@@ -705,3 +775,7 @@ public class RobotArrayGeneration : MonoBehaviour {
         }
     }
 }
+
+
+// CHANGE THE CALCULATION FOR THE BLOCK STARTING POSITION AND THE BLOCK CURRENT POSITION FOR FITNESS TESTING
+// CURRENT STRUCTURE USES PARENT OBJECT RATHER THAN BLOCK POSITION SO IT IT GETS INCORRECT VALUES FROM TIME TO TIME

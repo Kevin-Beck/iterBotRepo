@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RobotArrayGeneration : MonoBehaviour {
+public class RobotArrayGeneration : MonoBehaviour
+{
     public float timescale = 1;
     public int delay;
     public int NumberOfGenerationsToDo = 0;
@@ -23,13 +25,13 @@ public class RobotArrayGeneration : MonoBehaviour {
     public float blockMutationChance = 0.2f;
     public float jointMutationMagnitude = 0.5f;
     public float jointMutationChance = 0.2f;
-    
+
     // Editable members of the segment/joint population
     public GameObject[] SegmentTypeList;
     public GameObject[] JointTypeList;
 
     public int GenerationCount = 0;
-    
+
     DNA[] Creatures;
     List<DNA> WinningCreatures = new List<DNA>();
 
@@ -38,60 +40,90 @@ public class RobotArrayGeneration : MonoBehaviour {
         private GameObject conType;
         private bool isFixedJoint; // Special condition if the joint is a fixed joint
         private float conStr;
+        private float conStrMax;
+        private float conStrMin;
         private float conSpeed;
+        private float conSpeedMax;
+        private float conSpeedMin;
         private Vector3 conAxis;
 
         // Constructor
-        public Connection()
-        {
+        public Connection() {
             conType = null;
             isFixedJoint = false;
             conStr = 0;
+            conStrMin = 0;
+            conStrMax = 0;
             conSpeed = 0;
+            conSpeedMin = 0;
+            conSpeedMax = 0;
             conAxis = Vector3.zero;
         }
         // Instantiator
-        public GameObject InstantiateConnection(Vector3 location, Quaternion rotation) 
-        {
+        public GameObject InstantiateConnection(Vector3 location, Quaternion rotation) {
             GameObject connection = Instantiate(conType, location, rotation);
             return connection;
         }
+        public void RollNewConStr() {
+            conStr = (UnityEngine.Random.Range(conStrMin, conStrMax));
+        }
+        public void RollNewConSpeed() {
+            conSpeed = (UnityEngine.Random.Range(conSpeedMin, conSpeedMax));
+        }
+        public void RollNewAxisOfRotation() {
+            conAxis = new Vector3(UnityEngine.Random.Range(-1, 2), UnityEngine.Random.Range(-1, 2), UnityEngine.Random.Range(-1, 2));
+        }
         // Setter
-
-        public void SetConType(GameObject type)
-        {
+        public void SetConStrMin(float min) {
+            conStrMin = min;
+        }
+        public void SetConStrMax(float max) {
+            conStrMax = max;
+        }
+        public void SetConSpeedMin(float min) {
+            conSpeedMin = min;
+        }
+        public void SetConSpeedMax(float max) {
+            conSpeedMax = max;
+        }
+        public void SetConType(GameObject type) {
             conType = type;
         }
-        public void SetFixedJoint(bool state) 
-        {
+        public void SetFixedJoint(bool state) {
             isFixedJoint = state;
         }
-        public void SetConStr(float strength)
-        {
+        public void SetConStr(float strength) {
             conStr = strength;
         }
-        public void SetConSpeed(float speed)
-        {
+        public void SetConSpeed(float speed) {
             conSpeed = speed;
         }
         public void SetConAxis(Vector3 axis) {
             conAxis = axis;
         }
         // Getter
-        public GameObject GetConType()
-        {
+        public float GetConStrMin() {
+            return conStrMin;
+        }
+        public float GetConStrMax() {
+            return conStrMax;
+        }
+        public float GetConSpeedMin() {
+            return conSpeedMin;
+        }
+        public float GetConSpeedMax() {
+            return conSpeedMax;
+        }
+        public GameObject GetConType() {
             return conType;
         }
-        public bool GetIsFixedJoint() 
-        {
+        public bool GetIsFixedJoint() {
             return isFixedJoint;
         }
-        public float GetConStr()
-        {
+        public float GetConStr() {
             return conStr;
         }
-        public float GetConSpeed()
-        {
+        public float GetConSpeed() {
             return conSpeed;
         }
         public Vector3 GetConAxis() {
@@ -100,10 +132,9 @@ public class RobotArrayGeneration : MonoBehaviour {
     }
     public class Block
     {
-
         private string blockName;
         private Vector3 blockPosition;
-        private GameObject blockType; 
+        private GameObject blockType;
         private float blockWeight;
         private float stabilizedChance;
         private bool stabilized;
@@ -111,14 +142,13 @@ public class RobotArrayGeneration : MonoBehaviour {
         private float minWeight;
         private float maxWeight;
         private Vector3 instantiatedBlockObjectStartingLocation;
-        
+
         private Connection posXCon;
         private Connection posYCon;
         private Connection posZCon;
 
         // Constructor
-        public Block()
-        {
+        public Block() {
             blockPosition = Vector3.zero;
             blockType = null;
             blockWeight = 0;
@@ -140,27 +170,24 @@ public class RobotArrayGeneration : MonoBehaviour {
         }
         public void CalculateBlockColor() {
             float weightColorMod = (blockWeight - minWeight) / (maxWeight - minWeight);
-           blockColor = (new Color(1 - weightColorMod, 1 - weightColorMod, 1 - weightColorMod, 1));
+            blockColor = (new Color(1 - weightColorMod, 1 - weightColorMod, 1 - weightColorMod, 1));
+        }
+        public void RollNewBlockWeight() {
+            blockWeight = (UnityEngine.Random.Range(minWeight, maxWeight));
+            CalculateBlockColor();
         }
         // Setters
-        public void SetBlockType(GameObject type)
-        {
+        public void SetBlockType(GameObject type) {
             blockType = type;
         }
-        public void SetBlockPosition(Vector3 posVector)
-        {
+        public void SetBlockPosition(Vector3 posVector) {
             blockPosition = posVector;
         }
-        public void SetBlockWeight(float weight)
-        {
+        public void SetBlockWeight(float weight) {
             blockWeight = weight;
         }
-        public void SetBlockStabilized(bool stab)
-        {
+        public void SetBlockStabilized(bool stab) {
             stabilized = stab;
-        }
-        public void SetBlockColor(Color a) {
-            blockColor = a;
         }
         public void SetBlockMinWeight(float minw) {
             minWeight = minw;
@@ -179,34 +206,27 @@ public class RobotArrayGeneration : MonoBehaviour {
         }
 
         // Getter
-        public GameObject GetBlockType()
-        {
+        public GameObject GetBlockType() {
             return blockType;
         }
-        public Vector3 GetBlockPosition()
-        {
+        public Vector3 GetBlockPosition() {
             return blockPosition;
         }
-        public float GetBlockWeight()
-        {
+        public float GetBlockWeight() {
             return blockWeight;
         }
-        public bool GetBlockStabilized()
-        {
+        public bool GetBlockStabilized() {
             return stabilized;
         }
-        public Connection GetPosXCon()
-        {
+        public Connection GetPosXCon() {
             return posXCon;
         }
-        public Connection GetPosYCon()
-        {
+        public Connection GetPosYCon() {
             return posYCon;
         }
-        public Connection GetPosZCon()
-        {
+        public Connection GetPosZCon() {
             return posZCon;
-        } 
+        }
         public Color GetBlockColor() {
             return blockColor;
         }
@@ -238,51 +258,100 @@ public class RobotArrayGeneration : MonoBehaviour {
             return arrayOfBlocks[x, y, z];
         }
         // Function to print a DNA object to a string.
-        public string GenerateGeneticString() {
-
-            string geneOpen = "{";
-            string geneClose = "}";
-            string blockOpen = "[";
-            string blockClose = "]";
-            string setOpen = "(";
-            string setClose = ")";
-            string sequence = ",";
-
-            string gs = "";
-            Concat(gs, geneOpen); // Start off the gene
-            Concat(gs, "x" + arrayOfBlocks.GetLength(0) + "y" + arrayOfBlocks.GetLength(1) + "z" + arrayOfBlocks.GetLength(2)); // save the size of the DNA Array
-
-            for (int i = 0; i < arrayOfBlocks.GetLength(0); i++)
+        public DNA Replicate() {
+            DNA replicatedDNA = new DNA(CreatureName, arrayOfBlocks.GetLength(0), arrayOfBlocks.GetLength(1), arrayOfBlocks.GetLength(2));
+            for (int i = 0; i < replicatedDNA.arrayOfBlocks.GetLength(0); i++)
             {
-                for (int j = 0; j < arrayOfBlocks.GetLength(1); j++)
+                for (int j = 0; j < replicatedDNA.arrayOfBlocks.GetLength(1); j++)
                 {
-                    for (int k = 0; k < arrayOfBlocks.GetLength(2); k++)
+                    for (int k = 0; k < replicatedDNA.arrayOfBlocks.GetLength(2); k++)
                     {
-                        // Code for the block
-                        Concat(gs, blockOpen);
-                        Concat(gs, setOpen);
-                        Concat(gs, i.ToString()); // save the position vector
-                        Concat(gs, sequence);
-                        Concat(gs, j.ToString());
-                        Concat(gs, sequence);
-                        Concat(gs, k.ToString());
-                        Concat(gs, setClose);
-                        Concat(gs, setOpen);
-                        Concat(gs, arrayOfBlocks[i, j, k].GetBlockType().ToString());
-                        Concat(gs, sequence);
-                        Concat(gs, arrayOfBlocks[i, j, k].GetBlockStabilized().ToString());
-                        Concat(gs, setClose);
-                        Concat(gs, blockClose);
-                        // todo, None of the above works at all!
-                        // todo, loop through all the blocks and build a big string with all data
+                        // Copy dna block weight, and calc repDNA color
+                        replicatedDNA.arrayOfBlocks[i, j, k].SetBlockMaxWeight(arrayOfBlocks[i, j, k].GetBlockMaxWeight());
+                        replicatedDNA.arrayOfBlocks[i, j, k].SetBlockMinWeight(arrayOfBlocks[i, j, k].GetBlockMinWeight());
+                        replicatedDNA.arrayOfBlocks[i, j, k].SetBlockWeight(arrayOfBlocks[i, j, k].GetBlockWeight());
+                        replicatedDNA.arrayOfBlocks[i, j, k].CalculateBlockColor();
+                        // Position
+                        replicatedDNA.arrayOfBlocks[i, j, k].SetBlockPosition(arrayOfBlocks[i, j, k].GetBlockPosition());
+                        // Stabilization
+                        replicatedDNA.arrayOfBlocks[i, j, k].SetBlockStabilized(arrayOfBlocks[i, j, k].GetBlockStabilized());
+                        replicatedDNA.arrayOfBlocks[i, j, k].SetBlockStabilizedChance(arrayOfBlocks[i, j, k].GetBlockStabilizedChance());
+                        // Type
+                        replicatedDNA.arrayOfBlocks[i, j, k].SetBlockType(arrayOfBlocks[i, j, k].GetBlockType());
+                        // Name
+                        replicatedDNA.arrayOfBlocks[i, j, k].SetBlockName(arrayOfBlocks[i, j, k].GetBlockName());
+
+                        // Now we copy all the data from the time joints connected to the original block, to put into the new block data
+                        if (arrayOfBlocks[i, j, k].GetPosXCon() != null)
+                        {
+                            if (arrayOfBlocks[i, j, k].GetPosXCon().GetIsFixedJoint())
+                            {
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetFixedJoint(true);
+                            }
+                            else
+                            {
+                                // Copy x joint axis
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosXCon().GetConAxis());
+                                // Copy x joint speed
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeed());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeedMax());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeedMin());
+                                // copy x joint strength
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStr(arrayOfBlocks[i, j, k].GetPosXCon().GetConStr());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosXCon().GetConStrMax());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosXCon().GetConStrMin());
+                                // copy x joint type
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConType(arrayOfBlocks[i, j, k].GetPosXCon().GetConType());
+                            }
+                        }
+                        if (arrayOfBlocks[i, j, k].GetPosYCon() != null)
+                        {
+                            if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint())
+                            {
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetFixedJoint(true);
+                            }
+                            else
+                            {
+                                // Copy x joint axis
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosYCon().GetConAxis());
+                                // Copy x joint speed
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeed());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeedMax());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeedMin());
+                                // copy x joint strength
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStr(arrayOfBlocks[i, j, k].GetPosYCon().GetConStr());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosYCon().GetConStrMax());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosYCon().GetConStrMin());
+                                // copy x joint type
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConType(arrayOfBlocks[i, j, k].GetPosYCon().GetConType());
+                            }
+                        }
+                        if (arrayOfBlocks[i, j, k].GetPosZCon() != null)
+                        {
+                            if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint())
+                            {
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetFixedJoint(true);
+                            }
+                            else
+                            {
+                                // Copy x joint axis
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosZCon().GetConAxis());
+                                // Copy x joint speed
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeed());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeedMax());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeedMin());
+                                // copy x joint strength
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStr(arrayOfBlocks[i, j, k].GetPosZCon().GetConStr());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosZCon().GetConStrMax());
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosZCon().GetConStrMin());
+                                // copy x joint type
+                                replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConType(arrayOfBlocks[i, j, k].GetPosZCon().GetConType());
+                            }
+                        }
                     }
                 }
             }
-            Concat(gs, geneClose);
-            return gs;
-        }
-        private string Concat(string s, string c) {
-            return s += c;
+            return replicatedDNA;
         }
         // Parents a child object by sending both objects
         private void ParentChild(GameObject par, GameObject child) {
@@ -485,33 +554,78 @@ public class RobotArrayGeneration : MonoBehaviour {
             Destroy(GameObject.Find(CreatureName));
         }
         // Mutator Functions change the values of the blocks, should be used during the iterative process of changing genes
-        private void MutateBlock(float BlockMutationMagnitude, float BlockMutationChance) {
+        private void MutateJoint(float JointMutationRate, float JointMutationChance) {
+
+        }
+        public void MutateDNA(float BlockMutationChance, float BlockMutationMagnitude, float JointMutationChance, float JointMutationMagnitude) {
             foreach (Block blockObject in arrayOfBlocks)
             {
                 if (blockObject.GetBlockType() != null)
                 {
                     //Block Weight
-                    if (Random.Range(0f, 1f) < BlockMutationChance)
+                    if (UnityEngine.Random.Range(0f, 1f) < BlockMutationChance)
                     {
-                        blockObject.SetBlockWeight(Random.Range(blockObject.GetBlockMinWeight(), blockObject.GetBlockMaxWeight()));
+                        blockObject.SetBlockWeight(UnityEngine.Random.Range(blockObject.GetBlockMinWeight(), blockObject.GetBlockMaxWeight()));
                         blockObject.CalculateBlockColor();
                     }
-                    if(Random.Range(0f, 1f) < BlockMutationChance)
+                    //Block
+                    if (UnityEngine.Random.Range(0f, 1f) < BlockMutationChance)
                     {
-                        if(Random.Range(0f, 1f) >  blockObject.GetBlockStabilizedChance())
+                        if (UnityEngine.Random.Range(0f, 1f) > blockObject.GetBlockStabilizedChance())
                         {
                             blockObject.SetBlockStabilized(!blockObject.GetBlockStabilized());
                         }
                     }
+                    // mutate Joint X if it exists
+                    if (blockObject.GetPosXCon().GetIsFixedJoint() != true && blockObject.GetPosXCon().GetConType() != null)
+                    {
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosXCon().RollNewAxisOfRotation();
+                        }
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosXCon().RollNewConSpeed();
+                        }
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosXCon().RollNewConStr();
+                        }
+                    }
+                    // mutate Joint Y if it exists
+                    if (blockObject.GetPosYCon().GetIsFixedJoint() != true && blockObject.GetPosYCon().GetConType() != null)
+                    {
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosYCon().RollNewAxisOfRotation();
+                        }
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosYCon().RollNewConSpeed();
+                        }
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosYCon().RollNewConStr();
+                        }
+                    }
+                    // mutate Joint Z if it exists
+                    if (blockObject.GetPosZCon().GetIsFixedJoint() != true && blockObject.GetPosZCon().GetConType() != null)
+                    {
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosZCon().RollNewAxisOfRotation();
+                        }
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosZCon().RollNewConSpeed();
+                        }
+                        if (UnityEngine.Random.Range(0f, 1f) < JointMutationChance)
+                        {
+                            blockObject.GetPosZCon().RollNewConStr();
+                        }
+                    }
                 }
             }
-        }
-        private void MutateJoint(float JointMutationRate, float JointMutationChance) {
-
-        }
-        public void MutateDNA(float BlockChance, float BlockMag, float JointChance, float JointMag) {
-            MutateBlock(BlockMag, BlockChance);
-            MutateJoint(JointMag, JointChance);
         }
         // Function to create the data for the individual block data, based on information based into the DNA constructor
         private void InitializeDNABlockData(int x, int y, int z, float density, float minW, float maxW, float chanceOfStabilization, GameObject[] SegmentTypes) {
@@ -519,27 +633,19 @@ public class RobotArrayGeneration : MonoBehaviour {
             arrayOfBlocks[x, y, z].SetBlockPosition(new Vector3(x, y, z));
 
             // Decide if block exists
-            if (Random.Range(0f, 1f) < density)
+            if (UnityEngine.Random.Range(0f, 1f) < density)
             {
                 // Choose Segment Type
-                arrayOfBlocks[x, y, z].SetBlockType(SegmentTypes[Random.Range(0, SegmentTypes.Length)]);
+                arrayOfBlocks[x, y, z].SetBlockType(SegmentTypes[UnityEngine.Random.Range(0, SegmentTypes.Length)]);
 
-                // Set the min/max of the block weights allowance
+                // Set the min and max block weights and roll for a new one
                 arrayOfBlocks[x, y, z].SetBlockMinWeight(minW);
                 arrayOfBlocks[x, y, z].SetBlockMaxWeight(maxW);
-
-                // Choose Segment Weight
-                arrayOfBlocks[x, y, z].SetBlockWeight(Random.Range(minW, maxW));
-
-                // Determine the segment's Color
-                arrayOfBlocks[x, y, z].CalculateBlockColor();
-
-                float weightColorMod = (arrayOfBlocks[x, y, z].GetBlockWeight() - minW) / (maxW - minW);
-                arrayOfBlocks[x, y, z].SetBlockColor(new Color(1 - weightColorMod, 1 - weightColorMod, 1 - weightColorMod, 1));
+                arrayOfBlocks[x, y, z].RollNewBlockWeight();
 
                 // Choose if Segment is Stabilized, meaning the block will not rotate around any axis
                 arrayOfBlocks[x, y, z].SetBlockStabilizedChance(chanceOfStabilization);
-                if (Random.Range(0f, 1f) < chanceOfStabilization)
+                if (UnityEngine.Random.Range(0f, 1f) < chanceOfStabilization)
                 {
                     arrayOfBlocks[x, y, z].SetBlockStabilized(true);
                 }
@@ -551,7 +657,21 @@ public class RobotArrayGeneration : MonoBehaviour {
         public void SetFitness(float fitnessScore) {
             fitness = fitnessScore;
         }
-        // Constructor
+        // Constructors
+        public DNA(string name, int SizeX, int SizeY, int SizeZ) { // Basic Constructor for blank objects
+            arrayOfBlocks = new Block[SizeX, SizeY, SizeZ];
+            for (int i = 0; i < SizeX; i++)
+            {
+                for (int j = 0; j < SizeY; j++)
+                {
+                    for (int k = 0; k < SizeZ; k++)
+                    {
+                        arrayOfBlocks[i, k, j] = new Block();
+                    }
+                }
+            }
+            CreatureName = name;
+        }
         public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr,
             float minSpeed, float maxSpeed, GameObject[] segtypes, GameObject[] jointtypes) {
             arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
@@ -568,7 +688,7 @@ public class RobotArrayGeneration : MonoBehaviour {
                 }
             }
             // Check for connections of the blocks in the PosXCon direction;
-            for (int i = 0; i < ArrayX; i++)
+            for (int i = 0; i < arrayOfBlocks.GetLength(0); i++)
             {
                 for (int j = 0; j < ArrayY; j++)
                 {
@@ -588,10 +708,19 @@ public class RobotArrayGeneration : MonoBehaviour {
                                 {
                                     if (arrayOfBlocks[i + 2, j, k].GetBlockType() != null)
                                     {
-                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConType(jointtypes[Random.Range(0, jointtypes.Length)]);
-                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConStr(Random.Range(minStr, maxStr));
-                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeed(Random.Range(minSpeed, maxSpeed));
-                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConAxis(new Vector3(Random.Range(-1, 2), Random.Range(-1, 2), Random.Range(-1, 2)));
+                                        // Pick a type off the list, even if its just 1 list long
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConType(jointtypes[UnityEngine.Random.Range(0, jointtypes.Length)]);
+
+                                        // Set the min and max x connection str min and max, then roll a new value for it
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConStrMin(minStr);
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConStrMax(maxStr);
+                                        arrayOfBlocks[i, j, k].GetPosXCon().RollNewConStr();
+                                        // Set the min and max x connection speed min and max, then roll a new value for it
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeedMin(minSpeed);
+                                        arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeedMax(maxSpeed);
+                                        arrayOfBlocks[i, j, k].GetPosXCon().RollNewConSpeed();
+                                        // Roll new axis of rotation
+                                        arrayOfBlocks[i, j, k].GetPosXCon().RollNewAxisOfRotation();
                                     }
                                 }
                             }
@@ -607,10 +736,18 @@ public class RobotArrayGeneration : MonoBehaviour {
                                 {
                                     if (arrayOfBlocks[i, j + 2, k].GetBlockType() != null)
                                     {
-                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConType(jointtypes[Random.Range(0, jointtypes.Length)]);
-                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConStr(Random.Range(minStr, maxStr));
-                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeed(Random.Range(minSpeed, maxSpeed));
-                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConAxis(new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2)));
+                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConType(jointtypes[UnityEngine.Random.Range(0, jointtypes.Length)]);
+
+                                        // Set the min and max Y connection str min and max, then roll a new value for it
+                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMin(minStr);
+                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMax(maxStr);
+                                        arrayOfBlocks[i, j, k].GetPosYCon().RollNewConStr();
+                                        // Set the min and max Y connection speed min and max, then roll a new value for it
+                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeedMin(minSpeed);
+                                        arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeedMax(maxSpeed);
+                                        arrayOfBlocks[i, j, k].GetPosYCon().RollNewConSpeed();
+                                        // Roll new axis of rotation
+                                        arrayOfBlocks[i, j, k].GetPosYCon().RollNewAxisOfRotation();
                                     }
                                 }
                             }
@@ -626,10 +763,18 @@ public class RobotArrayGeneration : MonoBehaviour {
                                 {
                                     if (arrayOfBlocks[i, j, k + 2].GetBlockType() != null)
                                     {
-                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConType(jointtypes[Random.Range(0, jointtypes.Length)]);
-                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConStr(Random.Range(minStr, maxStr));
-                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeed(Random.Range(minSpeed, maxSpeed));
-                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConAxis(new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2)));
+                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConType(jointtypes[UnityEngine.Random.Range(0, jointtypes.Length)]);
+
+                                        // Set the min and max x connection str min and max, then roll a new value for it
+                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConStrMin(minStr);
+                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConStrMax(maxStr);
+                                        arrayOfBlocks[i, j, k].GetPosZCon().RollNewConStr();
+                                        // Set the min and max x connection speed min and max, then roll a new value for it
+                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeedMin(minSpeed);
+                                        arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeedMax(maxSpeed);
+                                        arrayOfBlocks[i, j, k].GetPosZCon().RollNewConSpeed();
+                                        // Roll new axis of rotation
+                                        arrayOfBlocks[i, j, k].GetPosZCon().RollNewAxisOfRotation();
                                     }
                                 }
                             }
@@ -712,28 +857,63 @@ public class RobotArrayGeneration : MonoBehaviour {
             }
         }
     }
-    void Start()
-    {
-        Time.timeScale = timescale;
-        Creatures = InstantiateRandomGeneration();
-        StartCoroutine(Iterate(delay));
+    
+    public void Round1() {
+        GenerationCount++;
+        Creatures = new DNA[numOfCreatures];
+        Array.Clear(Creatures, 0, Creatures.Length);
+        CreateRandomGeneration();
+        InstantiateCreatureArray();
 
-        //Time.fixedDeltaTime = 0.02F * Time.timeScale;
-
-        // TODO mutation - eliminate stagnant pieces as part of the mutation process
-    } // end of start code
-    public void Round() {
-        Creatures = InstantiateRandomGeneration();
         StartCoroutine(Iterate(delay));
     }
-    public DNA[] InstantiateRandomGeneration()
-    {
-        DNA[] Creatures = new DNA[numOfCreatures];
-        for (int i = 0; i < Creatures.GetLength(0); i++)
+    IEnumerator Iterate(int numberOfSeconds) {
+        yield return new WaitForSeconds(numberOfSeconds);
+        WinningCreatures.Add(GradeAllCreatures());
+        Round1();
+    }
+    void Start() {
+        Creatures = new DNA[numOfCreatures];
+        Time.timeScale = timescale;
+        CreateRandomGeneration();
+        InstantiateCreatureArray();
+
+        StartCoroutine(Iterate(delay));
+        //Time.fixedDeltaTime = 0.02F * Time.timeScale;
+    } // end of start code
+    /*
+    public DNA[] InstantiateIndividualsFromChampion(DNA winner) {
+        DNA[] newCreatures = new DNA[numOfCreatures];
+        newCreatures[0] = winner.Replicate();
+        newCreatures[0].SetCreatureName("Creature0");
+        for (int i = 1; i < newCreatures.Length; i++)
         {
-            Creatures[i] = new DNA("Creature" + i.ToString(), sizeOfCreaturesX, sizeOfCreaturesY, sizeOfCreaturesZ, densityOfBlocks, stabilizationChance, minimumWeight, maximumWeight, minimumJointForce,
-                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList, JointTypeList);
+            // Add the champion dna to the array, and then mutate it to be different than the original, or the same! idk
+            // This is copying the previous slots exact values, not mutating it and making a new object 
+            newCreatures[i] = winner.Replicate();
+            newCreatures[i].MutateDNA(blockMutationChance, blockMutationChance, jointMutationChance, jointMutationMagnitude);
+            newCreatures[i].SetCreatureName("Creature" + i.ToString());
         }
+        int k = 0;
+        for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
+        {
+            for (int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
+            {
+                newCreatures[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
+                k++;
+            }
+        }
+        return newCreatures;
+    }
+    */
+    public void CreateRandomGeneration() { 
+        for (int i = 0; i < Creatures.Length; i++)
+        {
+            Creatures[i] = new DNA("G" + GenerationCount.ToString() + "Creature" + i.ToString(), sizeOfCreaturesX, sizeOfCreaturesY, sizeOfCreaturesZ, densityOfBlocks, stabilizationChance, minimumWeight, maximumWeight, minimumJointForce,
+                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList, JointTypeList);
+        } // Rolls new random creatures to fill array
+    }
+    public void InstantiateCreatureArray() {
         int k = 0;
         for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
         {
@@ -742,30 +922,35 @@ public class RobotArrayGeneration : MonoBehaviour {
                 Creatures[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
                 k++;
             }
-        }
-        return Creatures;
+        } // Instantiates the generations
     }
     private DNA GradeAllCreatures() {
-        Debug.Log("GRADEALLCREATURES PHASE");
         DNA winner = null;
-        float WinnerWork = 0;
+        float WinnerWork = -99999f;
         foreach (DNA individual in Creatures)
         {
             Vector3 startTemp = individual.GetStartingPosition();
             float Work = 0;
-            
+
             foreach (Block blockObject in individual.arrayOfBlocks)
             {
-                if(blockObject.GetBlockType() != null)
+                if (blockObject.GetBlockType() != null)
                 {
-                    
+
                     GameObject curSegment = GameObject.Find(blockObject.GetBlockName());
-                    Vector3 travelVector = Vector3.Project((curSegment.transform.position-blockObject.GetInstantiatedObjectStartingLocation()), fitnessVector);
-                    if(travelVector.normalized != fitnessVector.normalized)
+                    Vector3 travelVector = Vector3.Project((curSegment.transform.position - blockObject.GetInstantiatedObjectStartingLocation()), fitnessVector);
+                    Vector3 wrongWayVector = Vector3.ProjectOnPlane((curSegment.transform.position - blockObject.GetInstantiatedObjectStartingLocation()), fitnessVector);
+
+                    Work = curSegment.GetComponent<Rigidbody>().mass * ((travelVector.magnitude) - wrongWayVector.magnitude);
+
+                    if (Work < 0)
                     {
-                        travelVector = Vector3.zero;
+                        Work = 0;
                     }
-                    Work = curSegment.GetComponent<Rigidbody>().mass * (travelVector.magnitude);
+                    if (travelVector.normalized != fitnessVector.normalized)
+                    {
+                        Work = 0;
+                    }
                 }
             }
 
@@ -780,39 +965,4 @@ public class RobotArrayGeneration : MonoBehaviour {
         }
         return winner;
     }
-    private void PresentWinningCreatures() {
-        int counter = 0;
-        foreach( DNA indiv in WinningCreatures)
-        {
-            indiv.SetCreatureName("Winner" + counter);
-            counter++;
-        }
-        int k = 0;
-        DNA[] array = WinningCreatures.ToArray();
-        for (int i = 0; i < Mathf.Sqrt(array.Length); i++)
-        {
-            for (int j = 0; j < Mathf.Sqrt(array.Length); j++)
-            {
-                array[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
-                k++;
-            }
-        }
-    }
-    IEnumerator Iterate(int numberOfSeconds) {
-        yield return new WaitForSeconds(numberOfSeconds);
-        WinningCreatures.Add(GradeAllCreatures());
-        Debug.Log("NEXT GEN");
-        GenerationCount++;
-        if(GenerationCount < NumberOfGenerationsToDo)
-        {
-            Round();
-        }else
-        {
-            PresentWinningCreatures();
-        }
-    }
 }
-
-
-// CHANGE THE CALCULATION FOR THE BLOCK STARTING POSITION AND THE BLOCK CURRENT POSITION FOR FITNESS TESTING
-// CURRENT STRUCTURE USES PARENT OBJECT RATHER THAN BLOCK POSITION SO IT IT GETS INCORRECT VALUES FROM TIME TO TIME

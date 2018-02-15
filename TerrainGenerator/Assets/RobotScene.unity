@@ -1498,7 +1498,7 @@ MonoBehaviour:
   timescale: 3
   delay: 15
   NumberOfGenerationsToDo: 16
-  numOfCreatures: 100
+  numOfCreatures: 16
   sizeOfCreaturesX: 5
   sizeOfCreaturesY: 5
   sizeOfCreaturesZ: 5

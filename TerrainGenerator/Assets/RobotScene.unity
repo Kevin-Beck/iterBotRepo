@@ -1497,6 +1497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timescale: 3
   delay: 15
+  CurrentGenerationCount: 1
   NumberOfGenerationsToDo: 16
   numOfCreatures: 16
   sizeOfCreaturesX: 5
@@ -1510,16 +1511,15 @@ MonoBehaviour:
   maximumJointForce: 800
   minimumJointSpeed: 200
   maximumJointSpeed: 800
-  fitnessVector: {x: 0, y: 0, z: 1}
-  blockMutationMagnitude: 0.3
-  blockMutationChance: 0.2
-  jointMutationMagnitude: 0.5
-  jointMutationChance: 0.2
+  fitnessVector: {x: 1, y: 0, z: 0}
+  blockMutationMagnitude: 0.01
+  blockMutationChance: 0.1
+  jointMutationMagnitude: 0.01
+  jointMutationChance: 0.1
   SegmentTypeList:
   - {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6, type: 2}
   JointTypeList:
   - {fileID: 1501067322059026, guid: dae7583c98a78d945a4ba475edbeabb6, type: 2}
-  GenerationCount: 0
 --- !u!4 &242608536
 Transform:
   m_ObjectHideFlags: 0
@@ -4932,8 +4932,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 884064157}
-  m_LocalRotation: {x: -0.49892405, y: -0.29984146, z: 0.18916748, w: -0.79081327}
-  m_LocalPosition: {x: 25.013702, y: 333.51917, z: 42.61795}
+  m_LocalRotation: {x: 0.13396546, y: 0.83594, z: -0.23435485, w: 0.47784463}
+  m_LocalPosition: {x: -63.762264, y: 76.615845, z: 172.25165}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

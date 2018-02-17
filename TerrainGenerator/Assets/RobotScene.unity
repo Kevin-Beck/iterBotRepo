@@ -1495,22 +1495,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cda5c2476544d14a9e0764eae01b522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timescale: 3
+  timescale: 2
   delay: 15
   CurrentGenerationCount: 1
-  NumberOfGenerationsToDo: 16
-  numOfCreatures: 16
-  sizeOfCreaturesX: 5
-  sizeOfCreaturesY: 5
-  sizeOfCreaturesZ: 5
-  densityOfBlocks: 0.2
+  NumberOfGenerationsToDo: 50
+  RowsOfCreatures: 8
+  sizeOfCreaturesX: 3
+  sizeOfCreaturesY: 8
+  sizeOfCreaturesZ: 3
+  densityOfBlocks: 0.25
   stabilizationChance: 0.1
   minimumWeight: 2
   maximumWeight: 5
   minimumJointForce: 500
   maximumJointForce: 800
   minimumJointSpeed: 200
-  maximumJointSpeed: 800
+  maximumJointSpeed: 300
   fitnessVector: {x: 1, y: 0, z: 0}
   blockMutationMagnitude: 0.01
   blockMutationChance: 0.1

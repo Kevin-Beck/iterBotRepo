@@ -6,40 +6,40 @@ using UnityEngine;
 public class RobotArrayGeneration : MonoBehaviour
 {
     [Header("Time Factors")]
-    public float timescale = 1;
-    public int delay;
+    public float timescale = 1; // default 2
+    public int delay = 14; // default 14
     [Header("Generational Data")]
-    public int CurrentGenerationCount = 0;
-    public int NumberOfGenerationsToDo = 0;
-    public int numOfCreatures = 25;
+    public int CurrentGenerationCount = 0; // must keep 0, first gen is 0, do not change
+    public int NumberOfGenerationsToDo = 16; // number of gnenerations wanted currently 16
+    public int RowsOfCreatures = 8;
+    private int numOfCreatures; // total number of creatures to make, should be a perfect square, 64, set by squaring the rows
     [Header("Size Factors")]
-    public int sizeOfCreaturesX = 5;
-    public int sizeOfCreaturesY = 5;
-    public int sizeOfCreaturesZ = 5;
+    public int sizeOfCreaturesX = 5; // 5
+    public int sizeOfCreaturesY = 5; // 5
+    public int sizeOfCreaturesZ = 5; // 5
     [Header("DNA Attribute Boundaries")]
-    public float densityOfBlocks = 0.2f;
-    public float stabilizationChance = 0.1f;
-    public float minimumWeight = 2f;
-    public float maximumWeight = 5f;
-    public float minimumJointForce = 500f;
-    public float maximumJointForce = 800f;
-    public float minimumJointSpeed = 200f;
-    public float maximumJointSpeed = 800f;
+    public float densityOfBlocks = 0.2f; // .2f
+    public float stabilizationChance = 0.1f; // .1f
+    public float minimumWeight = 2f; // 2f
+    public float maximumWeight = 5f; // 5f
+    public float minimumJointForce = 500f; // 500f
+    public float maximumJointForce = 800f; // 800f
+    public float minimumJointSpeed = 200f; // 200f
+    public float maximumJointSpeed = 800f; // 800f
     [Header("Fitness and Mutation Factors")]
-    public Vector3 fitnessVector = new Vector3(1, 0, 0);
-    public float blockMutationMagnitude = 0.3f;
-    public float blockMutationChance = 0.2f;
-    public float jointMutationMagnitude = 0.5f;
-    public float jointMutationChance = 0.2f;
+    public Vector3 fitnessVector = new Vector3(1, 0, 0); // any vector you want to test for
+    public float blockMutationMagnitude = 0.3f; // does nothing currently
+    public float blockMutationChance = 0.2f; // .2f is nice
+    public float jointMutationMagnitude = 0.5f; // .5f // does nothing yet
+    public float jointMutationChance = 0.2f; // .2f default
 
     [Header("GameObject Components")]
     // Editable members of the segment/joint population
     public GameObject[] SegmentTypeList;
     public GameObject[] JointTypeList;
 
-
-    DNA[] Creatures;
-    List<DNA> WinningCreatures = new List<DNA>();
+    private DNA[] Creatures;
+    private List<DNA> WinningCreatures = new List<DNA>();
 
     public class Connection
     {
@@ -281,7 +281,6 @@ public class RobotArrayGeneration : MonoBehaviour
                         replicatedDNA.arrayOfBlocks[i, j, k].SetBlockType(arrayOfBlocks[i, j, k].GetBlockType());
                         // Name
                         replicatedDNA.arrayOfBlocks[i, j, k].CalculateBlockName(newName);
-                        Debug.Log(replicatedDNA.arrayOfBlocks[i, j, k].GetBlockName());
 
                         // Now we copy all the data from the time joints connected to the original block, to put into the new block data
                         if (arrayOfBlocks[i, j, k].GetPosXCon() != null)
@@ -665,13 +664,13 @@ public class RobotArrayGeneration : MonoBehaviour
         // Constructors
         public DNA(string name, int SizeX, int SizeY, int SizeZ) { // Basic Constructor for blank objects
             arrayOfBlocks = new Block[SizeX, SizeY, SizeZ];
-            for (int i = 0; i < SizeX; i++)
+            for (int i = 0; i < arrayOfBlocks.GetLength(0); i++)
             {
-                for (int j = 0; j < SizeY; j++)
+                for (int j = 0; j < arrayOfBlocks.GetLength(1); j++)
                 {
-                    for (int k = 0; k < SizeZ; k++)
+                    for (int k = 0; k < arrayOfBlocks.GetLength(2); k++)
                     {
-                        arrayOfBlocks[i, k, j] = new Block();
+                        arrayOfBlocks[i, j, k] = new Block();
                     }
                 }
             }
@@ -887,45 +886,49 @@ public class RobotArrayGeneration : MonoBehaviour
     }
     IEnumerator RandomSelect(int numberOfSeconds) {
         yield return new WaitForSeconds(numberOfSeconds);
-        WinningCreatures.Add(GradeAllCreatures());
+        GradeAllCreatures();
         RandomSelectRound();
     }
     IEnumerator ChampionSelect(int numberOfSeconds) {
         yield return new WaitForSeconds(numberOfSeconds);
         // Get a champion from the current generation,  start a new test from that generation
         CurrentGenerationCount++;
-        DNA champion = GradeAllCreatures();
-        InstantiateIndividualsFromChampion(champion);
+        GradeAllCreatures();
+        InstantiateIndividualsFromChampion();
         ChampionSelectRound();
     }
     void Start() {
+        numOfCreatures = RowsOfCreatures * RowsOfCreatures; // DO NOT REMOVE THIS, it sets the number of creatures to the num of rows squared. Everything depends on this structure.
         Creatures = new DNA[numOfCreatures];
         Time.timeScale = timescale;
+        // Should only really change the stuff after this, above this point is stuff you dont wanna get into basically
 
         CreateRandomGeneration();
         InstantiateCreatureArray();
 
         StartCoroutine(ChampionSelect(delay));
-
-        // Random Select, no mutations
-        // StartCoroutine(RandomSelect(delay));
         
-        //Time.fixedDeltaTime = 0.02F * Time.timeScale;
     } // end of start code
     
-    public void InstantiateIndividualsFromChampion(DNA winner) {
+    public void InstantiateIndividualsFromChampion() {
         Array.Clear(Creatures, 0, Creatures.Length);
         Creatures = new DNA[numOfCreatures];
-        Creatures[0] = winner.Replicate("Gen" + CurrentGenerationCount + "Creature0");
-
-        for (int i = 1; i < Creatures.Length; i++)
+        WinningCreatures.ToArray();
+        Debug.Log("WinningCreatures.count = " + WinningCreatures.Count);
+        
+        int count = 0;
+        for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
         {
-            // Add the champion dna to the array, and then mutate it to be different than the original, or the same! idk
-            // This is copying the previous slots exact values, not mutating it and making a new object 
-            Creatures[i] = winner.Replicate("Gen" + CurrentGenerationCount + "Creature" + i);
-            Creatures[i].MutateDNA(blockMutationChance, blockMutationChance, jointMutationChance, jointMutationMagnitude);
-            Creatures[i].SetCreatureName("Gen" + CurrentGenerationCount + "Creature" + i);
+            for(int j = 0; j < Math.Sqrt(numOfCreatures); j++)
+            {
+                Debug.Log("Count = " + count);
+                Creatures[count] = WinningCreatures[i].Replicate("Gen" + CurrentGenerationCount + "Creature" + count);
+                Creatures[count].MutateDNA(blockMutationChance, blockMutationChance, jointMutationChance, jointMutationMagnitude);
+                Creatures[count].SetCreatureName("Gen" + CurrentGenerationCount + "Creature" + count);
+                count++;
+            }
         }
+
         int k = 0;
         for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
         {
@@ -954,19 +957,17 @@ public class RobotArrayGeneration : MonoBehaviour
             }
         } // Instantiates the generations
     }
-    private DNA GradeAllCreatures() {
-        DNA winner = null;
-        float WinnerWork = -99999f;
+    private void GradeAllCreatures() {
+        WinningCreatures.Clear();
         foreach (DNA individual in Creatures)
         {
             Vector3 startTemp = individual.GetStartingPosition();
             float Work = 0;
-
+            // Calculate the work done by each block
             foreach (Block blockObject in individual.arrayOfBlocks)
             {
                 if (blockObject.GetBlockType() != null)
                 {
-
                     GameObject curSegment = GameObject.Find(blockObject.GetBlockName());
                     Vector3 travelVector = Vector3.Project((curSegment.transform.position - blockObject.GetInstantiatedObjectStartingLocation()), fitnessVector);
                     Vector3 wrongWayVector = Vector3.ProjectOnPlane((curSegment.transform.position - blockObject.GetInstantiatedObjectStartingLocation()), fitnessVector);
@@ -983,16 +984,63 @@ public class RobotArrayGeneration : MonoBehaviour
                     }
                 }
             }
-            individual.SetFitness(Work);
-            if (individual.GetFitness() > WinnerWork)
+
+            // Calculate the standardDeviation of the blocks, if its too high, we'll reset the values of the fitness to 0 as punishment for varying too much
+            // First we get the total vector size
+            Vector3 totalVector = Vector3.zero;
+            int numOfBlocks = 0;
+            foreach(Block blockObject in individual.arrayOfBlocks)
             {
-                winner = individual;
-                WinnerWork = individual.GetFitness();
-                Debug.Log(individual.GetCreatureName() + "  " + WinnerWork);
+                if(blockObject.GetBlockType() != null)
+                {
+                    numOfBlocks++;
+                    GameObject curSegment = GameObject.Find(blockObject.GetBlockName());
+                    totalVector += curSegment.GetComponent<Rigidbody>().transform.position;
+                }
+            }
+            if(numOfBlocks > 0)
+            {
+                Vector3 averageVector = totalVector / numOfBlocks;
+
+                // now subtract this average position from each of the blocks positions to calculate the distance each piece is from the average
+                float sumOfSquaresOfDistances = 0;
+                foreach (Block blockObject in individual.arrayOfBlocks)
+                {
+                    if (blockObject.GetBlockType() != null)
+                    {
+                        sumOfSquaresOfDistances += Mathf.Pow(((GameObject.Find(blockObject.GetBlockName()).GetComponent<Rigidbody>().transform.position - averageVector).magnitude), 2);
+                    }
+                }
+                float standardDeviationOfBlockVectors = sumOfSquaresOfDistances / numOfBlocks;
+                if(standardDeviationOfBlockVectors > 50)
+                {
+                    Work = 0; // This negates the work done by this object, as it was too varied
+                }
+            }
+
+
+            // Determine if the fitness is good enough to get into the winners bracket
+            individual.SetFitness(Work);
+            if (individual.GetFitness() > -1)
+            {
+                WinningCreatures.Add(individual);
+                if (WinningCreatures.Count > Mathf.Sqrt(numOfCreatures)); // Takes a winner for each row
+                {
+                    float tempLow = float.MaxValue;
+                    int weakestBotIndex = -1;
+                    foreach (DNA bot in WinningCreatures)
+                    {
+                        if(bot.GetFitness() < tempLow)
+                        {
+                          //  tempLow = bot.GetFitness();               // TODO probably better to just switch winner list to being a hard set constant number, and use an array
+                          //  weakestBotIndex = WinningCreatures.IndexOf(bot); // TODO  // the problem being that adding and removing is a bitch, and we should just stay consistent
+                        }
+                    }
+                    // WinningCreatures.RemoveAt(weakestBotIndex); // if we have a consistent number of creatures, and they're perfect squares, it will work fine with an array.
+                }
             }
             individual.SelfDestruct();
         }
-        return winner;
     }
     private void PresentWinningCreatures() {
         int counter = 0;
@@ -1005,7 +1053,6 @@ public class RobotArrayGeneration : MonoBehaviour
         int k = 0;
 
         DNA[] array = WinningCreatures.ToArray();
-        Debug.Log("array size" + array.Length);
         for (int i = 0; i < Mathf.Sqrt(array.Length); i++)
         {
             for (int j = 0; j < Mathf.Sqrt(array.Length); j++)

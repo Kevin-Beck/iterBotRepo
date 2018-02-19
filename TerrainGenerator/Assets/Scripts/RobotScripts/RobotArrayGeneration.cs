@@ -12,7 +12,7 @@ public class RobotArrayGeneration : MonoBehaviour
     public int CurrentGenerationCount = 0; // must keep 0, first gen is 0, do not change
     public int NumberOfGenerationsToDo = 16; // number of gnenerations wanted currently 16
     public int RowsOfCreatures = 8;
-    private int numOfCreatures; // total number of creatures to make, should be a perfect square, 64, set by squaring the rows
+    public int numOfCreatures; // total number of creatures to make, should be a perfect square, 64, set by squaring the rows
     [Header("Size Factors")]
     public int sizeOfCreaturesX = 5; // 5
     public int sizeOfCreaturesY = 5; // 5
@@ -32,6 +32,7 @@ public class RobotArrayGeneration : MonoBehaviour
     public float blockMutationChance = 0.2f; // .2f is nice
     public float jointMutationMagnitude = 0.5f; // .5f // does nothing yet
     public float jointMutationChance = 0.2f; // .2f default
+    public int pickedWinnersEachGen = 5;
 
     [Header("GameObject Components")]
     // Editable members of the segment/joint population
@@ -39,7 +40,8 @@ public class RobotArrayGeneration : MonoBehaviour
     public GameObject[] JointTypeList;
 
     private DNA[] Creatures;
-    private List<DNA> WinningCreatures = new List<DNA>();
+    private DNA[] Winners;
+    //private List<DNA> WinningCreatures = new List<DNA>();
 
     public class Connection
     {
@@ -864,7 +866,7 @@ public class RobotArrayGeneration : MonoBehaviour
     public void ChampionSelectRound() {
         if(CurrentGenerationCount >= NumberOfGenerationsToDo)
         {
-            // Just let the winners run
+            Debug.Break();
         }else
         {
             StartCoroutine(ChampionSelect(delay));
@@ -900,6 +902,9 @@ public class RobotArrayGeneration : MonoBehaviour
     void Start() {
         numOfCreatures = RowsOfCreatures * RowsOfCreatures; // DO NOT REMOVE THIS, it sets the number of creatures to the num of rows squared. Everything depends on this structure.
         Creatures = new DNA[numOfCreatures];
+        Winners = new DNA[pickedWinnersEachGen];
+
+
         Time.timeScale = timescale;
         // Should only really change the stuff after this, above this point is stuff you dont wanna get into basically
 
@@ -913,18 +918,25 @@ public class RobotArrayGeneration : MonoBehaviour
     public void InstantiateIndividualsFromChampion() {
         Array.Clear(Creatures, 0, Creatures.Length);
         Creatures = new DNA[numOfCreatures];
-        WinningCreatures.ToArray();
-        Debug.Log("WinningCreatures.count = " + WinningCreatures.Count);
+
+        Time.timeScale = timescale;
         
         int count = 0;
         for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
         {
             for(int j = 0; j < Math.Sqrt(numOfCreatures); j++)
             {
-                Debug.Log("Count = " + count);
-                Creatures[count] = WinningCreatures[i].Replicate("Gen" + CurrentGenerationCount + "Creature" + count);
-                Creatures[count].MutateDNA(blockMutationChance, blockMutationChance, jointMutationChance, jointMutationMagnitude);
-                Creatures[count].SetCreatureName("Gen" + CurrentGenerationCount + "Creature" + count);
+                if(i == 0 && j < pickedWinnersEachGen) // if we're in the first row, and we want to recreate our winners from last round
+                {
+                    Creatures[count] = Winners[count % pickedWinnersEachGen].Replicate("Gen" + CurrentGenerationCount + "Creature" + count);
+                    Creatures[count].SetCreatureName("Gen" + CurrentGenerationCount + "Creature" + count);
+                }
+                else // we want to make the creature after we mutated it
+                {
+                    Creatures[count] = Winners[count % pickedWinnersEachGen].Replicate("Gen" + CurrentGenerationCount + "Creature" + count);
+                    Creatures[count].MutateDNA(blockMutationChance, blockMutationChance, jointMutationChance, jointMutationMagnitude);
+                    Creatures[count].SetCreatureName("Gen" + CurrentGenerationCount + "Creature" + count);
+                }
                 count++;
             }
         }
@@ -958,7 +970,13 @@ public class RobotArrayGeneration : MonoBehaviour
         } // Instantiates the generations
     }
     private void GradeAllCreatures() {
-        WinningCreatures.Clear();
+       // Array.Clear(Winners, 0, Winners.Length);
+       // Winners = new DNA[pickedWinnersEachGen];
+
+        int numberOfWinners = 0;
+        float winnerFitness = 0;
+        float lowestWinnerScore = -1;
+ 
         foreach (DNA individual in Creatures)
         {
             Vector3 startTemp = individual.GetStartingPosition();
@@ -987,6 +1005,7 @@ public class RobotArrayGeneration : MonoBehaviour
 
             // Calculate the standardDeviation of the blocks, if its too high, we'll reset the values of the fitness to 0 as punishment for varying too much
             // First we get the total vector size
+            /*
             Vector3 totalVector = Vector3.zero;
             int numOfBlocks = 0;
             foreach(Block blockObject in individual.arrayOfBlocks)
@@ -998,6 +1017,7 @@ public class RobotArrayGeneration : MonoBehaviour
                     totalVector += curSegment.GetComponent<Rigidbody>().transform.position;
                 }
             }
+            
             if(numOfBlocks > 0)
             {
                 Vector3 averageVector = totalVector / numOfBlocks;
@@ -1017,47 +1037,62 @@ public class RobotArrayGeneration : MonoBehaviour
                     Work = 0; // This negates the work done by this object, as it was too varied
                 }
             }
+            */
 
+            // TODO THIS NEEDS WORK STILL SELECTION PROCESS RUINS ITSELF WITH MULTIPLE WINNERS
+            // THIS MUST BE FIXED
 
             // Determine if the fitness is good enough to get into the winners bracket
             individual.SetFitness(Work);
-            if (individual.GetFitness() > -1)
+            if (individual.GetFitness() > lowestWinnerScore)
             {
-                WinningCreatures.Add(individual);
-                if (WinningCreatures.Count > Mathf.Sqrt(numOfCreatures)); // Takes a winner for each row
+                // Keep track of best of gen
+                if (individual.GetFitness() > winnerFitness)
                 {
-                    float tempLow = float.MaxValue;
-                    int weakestBotIndex = -1;
-                    foreach (DNA bot in WinningCreatures)
-                    {
-                        if(bot.GetFitness() < tempLow)
+                    Debug.Log(individual.GetCreatureName() + " has joined the winners");
+                    winnerFitness = individual.GetFitness();
+                }
+                // Select winners and if we have enough, then we need to check
+                if (numberOfWinners >= pickedWinnersEachGen) 
+                {
+                    //float tempLow = float.MaxValue;
+                    //int weakestBotIndex = -1;
+                    //for(int j = 0; j < Winners.Length; j++)
+                    //{
+                        if(Winners[0].GetFitness() < individual.GetFitness())
                         {
-                          //  tempLow = bot.GetFitness();               // TODO probably better to just switch winner list to being a hard set constant number, and use an array
-                          //  weakestBotIndex = WinningCreatures.IndexOf(bot); // TODO  // the problem being that adding and removing is a bitch, and we should just stay consistent
+                        Winners[0] = individual.Replicate("demo");
+                            //weakestBotIndex = j;
+                            //tempLow = Winners[j].GetFitness();
                         }
-                    }
-                    // WinningCreatures.RemoveAt(weakestBotIndex); // if we have a consistent number of creatures, and they're perfect squares, it will work fine with an array.
+                    //}
+                    //Winners[weakestBotIndex] = individual.Replicate("replacer");
+
+                }else
+                {
+                    Winners[numberOfWinners] = individual.Replicate("tempWinner");
+                    numberOfWinners++;
                 }
             }
+            //Remove the individual after testing is completed
             individual.SelfDestruct();
         }
+        // Print out the best score so far
+        Debug.Log("Gen: " + CurrentGenerationCount + "  Winner: " + winnerFitness);
     }
     private void PresentWinningCreatures() {
         int counter = 0;
-        foreach (DNA indiv in WinningCreatures)
+        foreach (DNA indiv in Winners)
         {
             indiv.SetCreatureName("Winner" + counter);
             counter++;
         }
-
-        int k = 0;
-
-        DNA[] array = WinningCreatures.ToArray();
-        for (int i = 0; i < Mathf.Sqrt(array.Length); i++)
+        int k = 0;        
+        for (int i = 0; i < Mathf.Sqrt(Winners.Length); i++)
         {
-            for (int j = 0; j < Mathf.Sqrt(array.Length); j++)
+            for (int j = 0; j < Mathf.Sqrt(Winners.Length); j++)
             {
-                array[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
+                Winners[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
                 k++;
             }
         }

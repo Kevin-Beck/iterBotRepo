@@ -1500,6 +1500,7 @@ MonoBehaviour:
   CurrentGenerationCount: 1
   NumberOfGenerationsToDo: 50
   RowsOfCreatures: 8
+  numOfCreatures: 64
   sizeOfCreaturesX: 3
   sizeOfCreaturesY: 8
   sizeOfCreaturesZ: 3
@@ -1516,6 +1517,7 @@ MonoBehaviour:
   blockMutationChance: 0.1
   jointMutationMagnitude: 0.01
   jointMutationChance: 0.1
+  pickedWinnersEachGen: 1
   SegmentTypeList:
   - {fileID: 1785048617588042, guid: 34b191d97ec0cc1498ac5bd56eb145b6, type: 2}
   JointTypeList:

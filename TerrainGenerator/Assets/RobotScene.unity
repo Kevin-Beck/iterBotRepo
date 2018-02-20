@@ -1499,8 +1499,8 @@ MonoBehaviour:
   delay: 15
   CurrentGenerationCount: 1
   NumberOfGenerationsToDo: 50
-  RowsOfCreatures: 8
-  numOfCreatures: 64
+  RowsOfCreatures: 7
+  numOfCreatures: 49
   sizeOfCreaturesX: 3
   sizeOfCreaturesY: 8
   sizeOfCreaturesZ: 3

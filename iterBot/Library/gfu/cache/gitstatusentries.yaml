@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 61
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 
+  m_EditorClassIdentifier: GitHub.Unity:GitHub.Unity:GitStatusEntriesCache
+  lastUpdatedAtString: 2018-02-26T16:54:42.1025934-05:00
+  lastVerifiedAtString: 2018-02-26T16:54:42.1025934-05:00
+  initializedAtString: 2018-02-26T16:54:42.1025934-05:00
+  entries:
+  - path: iterBot\Assets\Prefabs\RobotJointComponent.prefab
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Prefabs\RobotJointComponent.prefab
+    projectPath: Assets\Prefabs\RobotJointComponent.prefab
+    originalPath: 
+    status: 3
+    staged: 0
+  - path: iterBot\Library\CurrentLayout.dwlt
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\CurrentLayout.dwlt
+    projectPath: Library\CurrentLayout.dwlt
+    originalPath: 
+    status: 3
+    staged: 0
+  - path: iterBot\Library\ScriptAssemblies\BuiltinAssemblies.stamp
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\ScriptAssemblies\BuiltinAssemblies.stamp
+    projectPath: Library\ScriptAssemblies\BuiltinAssemblies.stamp
+    originalPath: 
+    status: 5
+    staged: 0
+  - path: iterBot\Library\assetDatabase3
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\assetDatabase3
+    projectPath: Library\assetDatabase3
+    originalPath: 
+    status: 3
+    staged: 0
+  - path: iterBot\Library\metadata\da\dae7583c98a78d945a4ba475edbeabb6.info
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\metadata\da\dae7583c98a78d945a4ba475edbeabb6.info
+    projectPath: Library\metadata\da\dae7583c98a78d945a4ba475edbeabb6.info
+    originalPath: 
+    status: 3
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub.meta
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub.meta
+    projectPath: Assets\Plugins\GitHub.meta
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor.meta
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor.meta
+    projectPath: Assets\Plugins\GitHub\Editor.meta
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor\x64.meta
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor\x64.meta
+    projectPath: Assets\Plugins\GitHub\Editor\x64.meta
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor\x64\sfw_x64.dll
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor\x64\sfw_x64.dll
+    projectPath: Assets\Plugins\GitHub\Editor\x64\sfw_x64.dll
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor\x64\sfw_x64.dll.meta
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor\x64\sfw_x64.dll.meta
+    projectPath: Assets\Plugins\GitHub\Editor\x64\sfw_x64.dll.meta
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor\x86.meta
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor\x86.meta
+    projectPath: Assets\Plugins\GitHub\Editor\x86.meta
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor\x86\pthreadVC2.dll
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor\x86\pthreadVC2.dll
+    projectPath: Assets\Plugins\GitHub\Editor\x86\pthreadVC2.dll
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor\x86\pthreadVC2.dll.meta
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor\x86\pthreadVC2.dll.meta
+    projectPath: Assets\Plugins\GitHub\Editor\x86\pthreadVC2.dll.meta
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor\x86\sfw_x86.dll
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor\x86\sfw_x86.dll
+    projectPath: Assets\Plugins\GitHub\Editor\x86\sfw_x86.dll
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Assets\Plugins\GitHub\Editor\x86\sfw_x86.dll.meta
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Assets\Plugins\GitHub\Editor\x86\sfw_x86.dll.meta
+    projectPath: Assets\Plugins\GitHub\Editor\x86\sfw_x86.dll.meta
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Library\EditorInstance.json
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\EditorInstance.json
+    projectPath: Library\EditorInstance.json
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Library\gfu\cache\branches.yaml
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\gfu\cache\branches.yaml
+    projectPath: Library\gfu\cache\branches.yaml
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Library\gfu\cache\gitlocks.yaml
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\gfu\cache\gitlocks.yaml
+    projectPath: Library\gfu\cache\gitlocks.yaml
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Library\gfu\cache\gitlog.yaml
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\gfu\cache\gitlog.yaml
+    projectPath: Library\gfu\cache\gitlog.yaml
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Library\gfu\cache\gittrackingstatus.yaml
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\gfu\cache\gittrackingstatus.yaml
+    projectPath: Library\gfu\cache\gittrackingstatus.yaml
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Library\gfu\cache\gituser.yaml
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\gfu\cache\gituser.yaml
+    projectPath: Library\gfu\cache\gituser.yaml
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Library\gfu\cache\repoinfo.yaml
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Library\gfu\cache\repoinfo.yaml
+    projectPath: Library\gfu\cache\repoinfo.yaml
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Temp\ProcessJobs\e9a6970f79cd12d8b075e7d72f1b07cb.bakert
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Temp\ProcessJobs\e9a6970f79cd12d8b075e7d72f1b07cb.bakert
+    projectPath: Temp\ProcessJobs\e9a6970f79cd12d8b075e7d72f1b07cb.bakert
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Temp\UnityLockfile
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Temp\UnityLockfile
+    projectPath: Temp\UnityLockfile
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: iterBot\Temp\UnityTempFile-e09e868a2eed2894eaa633767f67582e
+    fullPath: C:\Users\Kevin\Documents\UnityProjects\iterBotRepo\iterBot\Temp\UnityTempFile-e09e868a2eed2894eaa633767f67582e
+    projectPath: Temp\UnityTempFile-e09e868a2eed2894eaa633767f67582e
+    originalPath: 
+    status: 1
+    staged: 0

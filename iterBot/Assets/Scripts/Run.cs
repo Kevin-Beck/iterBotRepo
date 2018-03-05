@@ -7,6 +7,9 @@ public class Run : MonoBehaviour {
     [Header("Time Factors")]
     public float timescale = 1; // default 2
     public int delay = 14; // default 14
+    public float scaleX = 50;
+    public float scaleZ = 50;
+
     [Header("Generational Data")]
     public int CurrentGenerationCount = 0; // must keep 0, first gen is 0, do not change
     public int NumberOfGenerationsToDo = 16; // number of gnenerations wanted currently 16
@@ -32,6 +35,11 @@ public class Run : MonoBehaviour {
     public float jointMutationMagnitude = 0.5f; // .5f // does nothing yet
     public float jointMutationChance = 0.2f; // .2f default
     public int pickedWinnersEachGen = 5;
+
+    [Header("Surface Type")]
+    // The surfacce structures that the robots traverse
+    public GameObject[] SurfaceTypeList;
+    public int SelectedSurfaceType = 0; // the selcted type off the list of types
 
     [Header("GameObject Components")]
     // Editable members of the segment/joint population
@@ -61,7 +69,6 @@ public class Run : MonoBehaviour {
         GradeAllCreatures();
         GenerateArrayFromIndividual();
         InstantiateCreatureArray();
-
         ChampionSelectRound();
     }
     void Start() {
@@ -118,10 +125,15 @@ public class Run : MonoBehaviour {
         {
             for (int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
             {
-                Creatures[k].InstantiateDNAasUnityCreature(new Vector3(50 * i, 0, 50 * j));
+                GenerateTerrainSurface(new Vector3(scaleX * i, 0, scaleZ * j));
+                Creatures[k].InstantiateDNAasUnityCreature(new Vector3(scaleX * i, 1, scaleZ * j));
+                
                 k++;
             }
         } // Instantiates the generations
+    }
+    public void GenerateTerrainSurface(Vector3 location) {
+        Instantiate(SurfaceTypeList[SelectedSurfaceType], new Vector3(location.x, 0, location.z), Quaternion.identity);
     }
     private void GradeAllCreatures() {
         // Array.Clear(Winners, 0, Winners.Length);

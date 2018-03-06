@@ -84,7 +84,7 @@ public class Run : MonoBehaviour {
     public void RunSimulation() {
         Time.timeScale = timescale;
         // Should only really change the stuff after this, above this point is stuff you dont wanna get into basically
-
+        GenerateAllSurfaces();
         CreateRandomGeneration();
         InstantiateCreatureArray();
 
@@ -126,12 +126,21 @@ public class Run : MonoBehaviour {
         {
             for (int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
             {
-                GenerateTerrainSurface(new Vector3(scaleX * i, 0, scaleZ * j));
-                Creatures[k].InstantiateDNAasUnityCreature(new Vector3(scaleX * i, 1, scaleZ * j));
-                
+                Creatures[k].InstantiateDNAasUnityCreature(new Vector3(scaleX * i, 1, scaleZ * j));                
                 k++;
             }
         } // Instantiates the generations
+    }
+    public void GenerateAllSurfaces() {
+        int k = 0;
+        for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
+        {
+            for (int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
+            {
+                GenerateTerrainSurface(new Vector3(scaleX * i, 0, scaleZ * j));
+                k++;
+            }
+        }
     }
     public void GenerateTerrainSurface(Vector3 location) {
         Instantiate(SurfaceTypeList[SelectedSurfaceType], new Vector3(location.x, 0, location.z), Quaternion.identity);

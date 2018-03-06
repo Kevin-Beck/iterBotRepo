@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74818b94fc48c2f47812b7efc30b3b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timescale: 3
+  timescale: 2
   delay: 30
   scaleX: 220
   scaleZ: 110
@@ -148,9 +148,9 @@ MonoBehaviour:
   NumberOfGenerationsToDo: 50
   RowsOfCreatures: 12
   numOfCreatures: 144
-  sizeOfCreaturesX: 4
-  sizeOfCreaturesY: 6
-  sizeOfCreaturesZ: 4
+  sizeOfCreaturesX: 3
+  sizeOfCreaturesY: 7
+  sizeOfCreaturesZ: 3
   densityOfBlocks: 0.25
   stabilizationChance: 0.1
   minimumWeight: 2

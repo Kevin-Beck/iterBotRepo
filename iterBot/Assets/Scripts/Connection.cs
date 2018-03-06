@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Connection : MonoBehaviour {
+public class Connection{
     private GameObject conType;
     private bool isFixedJoint; // Special condition if the joint is a fixed joint
     private float conStr;
@@ -27,7 +27,7 @@ public class Connection : MonoBehaviour {
     }
     // Instantiator
     public GameObject InstantiateConnection(Vector3 location, Quaternion rotation) {
-        GameObject connection = Instantiate(conType, location, rotation);
+        GameObject connection = MonoBehaviour.Instantiate(conType, location, rotation);
         return connection;
     }
     public void RollNewConStr() {

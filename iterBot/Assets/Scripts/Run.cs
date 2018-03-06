@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public class Run : MonoBehaviour {
@@ -48,7 +49,6 @@ public class Run : MonoBehaviour {
 
     private DNA[] Creatures;
     private DNA[] Winners;
-    //private List<DNA> WinningCreatures = new List<DNA>();
 
     public void ChampionSelectRound() {
         if (CurrentGenerationCount >= NumberOfGenerationsToDo)
@@ -75,8 +75,13 @@ public class Run : MonoBehaviour {
         numOfCreatures = RowsOfCreatures * RowsOfCreatures; // DO NOT REMOVE THIS, it sets the number of creatures to the num of rows squared. Everything depends on this structure.
         Creatures = new DNA[numOfCreatures];
         Winners = new DNA[pickedWinnersEachGen];
-
-
+        RunSimulation();
+    } // end of start code
+    public void ReloadLevel() {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
+    public void RunSimulation() {
         Time.timeScale = timescale;
         // Should only really change the stuff after this, above this point is stuff you dont wanna get into basically
 
@@ -84,12 +89,8 @@ public class Run : MonoBehaviour {
         InstantiateCreatureArray();
 
         StartCoroutine(ChampionSelect(delay));
-
-    } // end of start code
-
+    }
     public void GenerateArrayFromIndividual() {
-        Array.Clear(Creatures, 0, Creatures.Length);
-        Creatures = new DNA[numOfCreatures];
         Time.timeScale = timescale;
 
         int count = 0;
@@ -136,16 +137,13 @@ public class Run : MonoBehaviour {
         Instantiate(SurfaceTypeList[SelectedSurfaceType], new Vector3(location.x, 0, location.z), Quaternion.identity);
     }
     private void GradeAllCreatures() {
-        // Array.Clear(Winners, 0, Winners.Length);
-        // Winners = new DNA[pickedWinnersEachGen];
-
         int numberOfWinners = 0;
         float winnerFitness = 0;
         float lowestWinnerScore = -1;
 
         foreach (DNA individual in Creatures)
         {
-            Vector3 startTemp = individual.GetStartingPosition();
+            //Vector3 startTemp = individual.GetStartingPosition();
             float Work = 0;
             // Calculate the work done by each block
             foreach (Block blockObject in individual.arrayOfBlocks)

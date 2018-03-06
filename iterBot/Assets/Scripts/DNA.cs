@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DNA : MonoBehaviour {
+public class DNA {
     public Block[,,] arrayOfBlocks;
     private string CreatureName;
     private float fitness;
@@ -17,92 +17,6 @@ public class DNA : MonoBehaviour {
     private void ParentChild(GameObject par, GameObject child) {
         child.transform.parent = par.transform;
     }
-    
-    public DNA Replicate(string newName) {
-        DNA replicatedDNA = new DNA(newName, arrayOfBlocks.GetLength(0), arrayOfBlocks.GetLength(1), arrayOfBlocks.GetLength(2));
-        for (int i = 0; i < replicatedDNA.arrayOfBlocks.GetLength(0); i++)
-        {
-            for (int j = 0; j < replicatedDNA.arrayOfBlocks.GetLength(1); j++)
-            {
-                for (int k = 0; k < replicatedDNA.arrayOfBlocks.GetLength(2); k++)
-                {
-                    // Copy dna block weight, and calc repDNA color
-                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockMaxWeight(arrayOfBlocks[i, j, k].GetBlockMaxWeight());
-                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockMinWeight(arrayOfBlocks[i, j, k].GetBlockMinWeight());
-                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockWeight(arrayOfBlocks[i, j, k].GetBlockWeight());
-                    replicatedDNA.arrayOfBlocks[i, j, k].CalculateBlockColor();
-                    // Position
-                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockPosition(arrayOfBlocks[i, j, k].GetBlockPosition());
-                    // Stabilization
-                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockStabilized(arrayOfBlocks[i, j, k].GetBlockStabilized());
-                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockStabilizedChance(arrayOfBlocks[i, j, k].GetBlockStabilizedChance());
-                    // Type
-                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockType(arrayOfBlocks[i, j, k].GetBlockType());
-                    // Name
-                    replicatedDNA.arrayOfBlocks[i, j, k].CalculateBlockName(newName);
-
-                    // Now we copy all the data from the time joints connected to the original block, to put into the new block data
-                    if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null)
-                    {                        
-                        // Copy x joint axis
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosXCon().GetConAxis());
-                        // Copy x joint speed
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeed());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeedMax());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeedMin());
-                        // copy x joint strength
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStr(arrayOfBlocks[i, j, k].GetPosXCon().GetConStr());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosXCon().GetConStrMax());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosXCon().GetConStrMin());
-                        // copy x joint type
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConType(arrayOfBlocks[i, j, k].GetPosXCon().GetConType());                        
-                    }else if (arrayOfBlocks[i, j, k].GetPosXCon().GetIsFixedJoint())
-                    {
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetFixedJoint(true);
-                    }
-                    if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null)
-                    {                        
-                        // Copy x joint axis
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosYCon().GetConAxis());
-                        // Copy x joint speed
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeed());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeedMax());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeedMin());
-                        // copy x joint strength
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStr(arrayOfBlocks[i, j, k].GetPosYCon().GetConStr());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosYCon().GetConStrMax());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosYCon().GetConStrMin());
-                        // copy x joint type
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConType(arrayOfBlocks[i, j, k].GetPosYCon().GetConType());
-                        
-                    }else if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint())
-                    {
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetFixedJoint(true);
-                    }
-                    if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null)
-                    {                        
-                        // Copy x joint axis
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosZCon().GetConAxis());
-                        // Copy x joint speed
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeed());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeedMax());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeedMin());
-                        // copy x joint strength
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStr(arrayOfBlocks[i, j, k].GetPosZCon().GetConStr());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosZCon().GetConStrMax());
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosZCon().GetConStrMin());
-                        // copy x joint type
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConType(arrayOfBlocks[i, j, k].GetPosZCon().GetConType());                        
-                    }else if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint())
-                    {
-                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetFixedJoint(true);
-                    }
-                }
-            }
-        }
-        return replicatedDNA;
-    }
-      
     public Vector3 GetStartingPosition() {
         return startingPosition;
     }
@@ -200,12 +114,10 @@ public class DNA : MonoBehaviour {
                     // Fixed Y Joint
                     if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint() == true)
                     {
-
                         int temp = j + 1;
                         string name = CreatureName + "x" + i + "y" + j + "z" + k;
                         string name2 = CreatureName + "x" + i + "y" + temp + "z" + k;
                         GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
-
                     }
                     else if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null)
                     {
@@ -219,7 +131,6 @@ public class DNA : MonoBehaviour {
                         // instantiate the joint object at the vector below, this is the location of where the next block would be if it existed.
                         Vector3 instantiationVector = arrayOfBlocks[i, j + 1, k].GetBlockPosition() + instantiationPosition;
 
-
                         // The connectionobject is the actual joint object, which has a hinge joint on it
                         GameObject yconnectionobject = arrayOfBlocks[i, j, k].GetPosYCon().InstantiateConnection(instantiationVector, Quaternion.Euler(new Vector3(0, 0, 0)));
                         // name the connection object the current blocks name, and the description of the location
@@ -231,7 +142,6 @@ public class DNA : MonoBehaviour {
                         HingeJoint yPosHJ = GameObject.Find(curBlockName).AddComponent<HingeJoint>();
                         yPosHJ.axis = arrayOfBlocks[i, j, k].GetPosYCon().GetConAxis();
                         yPosHJ.connectedBody = yconnectionobject.GetComponent<Rigidbody>();
-
 
                         JointMotor yPosMotor = yPosHJ.motor;
                         yPosMotor.force = arrayOfBlocks[i, j, k].GetPosYCon().GetConStr();
@@ -246,12 +156,10 @@ public class DNA : MonoBehaviour {
                     //Fixed Z Joint
                     if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint() == true)
                     {
-
                         int temp = k + 1;
                         string name = CreatureName + "x" + i + "y" + j + "z" + k;
                         string name2 = CreatureName + "x" + i + "y" + j + "z" + temp;
                         GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
-
                     }
                     else if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null)
                     {
@@ -264,20 +172,18 @@ public class DNA : MonoBehaviour {
                         // instantiate the joint object at the vector below, this is the location of where the next block would be if it existed.
                         Vector3 instantiationVector = arrayOfBlocks[i, j, k + 1].GetBlockPosition() + instantiationPosition;
 
-
                         // The connectionobject is the actual joint object, which has a hinge joint on it
                         GameObject zconnectionobject = arrayOfBlocks[i, j, k].GetPosZCon().InstantiateConnection(instantiationVector, Quaternion.Euler(new Vector3(90, 0, 0)));
                         // name the connection object the current blocks name, and the description of the location
                         zconnectionobject.name = curBlockName + "posZCon";
                         // The hingejoint on the connection object is then retreived and its target is set to the block next to it
                         zconnectionobject.GetComponent<HingeJoint>().connectedBody = GameObject.Find(blockToBeConnectedName).GetComponent<Rigidbody>();
-                        // ANd the current block is given a hinge joint that connects to the connection object, this is where the str/speed is applied
+                        // And the current block is given a hinge joint that connects to the connection object, this is where the str/speed is applied
 
                         HingeJoint zPosHJ = GameObject.Find(curBlockName).AddComponent<HingeJoint>();
                         zPosHJ.axis = arrayOfBlocks[i, j, k].GetPosZCon().GetConAxis();
                         zPosHJ.connectedBody = zconnectionobject.GetComponent<Rigidbody>();
-
-
+                        
                         JointMotor zPosMotor = zPosHJ.motor;
                         zPosMotor.force = arrayOfBlocks[i, j, k].GetPosZCon().GetConStr();
                         zPosMotor.targetVelocity = arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeed();
@@ -293,10 +199,96 @@ public class DNA : MonoBehaviour {
     }
     // Removes the object from the unity world by finding the parenting object, and deleting it
     public void SelfDestruct() {
-        Destroy(GameObject.Find(CreatureName));
+        MonoBehaviour.Destroy(GameObject.Find(CreatureName));
+    }
+    public DNA Replicate(string newName) {
+        DNA replicatedDNA = new DNA(newName, arrayOfBlocks.GetLength(0), arrayOfBlocks.GetLength(1), arrayOfBlocks.GetLength(2));
+        for (int i = 0; i < replicatedDNA.arrayOfBlocks.GetLength(0); i++)
+        {
+            for (int j = 0; j < replicatedDNA.arrayOfBlocks.GetLength(1); j++)
+            {
+                for (int k = 0; k < replicatedDNA.arrayOfBlocks.GetLength(2); k++)
+                {
+                    // Copy dna block weight, and calc repDNA color
+                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockMaxWeight(arrayOfBlocks[i, j, k].GetBlockMaxWeight());
+                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockMinWeight(arrayOfBlocks[i, j, k].GetBlockMinWeight());
+                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockWeight(arrayOfBlocks[i, j, k].GetBlockWeight());
+                    replicatedDNA.arrayOfBlocks[i, j, k].CalculateBlockColor();
+                    // Position
+                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockPosition(arrayOfBlocks[i, j, k].GetBlockPosition());
+                    // Stabilization
+                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockStabilized(arrayOfBlocks[i, j, k].GetBlockStabilized());
+                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockStabilizedChance(arrayOfBlocks[i, j, k].GetBlockStabilizedChance());
+                    // Type
+                    replicatedDNA.arrayOfBlocks[i, j, k].SetBlockType(arrayOfBlocks[i, j, k].GetBlockType());
+                    // Name
+                    replicatedDNA.arrayOfBlocks[i, j, k].CalculateBlockName(newName);
+
+                    // Now we copy all the data from the time joints connected to the original block, to put into the new block data
+                    if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null)
+                    {
+                        // Copy x joint axis
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosXCon().GetConAxis());
+                        // Copy x joint speed
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeed());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeedMax());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeedMin());
+                        // copy x joint strength
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStr(arrayOfBlocks[i, j, k].GetPosXCon().GetConStr());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosXCon().GetConStrMax());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosXCon().GetConStrMin());
+                        // copy x joint type
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConType(arrayOfBlocks[i, j, k].GetPosXCon().GetConType());
+                    }
+                    else if (arrayOfBlocks[i, j, k].GetPosXCon().GetIsFixedJoint())
+                    {
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetFixedJoint(true);
+                    }
+                    if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null)
+                    {
+                        // Copy x joint axis
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosYCon().GetConAxis());
+                        // Copy x joint speed
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeed());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeedMax());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosYCon().GetConSpeedMin());
+                        // copy x joint strength
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStr(arrayOfBlocks[i, j, k].GetPosYCon().GetConStr());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosYCon().GetConStrMax());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosYCon().GetConStrMin());
+                        // copy x joint type
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConType(arrayOfBlocks[i, j, k].GetPosYCon().GetConType());
+
+                    }
+                    else if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint())
+                    {
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetFixedJoint(true);
+                    }
+                    if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null)
+                    {
+                        // Copy x joint axis
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosZCon().GetConAxis());
+                        // Copy x joint speed
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeed(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeed());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeedMax(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeedMax());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConSpeedMin(arrayOfBlocks[i, j, k].GetPosZCon().GetConSpeedMin());
+                        // copy x joint strength
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStr(arrayOfBlocks[i, j, k].GetPosZCon().GetConStr());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStrMax(arrayOfBlocks[i, j, k].GetPosZCon().GetConStrMax());
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosZCon().GetConStrMin());
+                        // copy x joint type
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConType(arrayOfBlocks[i, j, k].GetPosZCon().GetConType());
+                    }
+                    else if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint())
+                    {
+                        replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetFixedJoint(true);
+                    }
+                }
+            }
+        }
+        return replicatedDNA;
     }
     // Mutator Functions change the values of the blocks, should be used during the iterative process of changing genes
-
     public void MutateDNA(float BlockMutationChance, float BlockMutationMagnitude, float JointMutationChance, float JointMutationMagnitude) {
         foreach (Block blockObject in arrayOfBlocks)
         {
@@ -413,8 +405,8 @@ public class DNA : MonoBehaviour {
         }
         CreatureName = name;
     }
-    public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr,
-        float minSpeed, float maxSpeed, GameObject[] segtypes, GameObject[] jointtypes) {
+    public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr, float minSpeed, float maxSpeed, GameObject[] segtypes, GameObject[] jointtypes) 
+    {
         arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
         CreatureName = name;
 

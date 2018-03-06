@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Block : MonoBehaviour {
+public class Block{
     private string blockName;
     private Vector3 blockPosition;
     private GameObject blockType;
@@ -34,7 +34,7 @@ public class Block : MonoBehaviour {
     }
     // Instantiator
     public GameObject InstantiateBlock(Vector3 position) {
-        GameObject block = Instantiate(blockType, position, new Quaternion(0, 0, 0, 0));
+        GameObject block = MonoBehaviour.Instantiate(blockType, position, new Quaternion(0, 0, 0, 0));
         return block;
     }
     public void CalculateBlockColor() {

@@ -173,6 +173,10 @@ public class Run : MonoBehaviour {
                     {
                         Work = 0;
                     }
+                    if(travelVector.y < 0)
+                    {
+                        Work = 0;
+                    }
                 }
             }
 
@@ -216,6 +220,8 @@ public class Run : MonoBehaviour {
             // THIS MUST BE FIXED
 
             // Determine if the fitness is good enough to get into the winners bracket
+
+
             individual.SetFitness(Work);
             if (individual.GetFitness() > lowestWinnerScore)
             {

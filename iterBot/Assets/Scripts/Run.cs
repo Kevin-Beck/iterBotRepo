@@ -35,7 +35,7 @@ public class Run : MonoBehaviour {
     public float blockMutationChance = 0.2f; // .2f is nice
     public float jointMutationMagnitude = 0.5f; // .5f // does nothing yet
     public float jointMutationChance = 0.2f; // .2f default
-    public int pickedWinnersEachGen = 5;
+    public int pickedWinnersEachGen = 1;
 
     [Header("Surface Type")]
     // The surfacce structures that the robots traverse
@@ -48,7 +48,7 @@ public class Run : MonoBehaviour {
     public GameObject[] JointTypeList;
 
     private DNA[] Creatures;
-    private DNA[] Winners;
+    public DNA[] Winners;
 
     public void ChampionSelectRound() {
         if (CurrentGenerationCount >= NumberOfGenerationsToDo)
@@ -67,7 +67,15 @@ public class Run : MonoBehaviour {
 
         CurrentGenerationCount++;
         GradeAllCreatures();
-        GenerateArrayFromIndividual();
+        Debug.Log("WinnerFitness inside Chapion Select Ienumerator: " + Winners[0].GetFitness());
+        if(Winners[0].GetFitness() == 0)
+        {
+            CreateRandomGeneration();
+        }
+        else
+        {
+            GenerateArrayFromIndividual();
+        }
         InstantiateCreatureArray();
         ChampionSelectRound();
     }
@@ -225,13 +233,19 @@ public class Run : MonoBehaviour {
             individual.SetFitness(Work);
             if (individual.GetFitness() > lowestWinnerScore)
             {
+
+                
                 // Keep track of best of gen
                 if (individual.GetFitness() > winnerFitness)
                 {
                     Debug.Log(individual.GetCreatureName() + " has joined the winners");
                     winnerFitness = individual.GetFitness();
+                    Winners[0] = individual.Replicate("winner");
+                    Winners[0].SetFitness(winnerFitness);
                 }
+                /*
                 // Select winners and if we have enough, then we need to check
+                
                 if (numberOfWinners >= pickedWinnersEachGen)
                 {
                     //float tempLow = float.MaxValue;
@@ -248,12 +262,13 @@ public class Run : MonoBehaviour {
                     //Winners[weakestBotIndex] = individual.Replicate("replacer");
 
                 }
-                else
+                else 
                 {
                     Winners[numberOfWinners] = individual.Replicate("tempWinner");
                     numberOfWinners++;
-                }
+                } */
             }
+            
             //Remove the individual after testing is completed
             individual.SelfDestruct();
         }

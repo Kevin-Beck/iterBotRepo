@@ -8,12 +8,16 @@ public class Run : MonoBehaviour {
     [Header("Time Factors")]
     public float timescale = 1; // default 2
     public int delay = 14; // default 14
+
+    [Header("Terrain Factors")]
     public float scaleX = 50;
-    public float scaleZ = 50;
+    public float scaleZ = 50;    // The surfacce structures that the robots traverse
+    public GameObject[] SurfaceTypeList;
+    public int SelectedSurfaceType = 0; // the selcted type off the list of types
 
     [Header("Generational Data")]
     public int CurrentGenerationCount = 0; // must keep 0, first gen is 0, do not change
-    public int NumberOfGenerationsToDo = 16; // number of gnenerations wanted currently 16
+    public int NumberOfGenerationsToDo = 16; // number of generations wanted currently 16
     public int RowsOfCreatures = 8;
     public int numOfCreatures; // total number of creatures to make, should be a perfect square, 64, set by squaring the rows
     [Header("Size Factors")]
@@ -37,10 +41,9 @@ public class Run : MonoBehaviour {
     public float jointMutationChance = 0.2f; // .2f default
     public int pickedWinnersEachGen = 1;
 
-    [Header("Surface Type")]
-    // The surfacce structures that the robots traverse
-    public GameObject[] SurfaceTypeList;
-    public int SelectedSurfaceType = 0; // the selcted type off the list of types
+   
+    [Header("Menu Items")]
+    public GameObject MenuController;
 
     [Header("GameObject Components")]
     // Editable members of the segment/joint population
@@ -50,7 +53,20 @@ public class Run : MonoBehaviour {
     private DNA[] Creatures;
     public DNA[] Winners;
 
+
+    public void SetSimTime(float newTime) {
+        if(newTime < 5 && newTime > 0)
+        {
+            Time.timeScale = newTime;
+        }
+        else
+        {
+            Debug.Log("Invalid Time");
+        }
+    }
+
     public void ChampionSelectRound() {
+        Time.timeScale = timescale;
         if (CurrentGenerationCount >= NumberOfGenerationsToDo)
         {
             Debug.Break();
@@ -64,10 +80,9 @@ public class Run : MonoBehaviour {
     IEnumerator ChampionSelect(int numberOfSeconds) {
         yield return new WaitForSeconds(numberOfSeconds);
         // Get a champion from the current generation,  start a new test from that generation
-
+        
         CurrentGenerationCount++;
         GradeAllCreatures();
-        Debug.Log("WinnerFitness inside Chapion Select Ienumerator: " + Winners[0].GetFitness());
         if(Winners[0].GetFitness() == 0)
         {
             CreateRandomGeneration();
@@ -90,8 +105,9 @@ public class Run : MonoBehaviour {
         SceneManager.LoadScene(scene.name);
     }
     public void RunSimulation() {
+
         Time.timeScale = timescale;
-        // Should only really change the stuff after this, above this point is stuff you dont wanna get into basically
+
         GenerateAllSurfaces();
         CreateRandomGeneration();
         InstantiateCreatureArray();
@@ -129,6 +145,7 @@ public class Run : MonoBehaviour {
         } // Rolls new random creatures to fill array
     }
     public void InstantiateCreatureArray() {
+        MenuController.GetComponent<RunMenu>().UpdateGenerationText(CurrentGenerationCount);
         int k = 0;
         for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
         {
@@ -274,6 +291,7 @@ public class Run : MonoBehaviour {
         }
         // Print out the best score so far
         Debug.Log("Gen: " + CurrentGenerationCount + "  Winner: " + winnerFitness);
+        MenuController.GetComponent<RunMenu>().UpdateWinnerFitnessText(winnerFitness);
     }
     private void PresentWinningCreatures() {
         int counter = 0;

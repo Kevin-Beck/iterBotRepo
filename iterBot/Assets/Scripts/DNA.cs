@@ -27,12 +27,10 @@ public class DNA {
         startingPosition = instantiationPosition; // This is used to score the robot
 
         // Creating the blocks and instantiating them
-        foreach (Block blockObject in arrayOfBlocks)
-        {
+        foreach (Block blockObject in arrayOfBlocks) {
             // instantiation vector is the blockposition within the DNA added to the insantiation position of the DNA itself
             Vector3 instantiationVector = blockObject.GetBlockPosition() + instantiationPosition;
-            if (blockObject.GetBlockType() != null)
-            {
+            if (blockObject.GetBlockType() != null) {
                 // Set the instantiated block object starting position
                 blockObject.SetInstantiatedObjectStartingLocation(instantiationVector);
 
@@ -55,8 +53,7 @@ public class DNA {
                 // Parent it
                 ParentChild(CreatureParentObject, tempSegment);
 
-                if (blockObject.GetBlockStabilized() == true)
-                {
+                if (blockObject.GetBlockStabilized() == true) {
                     Rigidbody stablebody = tempSegment.GetComponent<Rigidbody>();
                     stablebody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
                 }
@@ -64,31 +61,24 @@ public class DNA {
         }
 
         // Jointing the objects in the world
-        for (int i = 0; i < arrayOfBlocks.GetLength(0); i++)
-        {
-            for (int j = 0; j < arrayOfBlocks.GetLength(1); j++)
-            {
-                for (int k = 0; k < arrayOfBlocks.GetLength(2); k++)
-                {
+        for (int i = 0; i < arrayOfBlocks.GetLength(0); i++) {
+            for (int j = 0; j < arrayOfBlocks.GetLength(1); j++) {
+                for (int k = 0; k < arrayOfBlocks.GetLength(2); k++) {
                     //Fixed X Joint
-                    if (arrayOfBlocks[i, j, k].GetPosXCon().GetIsFixedJoint() == true)
-                    {
+                    if (arrayOfBlocks[i, j, k].GetPosXCon().GetIsFixedJoint() == true) {
                         int temp = i + 1;
                         string name = CreatureName + "x" + i + "y" + j + "z" + k;
                         string name2 = CreatureName + "x" + temp + "y" + j + "z" + k;
                         GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
-
                     }
-                    else if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null)
-                    {
+                    else if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null) {
                         // Non-Fixed X Joint
                         string curBlockName = CreatureName + "x" + i + "y" + j + "z" + k;
                         int temp = i + 2;
                         string blockToBeConnectedName = CreatureName + "x" + temp + "y" + j + "z" + k;
                         // instantiate the joint object at the vector below, this is the location of where the next block would be if it existed.
                         Vector3 instantiationVector = arrayOfBlocks[i + 1, j, k].GetBlockPosition() + instantiationPosition;
-
-
+                        
                         // The connectionobject is the actual joint object, which has a hinge joint on it
                         GameObject xconnectionobject = arrayOfBlocks[i, j, k].GetPosXCon().InstantiateConnection(instantiationVector, Quaternion.Euler(new Vector3(0, 0, 90)));
                         // name the connection object the current blocks name, and the description of the location
@@ -100,8 +90,7 @@ public class DNA {
                         HingeJoint xPosHJ = GameObject.Find(curBlockName).AddComponent<HingeJoint>();
                         xPosHJ.axis = arrayOfBlocks[i, j, k].GetPosXCon().GetConAxis();
                         xPosHJ.connectedBody = xconnectionobject.GetComponent<Rigidbody>();
-
-
+                        
                         JointMotor xPosMotor = xPosHJ.motor;
                         xPosMotor.force = arrayOfBlocks[i, j, k].GetPosXCon().GetConStr();
                         xPosMotor.targetVelocity = arrayOfBlocks[i, j, k].GetPosXCon().GetConSpeed();
@@ -112,15 +101,13 @@ public class DNA {
                         ParentChild(CreatureParentObject, xconnectionobject);
                     }
                     // Fixed Y Joint
-                    if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint() == true)
-                    {
+                    if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint() == true) {
                         int temp = j + 1;
                         string name = CreatureName + "x" + i + "y" + j + "z" + k;
                         string name2 = CreatureName + "x" + i + "y" + temp + "z" + k;
                         GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
                     }
-                    else if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null)
-                    {
+                    else if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null) {
                         // Non-Fixed Y Joint
                         //   string name = "x" + i + "y" + j + "z" + k;
                         //   Vector3 instantiationVector = arrayOfBlocks[i+1, j, k].GetBlockPosition() + instantiationPosition;
@@ -154,15 +141,13 @@ public class DNA {
                     }
 
                     //Fixed Z Joint
-                    if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint() == true)
-                    {
+                    if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint() == true) {
                         int temp = k + 1;
                         string name = CreatureName + "x" + i + "y" + j + "z" + k;
                         string name2 = CreatureName + "x" + i + "y" + j + "z" + temp;
                         GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
                     }
-                    else if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null)
-                    {
+                    else if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null) {
                         // Non-Fixed Z Joint
                         //  string name = "x" + i + "y" + j + "z" + k;
                         // Non-Fixed X Joint
@@ -199,16 +184,16 @@ public class DNA {
     }
     // Removes the object from the unity world by finding the parenting object, and deleting it
     public void SelfDestruct() {
-        MonoBehaviour.Destroy(GameObject.Find(CreatureName));
+        if(GameObject.Find(CreatureName) != null)
+        {
+            MonoBehaviour.Destroy(GameObject.Find(CreatureName));
+        }
     }
     public DNA Replicate(string newName) {
         DNA replicatedDNA = new DNA(newName, arrayOfBlocks.GetLength(0), arrayOfBlocks.GetLength(1), arrayOfBlocks.GetLength(2));
-        for (int i = 0; i < replicatedDNA.arrayOfBlocks.GetLength(0); i++)
-        {
-            for (int j = 0; j < replicatedDNA.arrayOfBlocks.GetLength(1); j++)
-            {
-                for (int k = 0; k < replicatedDNA.arrayOfBlocks.GetLength(2); k++)
-                {
+        for (int i = 0; i < replicatedDNA.arrayOfBlocks.GetLength(0); i++) {
+            for (int j = 0; j < replicatedDNA.arrayOfBlocks.GetLength(1); j++) {
+                for (int k = 0; k < replicatedDNA.arrayOfBlocks.GetLength(2); k++) {
                     // Copy dna block weight, and calc repDNA color
                     replicatedDNA.arrayOfBlocks[i, j, k].SetBlockMaxWeight(arrayOfBlocks[i, j, k].GetBlockMaxWeight());
                     replicatedDNA.arrayOfBlocks[i, j, k].SetBlockMinWeight(arrayOfBlocks[i, j, k].GetBlockMinWeight());
@@ -225,8 +210,7 @@ public class DNA {
                     replicatedDNA.arrayOfBlocks[i, j, k].CalculateBlockName(newName);
 
                     // Now we copy all the data from the time joints connected to the original block, to put into the new block data
-                    if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null)
-                    {
+                    if (arrayOfBlocks[i, j, k].GetPosXCon().GetConType() != null) {
                         // Copy x joint axis
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosXCon().GetConAxis());
                         // Copy x joint speed
@@ -240,12 +224,10 @@ public class DNA {
                         // copy x joint type
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetConType(arrayOfBlocks[i, j, k].GetPosXCon().GetConType());
                     }
-                    else if (arrayOfBlocks[i, j, k].GetPosXCon().GetIsFixedJoint())
-                    {
+                    else if (arrayOfBlocks[i, j, k].GetPosXCon().GetIsFixedJoint()) {
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosXCon().SetFixedJoint(true);
                     }
-                    if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null)
-                    {
+                    if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null) {
                         // Copy x joint axis
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosYCon().GetConAxis());
                         // Copy x joint speed
@@ -258,14 +240,11 @@ public class DNA {
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConStrMin(arrayOfBlocks[i, j, k].GetPosYCon().GetConStrMin());
                         // copy x joint type
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetConType(arrayOfBlocks[i, j, k].GetPosYCon().GetConType());
-
                     }
-                    else if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint())
-                    {
+                    else if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint()) {
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosYCon().SetFixedJoint(true);
                     }
-                    if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null)
-                    {
+                    if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null) {
                         // Copy x joint axis
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConAxis(arrayOfBlocks[i, j, k].GetPosZCon().GetConAxis());
                         // Copy x joint speed
@@ -279,8 +258,7 @@ public class DNA {
                         // copy x joint type
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetConType(arrayOfBlocks[i, j, k].GetPosZCon().GetConType());
                     }
-                    else if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint())
-                    {
+                    else if (arrayOfBlocks[i, j, k].GetPosZCon().GetIsFixedJoint()) {
                         replicatedDNA.arrayOfBlocks[i, j, k].GetPosZCon().SetFixedJoint(true);
                     }
                 }
@@ -290,19 +268,15 @@ public class DNA {
     }
     // Mutator Functions change the values of the blocks, should be used during the iterative process of changing genes
     public void MutateDNA(float BlockMutationChance, float BlockMutationMagnitude, float JointMutationChance, float JointMutationMagnitude) {
-        foreach (Block blockObject in arrayOfBlocks)
-        {
-            if (blockObject.GetBlockType() != null)
-            {
+        foreach (Block blockObject in arrayOfBlocks) {
+            if (blockObject.GetBlockType() != null) {
                 //Block Weight
-                if (UnityEngine.Random.Range(0f, 1f) < BlockMutationChance)
-                {
+                if (UnityEngine.Random.Range(0f, 1f) < BlockMutationChance) {
                     blockObject.SetBlockWeight(UnityEngine.Random.Range(blockObject.GetBlockMinWeight(), blockObject.GetBlockMaxWeight()));
                     blockObject.CalculateBlockColor();
                 }
                 //Block
-                if (UnityEngine.Random.Range(0f, 1f) < BlockMutationChance)
-                {
+                if (UnityEngine.Random.Range(0f, 1f) < BlockMutationChance) {
                     if (UnityEngine.Random.Range(0f, 1f) > blockObject.GetBlockStabilizedChance())
                     {
                         blockObject.SetBlockStabilized(!blockObject.GetBlockStabilized());

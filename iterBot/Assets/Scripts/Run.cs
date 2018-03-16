@@ -6,26 +6,27 @@ using System;
 public class Run : MonoBehaviour {
 
     [Header("Time Factors")]
-    public float timescale = 1; // default 2
-    public int delay = 14; // default 14
+    public float timescale = 3; // default 2
+    public int delay = 30; // default 14
 
     [Header("Terrain Factors")]
-    public float scaleX = 50;
-    public float scaleZ = 50;    // The surfacce structures that the robots traverse
+    public float scaleX = 220;
+    public float scaleZ = 110;    
+    // The surfacce structures that the robots traverse
     public GameObject[] SurfaceTypeList;
     public int SelectedSurfaceType = 0; // the selcted type off the list of types
 
     [Header("Generational Data")]
     public int CurrentGenerationCount = 0; // must keep 0, first gen is 0, do not change
-    public int NumberOfGenerationsToDo = 16; // number of generations wanted currently 16
+    public int NumberOfGenerationsToDo = 100; // number of generations ~50-100
     public int RowsOfCreatures = 8;
-    public int numOfCreatures; // total number of creatures to make, should be a perfect square, 64, set by squaring the rows
+    public int numOfCreatures = 64; // total number of creatures to make, should be a perfect square, 64, set by squaring the rows
     [Header("Size Factors")]
-    public int sizeOfCreaturesX = 5; // 5
-    public int sizeOfCreaturesY = 5; // 5
-    public int sizeOfCreaturesZ = 5; // 5
+    public int sizeOfCreaturesX = 3; // 3
+    public int sizeOfCreaturesY = 6; // 6
+    public int sizeOfCreaturesZ = 4; // 4
     [Header("DNA Attribute Boundaries")]
-    public float densityOfBlocks = 0.2f; // .2f
+    public float densityOfBlocks = 0.3f; // .3f
     public float stabilizationChance = 0.1f; // .1f
     public float minimumWeight = 2f; // 2f
     public float maximumWeight = 5f; // 5f
@@ -36,9 +37,9 @@ public class Run : MonoBehaviour {
     [Header("Fitness and Mutation Factors")]
     public Vector3 fitnessVector = new Vector3(1, 0, 0); // any vector you want to test for
     public float blockMutationMagnitude = 0.3f; // does nothing currently
-    public float blockMutationChance = 0.2f; // .2f is nice
-    public float jointMutationMagnitude = 0.5f; // .5f // does nothing yet
-    public float jointMutationChance = 0.2f; // .2f default
+    public float blockMutationChance = 0.1f; // .1f is nice
+    public float jointMutationMagnitude = 0.5f; // does nothing yet
+    public float jointMutationChance = 0.1f; 
     public int pickedWinnersEachGen = 1;
 
    
@@ -53,27 +54,17 @@ public class Run : MonoBehaviour {
     private DNA[] Creatures;
     public DNA[] Winners;
 
-
-    public void SetSimTime(float newTime) {
-        if(newTime < 5 && newTime > 0)
-        {
-            Time.timeScale = newTime;
-        }
-        else
-        {
-            Debug.Log("Invalid Time");
-        }
-    }
+    private IEnumerator loop; // This is the coroutine's name that runs the simulation loop
 
     public void ChampionSelectRound() {
-        Time.timeScale = timescale;
         if (CurrentGenerationCount >= NumberOfGenerationsToDo)
         {
             Debug.Break();
         }
         else
         {
-            StartCoroutine(ChampionSelect(delay));
+            loop = ChampionSelect(delay);
+            StartCoroutine(loop);
         }
     }
 
@@ -95,27 +86,37 @@ public class Run : MonoBehaviour {
         ChampionSelectRound();
     }
     void Start() {
-        numOfCreatures = RowsOfCreatures * RowsOfCreatures; // DO NOT REMOVE THIS, it sets the number of creatures to the num of rows squared. Everything depends on this structure.
-        Creatures = new DNA[numOfCreatures];
-        Winners = new DNA[pickedWinnersEachGen];
-        RunSimulation();
+       // RunSimulation();
     } // end of start code
-    public void ReloadLevel() {
-        Scene scene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(scene.name);
+    public void RestartSimulation() {
+        DestroyAllTerrain();
+        DestroyAllCreatures();
+        RunSimulation();
+    }
+    public void StopSimulation() {
+        StopCoroutine(loop);
+        DestroyAllTerrain();
+        DestroyAllCreatures();
+    }
+    public void UpdateSimulationSpeed() {
+        Time.timeScale = MenuController.GetComponent<RunMenu>().GetSimulationSpeed();
     }
     public void RunSimulation() {
 
-        Time.timeScale = timescale;
+        CurrentGenerationCount = 0;
+
+        numOfCreatures = RowsOfCreatures * RowsOfCreatures; // DO NOT REMOVE THIS, it sets the number of creatures to the num of rows squared. Everything depends on this structure.
+        Creatures = new DNA[numOfCreatures];
+        Winners = new DNA[pickedWinnersEachGen];
 
         GenerateAllSurfaces();
         CreateRandomGeneration();
         InstantiateCreatureArray();
 
-        StartCoroutine(ChampionSelect(delay));
+        loop = ChampionSelect(delay);
+        StartCoroutine(loop);
     }
     public void GenerateArrayFromIndividual() {
-        Time.timeScale = timescale;
 
         int count = 0;
         for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
@@ -162,16 +163,28 @@ public class Run : MonoBehaviour {
         {
             for (int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
             {
-                GenerateTerrainSurface(new Vector3(scaleX * i, 0, scaleZ * j));
+                GenerateTerrainSurface(new Vector3(scaleX * i, 0, scaleZ * j), k);
                 k++;
             }
         }
     }
-    public void GenerateTerrainSurface(Vector3 location) {
-        Instantiate(SurfaceTypeList[SelectedSurfaceType], new Vector3(location.x, 0, location.z), Quaternion.identity);
+    public void DestroyAllCreatures() {
+        foreach (DNA individual in Creatures)
+        {
+            individual.SelfDestruct();
+        }
+    }
+    public void DestroyAllTerrain() {
+        for (int i = 0; i < numOfCreatures; i++)
+        {
+            Destroy(GameObject.Find("Terrain" + i));
+        }
+    }
+    public void GenerateTerrainSurface(Vector3 location, int terrainNumber) {
+        GameObject individualTerrain = Instantiate(SurfaceTypeList[SelectedSurfaceType], new Vector3(location.x, 0, location.z), Quaternion.identity);
+        individualTerrain.name = "Terrain" + terrainNumber;
     }
     private void GradeAllCreatures() {
-        int numberOfWinners = 0;
         float winnerFitness = 0;
         float lowestWinnerScore = -1;
 

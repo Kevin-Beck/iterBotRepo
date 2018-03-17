@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class RunMenu : MonoBehaviour {
+    public GameObject RunController;
+
     public Camera Camera1;
     public Camera Camera2;
     public Camera Camera3;
@@ -16,6 +18,40 @@ public class RunMenu : MonoBehaviour {
     public Button Cam1Button;
     public Button Cam2Button;
     public Button Cam3Button;
+
+    public Button PauseButton;
+    public Text PauseButtonText;
+    private bool paused = false;
+    private int lastSelectedSpeedValue;
+
+    public Button RestartButton;
+    public Text RestartButtonText;
+
+    public void SpeedSelection() {
+        lastSelectedSpeedValue = timeScaleDropdown.value;
+        RunController.GetComponent<Run>().UpdateSimulationSpeed();
+    }
+    public void PauseButtonClick() {
+        if (PauseButtonText.text == "Pause")
+        {
+            paused = true;
+            PauseButtonText.text = "Run";
+            lastSelectedSpeedValue = timeScaleDropdown.value;
+            timeScaleDropdown.value = 0;
+            RunController.GetComponent<Run>().UpdateSimulationSpeed();
+        }
+        else if (PauseButtonText.text == "Run") 
+        {
+            paused = false;
+            PauseButtonText.text = "Pause";
+            timeScaleDropdown.value = lastSelectedSpeedValue;
+            RunController.GetComponent<Run>().UpdateSimulationSpeed();
+        }
+    }
+    public void StartButtonClick() {
+        RestartButtonText.text = "Restart";
+        RunController.GetComponent<Run>().RestartSimulation();
+    }
 
     public void SwitchToCam1() {
         Camera1.enabled = true;
@@ -33,7 +69,7 @@ public class RunMenu : MonoBehaviour {
         Camera2.enabled = false;
     }
     public int GetSimulationSpeed() {
-        return timeScaleDropdown.value + 1;
+        return timeScaleDropdown.value;
     }
     public void UpdateGenerationText(float value) {
         generationText.text = "Generation: " + value;
@@ -44,6 +80,6 @@ public class RunMenu : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+        lastSelectedSpeedValue = 1;
 	}
 }

@@ -41,6 +41,7 @@ public class Run : MonoBehaviour {
     public float jointMutationMagnitude = 0.5f; // does nothing yet
     public float jointMutationChance = 0.1f; 
     public int pickedWinnersEachGen = 1;
+    public float maxDeviation = 50; // maximum we want the bots to be able to vary
 
    
     [Header("Menu Items")]
@@ -51,8 +52,9 @@ public class Run : MonoBehaviour {
     public GameObject[] SegmentTypeList;
     public GameObject[] JointTypeList;
 
-    private DNA[] Creatures;
+    public DNA[] Creatures;
     public DNA[] Winners;
+    public DNA OverallChampion;
 
     private IEnumerator loop; // This is the coroutine's name that runs the simulation loop
 
@@ -63,6 +65,8 @@ public class Run : MonoBehaviour {
         }
         else
         {
+            //Destroy(GameObject.Find(Winners[0].GetCreatureName()));
+            //InstantiateMiniChampion(GameObject.Find("ChampionPosition").transform.position);
             loop = ChampionSelect(delay);
             StartCoroutine(loop);
         }
@@ -88,9 +92,17 @@ public class Run : MonoBehaviour {
     void Start() {
        // RunSimulation();
     } // end of start code
+    public void PauseSimulation() {
+        Time.timeScale = 0;
+    }
     public void RestartSimulation() {
-        DestroyAllTerrain();
-        DestroyAllCreatures();
+        try
+        {
+            StopSimulation();
+        }catch
+        {
+
+        }
         RunSimulation();
     }
     public void StopSimulation() {
@@ -102,7 +114,7 @@ public class Run : MonoBehaviour {
         Time.timeScale = MenuController.GetComponent<RunMenu>().GetSimulationSpeed();
     }
     public void RunSimulation() {
-
+        OverallChampion = new DNA("default", sizeOfCreaturesX, sizeOfCreaturesY, sizeOfCreaturesZ);
         CurrentGenerationCount = 0;
 
         numOfCreatures = RowsOfCreatures * RowsOfCreatures; // DO NOT REMOVE THIS, it sets the number of creatures to the num of rows squared. Everything depends on this structure.
@@ -116,6 +128,9 @@ public class Run : MonoBehaviour {
         loop = ChampionSelect(delay);
         StartCoroutine(loop);
     }
+    /*public void InstantiateMiniChampion(Vector3 position) {
+        Winners[0].InstantiateDNAasUnityCreature(position);
+    }*/
     public void GenerateArrayFromIndividual() {
 
         int count = 0;
@@ -185,7 +200,7 @@ public class Run : MonoBehaviour {
         individualTerrain.name = "Terrain" + terrainNumber;
     }
     private void GradeAllCreatures() {
-        float winnerFitness = 0;
+        float winnerFitness = -1;
         float lowestWinnerScore = -1;
 
         foreach (DNA individual in Creatures)
@@ -197,10 +212,14 @@ public class Run : MonoBehaviour {
             {
                 if (blockObject.GetBlockType() != null)
                 {
+                    // CurSegment is the current block portion of the individual
                     GameObject curSegment = GameObject.Find(blockObject.GetBlockName());
+                    // travelVector is the vector the block has travelled from start to finish
                     Vector3 travelVector = Vector3.Project((curSegment.transform.position - blockObject.GetInstantiatedObjectStartingLocation()), fitnessVector);
+                    // wrongWayVector is all the directions except the fitness vector
                     Vector3 wrongWayVector = Vector3.ProjectOnPlane((curSegment.transform.position - blockObject.GetInstantiatedObjectStartingLocation()), fitnessVector);
 
+                    // work is a misnomer, but it was the closest we wanted, it isthe value of mass x distance, minues the mass x distance in the wrong direction
                     Work = curSegment.GetComponent<Rigidbody>().mass * ((travelVector.magnitude) - wrongWayVector.magnitude);
 
                     if (Work < 0)
@@ -220,7 +239,7 @@ public class Run : MonoBehaviour {
 
             // Calculate the standardDeviation of the blocks, if its too high, we'll reset the values of the fitness to 0 as punishment for varying too much
             // First we get the total vector size
-            /*
+            
             Vector3 totalVector = Vector3.zero;
             int numOfBlocks = 0;
             foreach(Block blockObject in individual.arrayOfBlocks)
@@ -231,13 +250,12 @@ public class Run : MonoBehaviour {
                     GameObject curSegment = GameObject.Find(blockObject.GetBlockName());
                     totalVector += curSegment.GetComponent<Rigidbody>().transform.position;
                 }
-            }
-            
-            if(numOfBlocks > 0)
+            }            
+            if(numOfBlocks > 0) // quick check to make sure we have an actual individual that exists
             {
                 Vector3 averageVector = totalVector / numOfBlocks;
-
-                // now subtract this average position from each of the blocks positions to calculate the distance each piece is from the average
+                // now subtract this average position from each of the blocks positions to calculate the distance each 
+                // piece is from the average
                 float sumOfSquaresOfDistances = 0;
                 foreach (Block blockObject in individual.arrayOfBlocks)
                 {
@@ -247,24 +265,16 @@ public class Run : MonoBehaviour {
                     }
                 }
                 float standardDeviationOfBlockVectors = sumOfSquaresOfDistances / numOfBlocks;
-                if(standardDeviationOfBlockVectors > 50)
+                if(standardDeviationOfBlockVectors > maxDeviation)
                 {
                     Work = 0; // This negates the work done by this object, as it was too varied
                 }
             }
-            */
 
-            // TODO THIS NEEDS WORK STILL SELECTION PROCESS RUINS ITSELF WITH MULTIPLE WINNERS
-            // THIS MUST BE FIXED
-
-            // Determine if the fitness is good enough to get into the winners bracket
-
-
+            // Keep track of winning individuals
             individual.SetFitness(Work);
             if (individual.GetFitness() > lowestWinnerScore)
-            {
-
-                
+            {                
                 // Keep track of best of gen
                 if (individual.GetFitness() > winnerFitness)
                 {
@@ -273,32 +283,11 @@ public class Run : MonoBehaviour {
                     Winners[0] = individual.Replicate("winner");
                     Winners[0].SetFitness(winnerFitness);
                 }
-                /*
-                // Select winners and if we have enough, then we need to check
-                
-                if (numberOfWinners >= pickedWinnersEachGen)
-                {
-                    //float tempLow = float.MaxValue;
-                    //int weakestBotIndex = -1;
-                    //for(int j = 0; j < Winners.Length; j++)
-                    //{
-                    if (Winners[0].GetFitness() < individual.GetFitness())
-                    {
-                        Winners[0] = individual.Replicate("demo");
-                        //weakestBotIndex = j;
-                        //tempLow = Winners[j].GetFitness();
-                    }
-                    //}
-                    //Winners[weakestBotIndex] = individual.Replicate("replacer");
-
-                }
-                else 
-                {
-                    Winners[numberOfWinners] = individual.Replicate("tempWinner");
-                    numberOfWinners++;
-                } */
             }
-            
+            if (individual.GetFitness() > OverallChampion.GetFitness())
+            {
+                OverallChampion = individual.Replicate("OverallChampion");
+            }
             //Remove the individual after testing is completed
             individual.SelfDestruct();
         }

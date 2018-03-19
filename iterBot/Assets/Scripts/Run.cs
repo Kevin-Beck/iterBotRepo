@@ -15,6 +15,7 @@ public class Run : MonoBehaviour {
     // The surfacce structures that the robots traverse
     public GameObject[] SurfaceTypeList;
     public int SelectedSurfaceType = 0; // the selcted type off the list of types
+    public float gravitationalForce = 1;
 
     [Header("Generational Data")]
     public int CurrentGenerationCount = 0; // must keep 0, first gen is 0, do not change
@@ -25,6 +26,7 @@ public class Run : MonoBehaviour {
     public int sizeOfCreaturesX = 3; // 3
     public int sizeOfCreaturesY = 6; // 6
     public int sizeOfCreaturesZ = 4; // 4
+    public int selectedBodyType = 0;
     [Header("DNA Attribute Boundaries")]
     public float densityOfBlocks = 0.3f; // .3f
     public float stabilizationChance = 0.1f; // .1f
@@ -121,6 +123,9 @@ public class Run : MonoBehaviour {
         Creatures = new DNA[numOfCreatures];
         Winners = new DNA[pickedWinnersEachGen];
 
+        Physics.gravity = new Vector3(0f, -9.81f * gravitationalForce, 0f);
+        maxDeviation = 2*(float)Math.Sqrt((sizeOfCreaturesX + sizeOfCreaturesY + sizeOfCreaturesZ));
+
         GenerateAllSurfaces();
         CreateRandomGeneration();
         InstantiateCreatureArray();
@@ -157,7 +162,7 @@ public class Run : MonoBehaviour {
         for (int i = 0; i < Creatures.Length; i++)
         {
             Creatures[i] = new DNA("G" + CurrentGenerationCount.ToString() + "Creature" + i.ToString(), sizeOfCreaturesX, sizeOfCreaturesY, sizeOfCreaturesZ, densityOfBlocks, stabilizationChance, minimumWeight, maximumWeight, minimumJointForce,
-                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList, JointTypeList);
+                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList[selectedBodyType], JointTypeList);
         } // Rolls new random creatures to fill array
     }
     public void InstantiateCreatureArray() {

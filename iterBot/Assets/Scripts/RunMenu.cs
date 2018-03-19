@@ -22,13 +22,36 @@ public class RunMenu : MonoBehaviour {
     public Button PauseButton;
     public Text PauseButtonText;
     private bool paused = false;
-    private int lastSelectedSpeedValue;
+    public int lastSelectedSpeedValue;
 
     public Button RestartButton;
     public Text RestartButtonText;
 
+    public Slider XSizeSlider;
+    public Slider YSizeSlider;
+    public Slider ZSizeSlider;
+    public Slider BlockDensitySlider;
+    public Slider BlockStabilitySlider;
+    public Dropdown BodyTypeDropdown;
+    
+    public Dropdown TerrainTypeDropdown;
+    public Slider GravitationalForceSlider;
+
+    public void SetSimulationData() {
+        RunController.GetComponent<Run>().sizeOfCreaturesX = (int)XSizeSlider.value;
+        RunController.GetComponent<Run>().sizeOfCreaturesY = (int)YSizeSlider.value;
+        RunController.GetComponent<Run>().sizeOfCreaturesZ = (int)ZSizeSlider.value;
+        RunController.GetComponent<Run>().densityOfBlocks = BlockDensitySlider.value;
+        RunController.GetComponent<Run>().stabilizationChance = BlockStabilitySlider.value;
+        RunController.GetComponent<Run>().SelectedSurfaceType = TerrainTypeDropdown.value;
+        RunController.GetComponent<Run>().gravitationalForce = GravitationalForceSlider.value;
+        RunController.GetComponent<Run>().selectedBodyType = BodyTypeDropdown.value;
+    }
     public void SpeedSelection() {
-        lastSelectedSpeedValue = timeScaleDropdown.value;
+        if(timeScaleDropdown.value != 0)
+        {
+            lastSelectedSpeedValue = timeScaleDropdown.value;
+        }
         RunController.GetComponent<Run>().UpdateSimulationSpeed();
     }
     public void PauseButtonClick() {
@@ -36,11 +59,10 @@ public class RunMenu : MonoBehaviour {
         {
             paused = true;
             PauseButtonText.text = "Run";
-            lastSelectedSpeedValue = timeScaleDropdown.value;
             timeScaleDropdown.value = 0;
             RunController.GetComponent<Run>().UpdateSimulationSpeed();
         }
-        else if (PauseButtonText.text == "Run") 
+        else
         {
             paused = false;
             PauseButtonText.text = "Pause";
@@ -49,6 +71,7 @@ public class RunMenu : MonoBehaviour {
         }
     }
     public void StartButtonClick() {
+        SetSimulationData();
         RestartButtonText.text = "Restart";
         RunController.GetComponent<Run>().RestartSimulation();
     }

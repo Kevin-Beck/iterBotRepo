@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23622672717491154}
   - component: {fileID: 54092053656595426}
   m_Layer: 0
-  m_Name: SphereRobotBody
+  m_Name: SphereBodySegment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

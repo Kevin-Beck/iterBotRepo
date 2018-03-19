@@ -334,7 +334,7 @@ public class DNA {
         }
     }
     // Function to create the data for the individual block data, based on information based into the DNA constructor
-    private void InitializeDNABlockData(int x, int y, int z, float density, float minW, float maxW, float chanceOfStabilization, GameObject[] SegmentTypes) {
+    private void InitializeDNABlockData(int x, int y, int z, float density, float minW, float maxW, float chanceOfStabilization, GameObject SegmentType) {
         arrayOfBlocks[x, y, z] = new Block();
         arrayOfBlocks[x, y, z].SetBlockPosition(new Vector3(x, y, z));
 
@@ -342,7 +342,7 @@ public class DNA {
         if (UnityEngine.Random.Range(0f, 1f) < density)
         {
             // Choose Segment Type
-            arrayOfBlocks[x, y, z].SetBlockType(SegmentTypes[UnityEngine.Random.Range(0, SegmentTypes.Length)]);
+            arrayOfBlocks[x, y, z].SetBlockType(SegmentType);
 
             // Set the min and max block weights and roll for a new one
             arrayOfBlocks[x, y, z].SetBlockMinWeight(minW);
@@ -379,7 +379,7 @@ public class DNA {
         }
         CreatureName = name;
     }
-    public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr, float minSpeed, float maxSpeed, GameObject[] segtypes, GameObject[] jointtypes) 
+    public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr, float minSpeed, float maxSpeed, GameObject segtype, GameObject[] jointtypes) 
     {
         arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
         CreatureName = name;
@@ -390,7 +390,7 @@ public class DNA {
             {
                 for (int k = 0; k < ArrayZ; k++)
                 {
-                    InitializeDNABlockData(i, j, k, densityOfBlocks, minWeight, maxWeight, stabilizedChance, segtypes);
+                    InitializeDNABlockData(i, j, k, densityOfBlocks, minWeight, maxWeight, stabilizedChance, segtype);
                 }
             }
         }

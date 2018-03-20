@@ -58,6 +58,8 @@ public class Run : MonoBehaviour {
     public DNA[] Winners;
     public DNA OverallChampion;
 
+    private float curTime = 0;
+    private bool pause = true;
     private IEnumerator loop; // This is the coroutine's name that runs the simulation loop
 
     public void ChampionSelectRound() {
@@ -69,6 +71,7 @@ public class Run : MonoBehaviour {
         {
             //Destroy(GameObject.Find(Winners[0].GetCreatureName()));
             //InstantiateMiniChampion(GameObject.Find("ChampionPosition").transform.position);
+            curTime = 0;
             loop = ChampionSelect(delay);
             StartCoroutine(loop);
         }
@@ -96,6 +99,7 @@ public class Run : MonoBehaviour {
     } // end of start code
     public void PauseSimulation() {
         Time.timeScale = 0;
+        pause = true;
     }
     public void RestartSimulation() {
         try
@@ -116,6 +120,8 @@ public class Run : MonoBehaviour {
         Time.timeScale = MenuController.GetComponent<RunMenu>().GetSimulationSpeed();
     }
     public void RunSimulation() {
+        curTime = 0;
+        pause = false;
         OverallChampion = new DNA("default", sizeOfCreaturesX, sizeOfCreaturesY, sizeOfCreaturesZ);
         CurrentGenerationCount = 0;
 
@@ -299,6 +305,14 @@ public class Run : MonoBehaviour {
         // Print out the best score so far
         Debug.Log("Gen: " + CurrentGenerationCount + "  Winner: " + winnerFitness);
         MenuController.GetComponent<RunMenu>().UpdateWinnerFitnessText(winnerFitness);
+    }
+    private void Update() {
+        if(!pause)
+        {
+            curTime += Time.deltaTime;
+            MenuController.GetComponent<RunMenu>().UpdateClockText(curTime);
+        }
+
     }
     private void PresentWinningCreatures() {
         int counter = 0;

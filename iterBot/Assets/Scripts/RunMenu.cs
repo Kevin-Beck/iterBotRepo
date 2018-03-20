@@ -14,6 +14,7 @@ public class RunMenu : MonoBehaviour {
 
     public Text generationText;
     public Text winnerFitnessText;
+    public Text clockText;
 
     public Button Cam1Button;
     public Button Cam2Button;
@@ -21,7 +22,7 @@ public class RunMenu : MonoBehaviour {
 
     public Button PauseButton;
     public Text PauseButtonText;
-    private bool paused = false;
+    public bool paused = false;
     public int lastSelectedSpeedValue;
 
     public Button RestartButton;
@@ -37,6 +38,34 @@ public class RunMenu : MonoBehaviour {
     public Dropdown TerrainTypeDropdown;
     public Slider GravitationalForceSlider;
 
+    public Dropdown NumberOfCreatures;
+    public Slider TestingTimeSlider;
+
+    public Text TipText;
+
+
+    public void TipTextXSliderValue() {
+        TipText.text = "Current value: " + XSizeSlider.value;
+    }
+    public void TipTextYSliderValue() {
+        TipText.text = "Current value: " + YSizeSlider.value;
+    }
+    public void TipTextZSliderValue() {
+        TipText.text = "Current value: " + ZSizeSlider.value;
+    }
+    public void TipTextBlockDensitySlider() {
+        TipText.text = "Current value: " + BlockDensitySlider.value.ToString("F");
+    }
+    public void TipTextBlockStabilitySlider() {
+        TipText.text = "Current value: " + BlockStabilitySlider.value.ToString("F");
+    }
+    public void TipTextGravitationalForceSlider() {
+        TipText.text = "Current value: " + GravitationalForceSlider.value.ToString("F");
+    }
+    public void TipTextTestingTimeSlider() {
+        TipText.text = "Current value: " + TestingTimeSlider.value;
+    }
+
     public void SetSimulationData() {
         RunController.GetComponent<Run>().sizeOfCreaturesX = (int)XSizeSlider.value;
         RunController.GetComponent<Run>().sizeOfCreaturesY = (int)YSizeSlider.value;
@@ -46,6 +75,8 @@ public class RunMenu : MonoBehaviour {
         RunController.GetComponent<Run>().SelectedSurfaceType = TerrainTypeDropdown.value;
         RunController.GetComponent<Run>().gravitationalForce = GravitationalForceSlider.value;
         RunController.GetComponent<Run>().selectedBodyType = BodyTypeDropdown.value;
+        RunController.GetComponent<Run>().RowsOfCreatures = (NumberOfCreatures.value + 3);
+        RunController.GetComponent<Run>().delay = (int)TestingTimeSlider.value;
     }
     public void SpeedSelection() {
         if(timeScaleDropdown.value != 0)
@@ -75,7 +106,6 @@ public class RunMenu : MonoBehaviour {
         RestartButtonText.text = "Restart";
         RunController.GetComponent<Run>().RestartSimulation();
     }
-
     public void SwitchToCam1() {
         Camera1.enabled = true;
         Camera2.enabled = false;
@@ -99,6 +129,10 @@ public class RunMenu : MonoBehaviour {
     }
     public void UpdateWinnerFitnessText(float fitness) {
         winnerFitnessText.text = "Winner Fitness: " + (int)fitness;
+    }
+    public void UpdateClockText(float clock) {
+        
+        clockText.text = "Time: " + clock.ToString("F");
     }
 
     // Use this for initialization

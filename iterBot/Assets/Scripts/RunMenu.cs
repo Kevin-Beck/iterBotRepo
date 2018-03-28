@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RunMenu : MonoBehaviour {
     public GameObject RunController;
@@ -65,7 +66,9 @@ public class RunMenu : MonoBehaviour {
     public void TipTextTestingTimeSlider() {
         TipText.text = "Current value: " + TestingTimeSlider.value;
     }
-
+    public void SwitchSceneToMainMenu() {
+        SceneManager.LoadScene(0);
+    }
     public void SetSimulationData() {
         RunController.GetComponent<Run>().sizeOfCreaturesX = (int)XSizeSlider.value;
         RunController.GetComponent<Run>().sizeOfCreaturesY = (int)YSizeSlider.value;

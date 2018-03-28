@@ -76,8 +76,12 @@ public class Run : MonoBehaviour {
             StartCoroutine(loop);
         }
     }
-
+    public void ClearMemory() {
+        Resources.UnloadUnusedAssets();
+    }
     IEnumerator ChampionSelect(int numberOfSeconds) {
+        ClearMemory(); // Just a precaution to stop mem leaks
+
         yield return new WaitForSeconds(numberOfSeconds);
         // Get a champion from the current generation,  start a new test from that generation
         

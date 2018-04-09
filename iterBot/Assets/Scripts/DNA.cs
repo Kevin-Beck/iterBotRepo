@@ -406,7 +406,7 @@ public class DNA {
         }
         CreatureName = name;
     }
-    public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr, float minSpeed, float maxSpeed, GameObject segtype, GameObject[] jointtypes, GameObject jointrender) 
+    public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr, float minSpeed, float maxSpeed, GameObject[] segtypearray, int segSelected, GameObject[] jointtypes, GameObject jointrender) 
     {
         arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
         CreatureName = name;
@@ -418,6 +418,16 @@ public class DNA {
             {
                 for (int k = 0; k < ArrayZ; k++)
                 {
+                    GameObject segtype;
+                    if (segSelected == 2)
+                    {
+                        int temp = Random.Range(0, 2);
+                        segtype = segtypearray[temp];
+                    }
+                    else
+                    {
+                        segtype = segtypearray[segSelected];
+                    }
                     InitializeDNABlockData(i, j, k, densityOfBlocks, minWeight, maxWeight, stabilizedChance, segtype);
                 }
             }

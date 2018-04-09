@@ -20,6 +20,7 @@ public class RunMenu : MonoBehaviour {
     public GameObject CameraPanel;
     public GameObject SimulationSettingsPanel;
     public GameObject RunTimeSettingsPanel;
+    public GameObject AlertPanel;
 
     [Header("Cameras")]
     public Button Cam1Button;
@@ -51,7 +52,14 @@ public class RunMenu : MonoBehaviour {
     public Dropdown NumberOfCreatures;
     public Slider TestingTimeSlider;
 
+    public Slider XFitnessVectorSlider;
+    public Slider YFitnessVectorSlider;
+
     public Text TipText;
+    public Text AlertText;
+
+    public GameObject FitnessTargetMarker;
+    private GameObject Target;
 
     [Header("Coloring Options")]
     public Color PanelColor;
@@ -67,26 +75,61 @@ public class RunMenu : MonoBehaviour {
         SimulationSettingsPanel.GetComponent<Image>().color = PanelColor;
         RunTimeSettingsPanel.GetComponent<Image>().color = PanelColor;
 
+        ToolTipPanel.GetComponent<Image>().enabled = false;
+
+
+        Target = Instantiate(FitnessTargetMarker, new Vector3(20, 0, 20), Quaternion.identity);
+        XFitnessVectorChange();
+        YFitnessVectorChange();
+
+
 }
+    public void EnableTipTextBackground() {
+        ToolTipPanel.GetComponent<Image>().enabled = true;
+    }
+    public void DisableTipTextBackground() {
+        ToolTipPanel.GetComponent<Image>().enabled = false;
+    }
+    public void XFitnessVectorChange() {
+        EnableTipTextBackground();
+        TipText.text = "Current value: " + XFitnessVectorSlider.value;
+        UpdateFitnessMarker();
+    }
+    public void YFitnessVectorChange() {
+        EnableTipTextBackground();
+        TipText.text = "Current value: " + YFitnessVectorSlider.value;
+        UpdateFitnessMarker();
+    }
+    void UpdateFitnessMarker() {
+        Target.GetComponent<Transform>().position = new Vector3(175f, 25*YFitnessVectorSlider.value, -50 * XFitnessVectorSlider.value);
+        RunController.GetComponent<Run>().fitnessVector = Target.GetComponent<Transform>().position;
+    }
     public void TipTextXSliderValue() {
+        EnableTipTextBackground();
         TipText.text = "Current value: " + XSizeSlider.value;
     }
     public void TipTextYSliderValue() {
+        EnableTipTextBackground();
         TipText.text = "Current value: " + YSizeSlider.value;
     }
     public void TipTextZSliderValue() {
+        EnableTipTextBackground();
         TipText.text = "Current value: " + ZSizeSlider.value;
     }
     public void TipTextBlockDensitySlider() {
+        EnableTipTextBackground();
         TipText.text = "Current value: " + BlockDensitySlider.value.ToString("F");
     }
     public void TipTextBlockStabilitySlider() {
+        EnableTipTextBackground();
         TipText.text = "Current value: " + BlockStabilitySlider.value.ToString("F");
     }
     public void TipTextGravitationalForceSlider() {
+        EnableTipTextBackground();
         TipText.text = "Current value: " + GravitationalForceSlider.value.ToString("F");
     }
     public void TipTextTestingTimeSlider() {
+        EnableTipTextBackground();
         TipText.text = "Current value: " + TestingTimeSlider.value;
     }
     public void SwitchSceneToMainMenu() {
@@ -113,9 +156,17 @@ public class RunMenu : MonoBehaviour {
     }
 
     public void StartButtonClick() {
-        SetSimulationData();
-        RestartButtonText.text = "Restart";
-        RunController.GetComponent<Run>().RestartSimulation();
+        if (generationText.text != "Generation: 0")
+        {
+            SetSimulationData();
+            RestartButtonText.text = "Restart";        
+            UpdateWinnerFitnessText(0);
+            RunController.GetComponent<Run>().RestartSimulation();
+            AlertText.text = "Initializing base model for simulation.";
+        }else
+        {
+            AlertText.text = "Cannot restart until initialization procedure has finished.";
+        }
     }
     public void SwitchToCam1() {
         Camera1.enabled = true;

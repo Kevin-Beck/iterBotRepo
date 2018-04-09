@@ -60,6 +60,8 @@ public class Run : MonoBehaviour {
     public DNA OverallChampion;
     public DNA BestChampion;
 
+    private bool candidatefound = false;
+
     private float curTime = 0;
     private bool pause = true;
     private IEnumerator loop; // This is the coroutine's name that runs the simulation loop
@@ -71,8 +73,6 @@ public class Run : MonoBehaviour {
         }
         else
         {
-            //Destroy(GameObject.Find(Winners[0].GetCreatureName()));
-            //InstantiateMiniChampion(GameObject.Find("ChampionPosition").transform.position);
             curTime = 0;
             loop = ChampionSelect(delay);
             StartCoroutine(loop);
@@ -91,10 +91,19 @@ public class Run : MonoBehaviour {
         GradeAllCreatures();
         if(Winners[0].GetFitness() == 0)
         {
+            MenuController.GetComponent<RunMenu>().AlertText.text = "No successful candidate created in Generation " + CurrentGenerationCount + ". \nReinitializing Base Model";
             CreateRandomGeneration();
         }
         else
         {
+            if (candidatefound == false)
+            {
+                MenuController.GetComponent<RunMenu>().AlertText.text = "Successful Candidate created in Generation " + CurrentGenerationCount + "\nTesting Mutations of Best Candidate";
+                candidatefound = true;
+            } else
+            {
+                MenuController.GetComponent<RunMenu>().AlertText.text = "Continuing Mutation and Testing Process";
+            }
             GenerateArrayFromIndividual();
         }
         InstantiateCreatureArray();
@@ -108,6 +117,7 @@ public class Run : MonoBehaviour {
         pause = true;
     }
     public void RestartSimulation() {
+        candidatefound = false;
         try
         {
             StopSimulation();
@@ -145,9 +155,6 @@ public class Run : MonoBehaviour {
         loop = ChampionSelect(delay);
         StartCoroutine(loop);
     }
-    /*public void InstantiateMiniChampion(Vector3 position) {
-        Winners[0].InstantiateDNAasUnityCreature(position);
-    }*/
     public void GenerateArrayFromIndividual() {
         int count = 0;
         // PUtting this here to get the project done,
@@ -181,7 +188,7 @@ public class Run : MonoBehaviour {
         for (int i = 0; i < Creatures.Length; i++)
         {
             Creatures[i] = new DNA("G" + CurrentGenerationCount.ToString() + "Creature" + i.ToString(), sizeOfCreaturesX, sizeOfCreaturesY, sizeOfCreaturesZ, densityOfBlocks, stabilizationChance, minimumWeight, maximumWeight, minimumJointForce,
-                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList[selectedBodyType], JointTypeList, JointRenderObject);
+                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList, selectedBodyType, JointTypeList, JointRenderObject);
         } // Rolls new random creatures to fill array
     }
     public void InstantiateCreatureArray() {

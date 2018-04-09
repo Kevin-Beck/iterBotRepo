@@ -6,6 +6,9 @@ public class DNA {
     private float fitness;
     private Vector3 startingPosition;
 
+    public GameObject JointRenderingObject;
+    private bool RenderJointObjects;
+
     // gets the name of the object
     public string GetCreatureName() {
         return CreatureName;
@@ -39,7 +42,6 @@ public class DNA {
 
                 // Find the block's name, and set that name to the name of the segment
                 blockObject.CalculateBlockName(CreatureName);
-
 
                 // This stores the value of the unity objects name in the refered to block object inside the DNA
                 tempSegment.name = blockObject.GetBlockName();
@@ -99,6 +101,15 @@ public class DNA {
                         xPosHJ.useMotor = true;
 
                         ParentChild(CreatureParentObject, xconnectionobject);
+                        // This is for the rendering of the joint visualization:
+                        if(RenderJointObjects)
+                        {
+                            GameObject RenderTemp = MonoBehaviour.Instantiate(JointRenderingObject, instantiationVector, Quaternion.Euler(new Vector3(0, 0, 90)));
+                            RenderTemp.name = CreatureName + " + " + curBlockName + " + " + blockToBeConnectedName;
+                            RenderTemp.GetComponent<JointRendering>().baseObject = GameObject.Find(curBlockName);
+                            RenderTemp.GetComponent<JointRendering>().targetObject = GameObject.Find(blockToBeConnectedName);
+                            ParentChild(CreatureParentObject, RenderTemp);
+                        }
                     }
                     // Fixed Y Joint
                     if (arrayOfBlocks[i, j, k].GetPosYCon().GetIsFixedJoint() == true) {
@@ -108,10 +119,7 @@ public class DNA {
                         GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
                     }
                     else if (arrayOfBlocks[i, j, k].GetPosYCon().GetConType() != null) {
-                        // Non-Fixed Y Joint
-                        //   string name = "x" + i + "y" + j + "z" + k;
-                        //   Vector3 instantiationVector = arrayOfBlocks[i+1, j, k].GetBlockPosition() + instantiationPosition;
-                        // Non-Fixed X Joint
+
                         string curBlockName = CreatureName + "x" + i + "y" + j + "z" + k;
                         int temp = j + 2;
                         string blockToBeConnectedName = CreatureName + "x" + i + "y" + temp + "z" + k;
@@ -138,6 +146,14 @@ public class DNA {
                         yPosHJ.useMotor = true;
 
                         ParentChild(CreatureParentObject, yconnectionobject);
+                        if (RenderJointObjects)
+                        {
+                            GameObject RenderTemp = MonoBehaviour.Instantiate(JointRenderingObject, instantiationVector, Quaternion.Euler(new Vector3(0, 0, 90)));
+                            RenderTemp.name = CreatureName + " + " + curBlockName + " + " + blockToBeConnectedName;
+                            RenderTemp.GetComponent<JointRendering>().baseObject = GameObject.Find(curBlockName);
+                            RenderTemp.GetComponent<JointRendering>().targetObject = GameObject.Find(blockToBeConnectedName);
+                            ParentChild(CreatureParentObject, RenderTemp);
+                        }
                     }
 
                     //Fixed Z Joint
@@ -148,8 +164,7 @@ public class DNA {
                         GameObject.Find(name).AddComponent<FixedJoint>().connectedBody = GameObject.Find(name2).GetComponent<Rigidbody>();
                     }
                     else if (arrayOfBlocks[i, j, k].GetPosZCon().GetConType() != null) {
-                        // Non-Fixed Z Joint
-                        //  string name = "x" + i + "y" + j + "z" + k;
+
                         // Non-Fixed X Joint
                         string curBlockName = CreatureName + "x" + i + "y" + j + "z" + k;
                         int temp = k + 2;
@@ -177,6 +192,14 @@ public class DNA {
                         zPosHJ.useMotor = true;
 
                         ParentChild(CreatureParentObject, zconnectionobject);
+                        if (RenderJointObjects)
+                        {
+                            GameObject RenderTemp = MonoBehaviour.Instantiate(JointRenderingObject, instantiationVector, Quaternion.Euler(new Vector3(0, 0, 90)));
+                            RenderTemp.name = CreatureName + " + " + curBlockName + " + " + blockToBeConnectedName;
+                            RenderTemp.GetComponent<JointRendering>().baseObject = GameObject.Find(curBlockName);
+                            RenderTemp.GetComponent<JointRendering>().targetObject = GameObject.Find(blockToBeConnectedName);
+                            ParentChild(CreatureParentObject, RenderTemp);
+                        }
                     }
                 }
             }
@@ -264,6 +287,7 @@ public class DNA {
                 }
             }
         }
+        replicatedDNA.JointRenderingObject = JointRenderingObject;
         return replicatedDNA;
     }
     // Mutator Functions change the values of the blocks, should be used during the iterative process of changing genes
@@ -363,6 +387,9 @@ public class DNA {
     public void SetFitness(float fitnessScore) {
         fitness = fitnessScore;
     }
+    public void SetRenderJointObjects(bool x) {
+        RenderJointObjects = x;
+    }
     // Constructors
     public DNA(string name, int SizeX, int SizeY, int SizeZ) { // Basic Constructor for blank objects
         arrayOfBlocks = new Block[SizeX, SizeY, SizeZ];
@@ -379,10 +406,11 @@ public class DNA {
         }
         CreatureName = name;
     }
-    public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr, float minSpeed, float maxSpeed, GameObject segtype, GameObject[] jointtypes) 
+    public DNA(string name, int ArrayX, int ArrayY, int ArrayZ, float densityOfBlocks, float stabilizedChance, float minWeight, float maxWeight, float minStr, float maxStr, float minSpeed, float maxSpeed, GameObject segtype, GameObject[] jointtypes, GameObject jointrender) 
     {
         arrayOfBlocks = new Block[ArrayX, ArrayY, ArrayZ];
         CreatureName = name;
+        JointRenderingObject = jointrender;
 
         for (int i = 0; i < ArrayX; i++)
         {

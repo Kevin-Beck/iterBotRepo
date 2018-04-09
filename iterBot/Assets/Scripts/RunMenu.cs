@@ -5,27 +5,36 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class RunMenu : MonoBehaviour {
+    [Header("RunTimeConstants")]
     public GameObject RunController;
 
+    [Header("Cameras")]
     public Camera Camera1;
     public Camera Camera2;
     public Camera Camera3;
 
-    public Dropdown timeScaleDropdown;
+    [Header("Panels")]
+    public GameObject ToolTipPanel;
+    public GameObject InfoPanel;
+    public GameObject ControlPanel;
+    public GameObject CameraPanel;
+    public GameObject SimulationSettingsPanel;
+    public GameObject RunTimeSettingsPanel;
 
-    public Text generationText;
-    public Text winnerFitnessText;
-    public Text clockText;
-
+    [Header("Cameras")]
     public Button Cam1Button;
     public Button Cam2Button;
     public Button Cam3Button;
 
-    public Button PauseButton;
-    public Text PauseButtonText;
-    public bool paused = false;
-    public int lastSelectedSpeedValue;
+    [Header("Top Info Stuff")]
+    public Text generationText;
+    public Text winnerFitnessText;
+    public Text clockText;
 
+    [Header("Control Stuff")]
+    public Dropdown timeScaleDropdown;
+    private bool paused = false;
+    private int lastSelectedSpeedValue;
     public Button RestartButton;
     public Text RestartButtonText;
 
@@ -44,7 +53,21 @@ public class RunMenu : MonoBehaviour {
 
     public Text TipText;
 
+    [Header("Coloring Options")]
+    public Color PanelColor;
+    public Color HeaviestBlockColor;
+    public Color LightestBlockColor;
+    void Start() { 
+        lastSelectedSpeedValue = 1;
 
+        ToolTipPanel.GetComponent<Image>().color = PanelColor;
+        InfoPanel.GetComponent<Image>().color = PanelColor;
+        ControlPanel.GetComponent<Image>().color = PanelColor;
+        CameraPanel.GetComponent<Image>().color = PanelColor;
+        SimulationSettingsPanel.GetComponent<Image>().color = PanelColor;
+        RunTimeSettingsPanel.GetComponent<Image>().color = PanelColor;
+
+}
     public void TipTextXSliderValue() {
         TipText.text = "Current value: " + XSizeSlider.value;
     }
@@ -88,22 +111,7 @@ public class RunMenu : MonoBehaviour {
         }
         RunController.GetComponent<Run>().UpdateSimulationSpeed();
     }
-    public void PauseButtonClick() {
-        if (PauseButtonText.text == "Pause")
-        {
-            paused = true;
-            PauseButtonText.text = "Run";
-            timeScaleDropdown.value = 0;
-            RunController.GetComponent<Run>().UpdateSimulationSpeed();
-        }
-        else
-        {
-            paused = false;
-            PauseButtonText.text = "Pause";
-            timeScaleDropdown.value = lastSelectedSpeedValue;
-            RunController.GetComponent<Run>().UpdateSimulationSpeed();
-        }
-    }
+
     public void StartButtonClick() {
         SetSimulationData();
         RestartButtonText.text = "Restart";
@@ -137,9 +145,4 @@ public class RunMenu : MonoBehaviour {
         
         clockText.text = "Time: " + clock.ToString("F");
     }
-
-    // Use this for initialization
-    void Start () {
-        lastSelectedSpeedValue = 1;
-	}
 }

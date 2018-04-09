@@ -45,7 +45,6 @@ public class Run : MonoBehaviour {
     public int pickedWinnersEachGen = 1;
     public float maxDeviation = 50; // maximum we want the bots to be able to vary
 
-   
     [Header("Menu Items")]
     public GameObject MenuController;
 
@@ -54,9 +53,12 @@ public class Run : MonoBehaviour {
     public GameObject[] SegmentTypeList;
     public GameObject[] JointTypeList;
 
+    public GameObject JointRenderObject;
+
     public DNA[] Creatures;
     public DNA[] Winners;
     public DNA OverallChampion;
+    public DNA BestChampion;
 
     private float curTime = 0;
     private bool pause = true;
@@ -147,8 +149,15 @@ public class Run : MonoBehaviour {
         Winners[0].InstantiateDNAasUnityCreature(position);
     }*/
     public void GenerateArrayFromIndividual() {
-
         int count = 0;
+        // PUtting this here to get the project done,
+        // it just sees if the winner beat the overal best guy, if not, it makes the winner array[0] a replicate
+        // of the overall champ
+
+        if (Winners[0].GetFitness() < OverallChampion.GetFitness())
+        {
+            Winners[0] = OverallChampion.Replicate("ReplacementWinner");
+        }
         for (int i = 0; i < Mathf.Sqrt(numOfCreatures); i++)
         {
             for (int j = 0; j < Math.Sqrt(numOfCreatures); j++)
@@ -172,7 +181,7 @@ public class Run : MonoBehaviour {
         for (int i = 0; i < Creatures.Length; i++)
         {
             Creatures[i] = new DNA("G" + CurrentGenerationCount.ToString() + "Creature" + i.ToString(), sizeOfCreaturesX, sizeOfCreaturesY, sizeOfCreaturesZ, densityOfBlocks, stabilizationChance, minimumWeight, maximumWeight, minimumJointForce,
-                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList[selectedBodyType], JointTypeList);
+                maximumJointForce, minimumJointSpeed, maximumJointSpeed, SegmentTypeList[selectedBodyType], JointTypeList, JointRenderObject);
         } // Rolls new random creatures to fill array
     }
     public void InstantiateCreatureArray() {
@@ -182,6 +191,10 @@ public class Run : MonoBehaviour {
         {
             for (int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
             {
+                if(k == 0)
+                {
+                    Creatures[k].SetRenderJointObjects(true);
+                }
                 Creatures[k].InstantiateDNAasUnityCreature(new Vector3(scaleX * i, 1, scaleZ * j));                
                 k++;
             }
@@ -301,14 +314,14 @@ public class Run : MonoBehaviour {
             }
             if (individual.GetFitness() > OverallChampion.GetFitness())
             {
+                // Print the winner to the screen and also set the overall champ to the new winning dude
+                MenuController.GetComponent<RunMenu>().UpdateWinnerFitnessText(winnerFitness);
                 OverallChampion = individual.Replicate("OverallChampion");
             }
             //Remove the individual after testing is completed
             individual.SelfDestruct();
         }
-        // Print out the best score so far
-        Debug.Log("Gen: " + CurrentGenerationCount + "  Winner: " + winnerFitness);
-        MenuController.GetComponent<RunMenu>().UpdateWinnerFitnessText(winnerFitness);
+
     }
     private void Update() {
         if(!pause)

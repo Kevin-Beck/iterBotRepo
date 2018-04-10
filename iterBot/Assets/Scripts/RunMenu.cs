@@ -19,7 +19,6 @@ public class RunMenu : MonoBehaviour {
     public GameObject ControlPanel;
     public GameObject CameraPanel;
     public GameObject SimulationSettingsPanel;
-    public GameObject RunTimeSettingsPanel;
     public GameObject AlertPanel;
 
     [Header("Cameras")]
@@ -33,7 +32,6 @@ public class RunMenu : MonoBehaviour {
     public Text clockText;
 
     [Header("Control Stuff")]
-    public Dropdown timeScaleDropdown;
     private bool paused = false;
     private int lastSelectedSpeedValue;
     public Button RestartButton;
@@ -61,6 +59,8 @@ public class RunMenu : MonoBehaviour {
     public GameObject FitnessTargetMarker;
     private GameObject Target;
 
+    public Slider SimSpeedSlider;
+
     [Header("Coloring Options")]
     public Color PanelColor;
     public Color HeaviestBlockColor;
@@ -73,7 +73,6 @@ public class RunMenu : MonoBehaviour {
         ControlPanel.GetComponent<Image>().color = PanelColor;
         CameraPanel.GetComponent<Image>().color = PanelColor;
         SimulationSettingsPanel.GetComponent<Image>().color = PanelColor;
-        RunTimeSettingsPanel.GetComponent<Image>().color = PanelColor;
 
         ToolTipPanel.GetComponent<Image>().enabled = false;
 
@@ -92,12 +91,12 @@ public class RunMenu : MonoBehaviour {
     }
     public void XFitnessVectorChange() {
         EnableTipTextBackground();
-        TipText.text = "Current value: " + XFitnessVectorSlider.value;
+        TipText.text = "Current value: " + XFitnessVectorSlider.value.ToString("F");
         UpdateFitnessMarker();
     }
     public void YFitnessVectorChange() {
         EnableTipTextBackground();
-        TipText.text = "Current value: " + YFitnessVectorSlider.value;
+        TipText.text = "Current value: " + YFitnessVectorSlider.value.ToString("F");
         UpdateFitnessMarker();
     }
     void UpdateFitnessMarker() {
@@ -107,6 +106,10 @@ public class RunMenu : MonoBehaviour {
     public void TipTextXSliderValue() {
         EnableTipTextBackground();
         TipText.text = "Current value: " + XSizeSlider.value;
+    }
+    public void TipTextSimSpeedSliderValue() {
+        EnableTipTextBackground();
+        TipText.text = "Current value: " + SimSpeedSlider.value +"x";
     }
     public void TipTextYSliderValue() {
         EnableTipTextBackground();
@@ -148,10 +151,6 @@ public class RunMenu : MonoBehaviour {
         RunController.GetComponent<Run>().delay = (int)TestingTimeSlider.value;
     }
     public void SpeedSelection() {
-        if(timeScaleDropdown.value != 0)
-        {
-            lastSelectedSpeedValue = timeScaleDropdown.value;
-        }
         RunController.GetComponent<Run>().UpdateSimulationSpeed();
     }
 
@@ -183,8 +182,8 @@ public class RunMenu : MonoBehaviour {
         Camera1.enabled = false;
         Camera2.enabled = false;
     }
-    public int GetSimulationSpeed() {
-        return timeScaleDropdown.value;
+    public float GetSimulationSpeed() {
+        return SimSpeedSlider.value;
     }
     public void UpdateGenerationText(float value) {
         generationText.text = "Generation: " + value;

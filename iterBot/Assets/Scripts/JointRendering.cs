@@ -10,7 +10,6 @@ public class JointRendering : MonoBehaviour {
     private Transform targetTransform;
 
     public float speed = 1.0F;
-    private float lengthScale = 1.0f;
     public float distanceBetweenBaseAndTarget;
 
     void Start () {

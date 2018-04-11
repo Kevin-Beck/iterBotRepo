@@ -231,6 +231,7 @@ public class Run : MonoBehaviour {
         }
     }
     public void GenerateTerrainSurface(Vector3 location, int terrainNumber) {
+
         GameObject individualTerrain = Instantiate(SurfaceTypeList[SelectedSurfaceType], new Vector3(location.x, 0, location.z), Quaternion.identity);
         individualTerrain.name = "Terrain" + terrainNumber;
     }

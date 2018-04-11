@@ -32,8 +32,6 @@ public class RunMenu : MonoBehaviour {
     public Text clockText;
 
     [Header("Control Stuff")]
-    private bool paused = false;
-    private int lastSelectedSpeedValue;
     public Button RestartButton;
     public Text RestartButtonText;
 
@@ -65,9 +63,10 @@ public class RunMenu : MonoBehaviour {
     public Color PanelColor;
     public Color HeaviestBlockColor;
     public Color LightestBlockColor;
-    void Start() { 
-        lastSelectedSpeedValue = 1;
 
+    public GameObject TerrainPreview;
+
+    void Start() { 
         ToolTipPanel.GetComponent<Image>().color = PanelColor;
         InfoPanel.GetComponent<Image>().color = PanelColor;
         ControlPanel.GetComponent<Image>().color = PanelColor;
@@ -76,12 +75,11 @@ public class RunMenu : MonoBehaviour {
 
         ToolTipPanel.GetComponent<Image>().enabled = false;
 
-
         Target = Instantiate(FitnessTargetMarker, new Vector3(20, 0, 20), Quaternion.identity);
         XFitnessVectorChange();
         YFitnessVectorChange();
 
-
+        GenerateTerrainPreview();
 }
     public void EnableTipTextBackground() {
         ToolTipPanel.GetComponent<Image>().enabled = true;
@@ -133,6 +131,7 @@ public class RunMenu : MonoBehaviour {
     }
     public void TipTextTestingTimeSlider() {
         EnableTipTextBackground();
+        RunController.GetComponent<Run>().delay = (int)TestingTimeSlider.value;
         TipText.text = "Current value: " + TestingTimeSlider.value;
     }
     public void SwitchSceneToMainMenu() {
@@ -153,8 +152,27 @@ public class RunMenu : MonoBehaviour {
     public void SpeedSelection() {
         RunController.GetComponent<Run>().UpdateSimulationSpeed();
     }
-
+    public void GenerateTerrainPreview() {
+        if (generationText.text == "Generation:")
+        {
+            try
+            {
+                GameObject.Destroy(GameObject.Find("Terrain6"));
+            }
+            catch
+            {
+            }
+            RunController.GetComponent<Run>().SelectedSurfaceType = TerrainTypeDropdown.value;
+            RunController.GetComponent<Run>().GenerateTerrainSurface(Vector3.zero, 6);
+        }        
+    }
     public void StartButtonClick() {
+        try
+        {
+            GameObject.Destroy(GameObject.Find("Terrain6"));
+        }catch
+        {
+        }
         if (generationText.text != "Generation: 0")
         {
             SetSimulationData();

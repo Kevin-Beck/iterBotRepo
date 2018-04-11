@@ -5,6 +5,6 @@ using UnityEngine.UI;
 
 public class WhenTheProgramStarts : MonoBehaviour {
     private void Start() {
-        Screen.SetResolution(1280, 720, true);
+        Screen.SetResolution(1280, 720, false);
     }
 }

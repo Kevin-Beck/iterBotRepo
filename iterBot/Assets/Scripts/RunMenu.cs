@@ -8,12 +8,21 @@ public class RunMenu : MonoBehaviour {
     [Header("RunTimeConstants")]
     public GameObject RunController;
 
+    [Header("ConfigMenu")]
+    public Button ConfigMenuButton;
+    public GameObject ConfigMenu;
+    public Button ConfigDoneButton;
+    public Button ConfigWindowButton;
+    public Button ConfigFullScreenButton;
+    public Dropdown ResolutionDropdown;
+    private bool fullscreenbool = true;
+
     [Header("Cameras")]
     public Camera Camera1;
     public Camera Camera2;
     public Camera Camera3;
 
-    [Header("Panels")]
+    [Header("Main Panels")]
     public GameObject ToolTipPanel;
     public GameObject InfoPanel;
     public GameObject ControlPanel;
@@ -32,39 +41,41 @@ public class RunMenu : MonoBehaviour {
     public Text clockText;
 
     [Header("Control Stuff")]
-    public Button RestartButton;
-    public Text RestartButtonText;
-
+    [Header("Individual")]
     public Slider XSizeSlider;
     public Slider YSizeSlider;
     public Slider ZSizeSlider;
     public Slider BlockDensitySlider;
     public Slider BlockStabilitySlider;
     public Dropdown BodyTypeDropdown;
-    
+
+    [Header("Environment")]
     public Dropdown TerrainTypeDropdown;
     public Slider GravitationalForceSlider;
+    public GameObject TerrainPreview;
 
+    [Header("Algorithm")]
     public Dropdown NumberOfCreatures;
     public Slider TestingTimeSlider;
-
     public Slider XFitnessVectorSlider;
     public Slider YFitnessVectorSlider;
-
-    public Text TipText;
-    public Text AlertText;
-
     public GameObject FitnessTargetMarker;
     private GameObject Target;
 
+    [Header("Start/Restart/Speed")]
+    public Button RestartButton;
+    public Text RestartButtonText;
     public Slider SimSpeedSlider;
+
+    [Header("Information")]
+    public Text TipText;
+    public Text AlertText;
 
     [Header("Coloring Options")]
     public Color PanelColor;
     public Color HeaviestBlockColor;
     public Color LightestBlockColor;
 
-    public GameObject TerrainPreview;
 
     void Start() { 
         ToolTipPanel.GetComponent<Image>().color = PanelColor;
@@ -212,5 +223,39 @@ public class RunMenu : MonoBehaviour {
     public void UpdateClockText(float clock) {
         
         clockText.text = "Time: " + clock.ToString("F");
+    }
+    public void ConfigButtonClick() {
+        ConfigMenu.SetActive(true);
+    }
+    public void ConfigDoneButtonClick() {
+        ConfigMenu.SetActive(false);
+    }
+    public void FullScreenButtonPress() {
+        fullscreenbool = true;
+        ResolutionChanged();
+    }
+    public void WindowButtonPress() {
+        fullscreenbool = false;
+        ResolutionChanged();
+    }
+    public void ResolutionChanged() {
+        int dropdownvalue = ResolutionDropdown.value;
+        if (dropdownvalue == 0)
+        {
+            Screen.SetResolution(1280, 720, fullscreenbool);
+        }
+        else if(dropdownvalue == 1)
+        {
+            Screen.SetResolution(1366, 768, fullscreenbool);
+        }
+        else if(dropdownvalue == 2)
+        {
+            Screen.SetResolution(1920, 1080, fullscreenbool);
+        }
+        else if(dropdownvalue == 3)
+        {
+            Screen.SetResolution(2560, 1440, fullscreenbool);
+        }
+       
     }
 }

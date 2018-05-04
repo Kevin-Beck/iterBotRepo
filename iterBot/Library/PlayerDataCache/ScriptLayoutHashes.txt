@@ -1,4 +1,4 @@
-WindowsStandalone
+OSXStandalone
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.QuitScript
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.WhenTheProgramStarts
 9ddbc95efc62aa7e10eeb66226d8de69 Assembly-CSharp.dll:.FollowCamera

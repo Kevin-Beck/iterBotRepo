@@ -333,7 +333,6 @@ public class Run : MonoBehaviour {
             curTime += Time.deltaTime;
             MenuController.GetComponent<RunMenu>().UpdateClockText(curTime);
         }
-
     }
     private void PresentWinningCreatures() {
         int counter = 0;

@@ -223,7 +223,10 @@ public class RunMenu : MonoBehaviour {
     public void StartButtonClick() {
         try
         {
-            GameObject.Destroy(GameObject.Find("Terrain0"));
+            if(generationText.text == "Generation:")
+            {
+                GameObject.Destroy(GameObject.Find("Terrain0"));
+            }
         }catch
         {
         }

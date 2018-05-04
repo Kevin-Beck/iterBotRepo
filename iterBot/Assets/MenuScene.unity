@@ -141,6 +141,84 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!1 &61474540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 61474541}
+  - component: {fileID: 61474543}
+  - component: {fileID: 61474542}
+  m_Layer: 5
+  m_Name: Heading4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &61474541
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 61474540}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 579920909}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &61474542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114802048345123098, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 61474540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 06aeae14bc9158141851416305e63220, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "Block Density\r"
+--- !u!222 &61474543
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222782947260761872, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 61474540}
 --- !u!1001 &144544826
 Prefab:
   m_ObjectHideFlags: 0
@@ -301,7 +379,7 @@ Prefab:
     - target: {fileID: 224369792590436928, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 153
+      value: 761
       objectReference: {fileID: 0}
     - target: {fileID: 1091944024274940, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
       propertyPath: m_Name
@@ -330,7 +408,7 @@ Prefab:
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -350,7 +428,7 @@ Prefab:
     - target: {fileID: 224545407067992954, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224545407067992954, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -370,7 +448,7 @@ Prefab:
     - target: {fileID: 224364158326911834, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224364158326911834, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -440,7 +518,7 @@ Prefab:
     - target: {fileID: 224397623459713074, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.60578185
       objectReference: {fileID: 0}
     - target: {fileID: 114193158633427606, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -492,6 +570,200 @@ Prefab:
       propertyPath: m_Text
       value: The Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 114655982863749882, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Terrain Generation: '
+      objectReference: {fileID: 0}
+    - target: {fileID: 114960902821164084, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "The next section of options you will see are the terrain modifications.
+        In iterBot, you have the\r ability to modify the both the terrain types used
+        by the bots as well as the gravitational force applied\r to the bots on their
+        terrain. We wanted to include both of these as options to allow as much\r
+        customization as possible as well as continue to strive down the path of eventually
+        implementing real\r off-world testing.\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 114634217012898724, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Terrain Type:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074618690594090, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -152.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518938958302796, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -342.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 361
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -532.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -646.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 209
+      objectReference: {fileID: 0}
+    - target: {fileID: 114160365109108560, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "The terrain type option will allow her user to choose between various
+        terrains included in iterBot.\r Two types of terrain are presented to the
+        user: simplistic types and realistic terrain. The simplistic\r terrain types
+        allow you to choose between different \u201Cobstacle course\u201D-type terrains.
+        These types of\r terrain are useful in prepping a bot design for further testing
+        on our provided realistic terrain. It\u2019s\r almost always better to test
+        bots and their variables on simple terrain before you move on to testing\r
+        them on realistic terrain. This will help you to prevent entire reworkings
+        of bots. After all, finding\r\nout that your bot can never climb over a small
+        wall means it certainly won\u2019t make it over a mountain.\n\nThe second
+        types of terrain presented are our realistic terrains. These terrains are
+        designed to\r represent environments that you would find in the real world.
+        Once a bot simulation has been run\r\nand perfected on simplistic terrain,
+        you can move on to realistic terrain to test how would work in\r the real
+        world. These terrain types include tax or such as grass and rocky soil as
+        well as features such\r\nas hills valleys and mountains.\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375335276067848, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: terrainGenerationText
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074618690594090, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: terrainTypeHeading
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518938958302796, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: terrainTypeText
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: gravityHeading
+      objectReference: {fileID: 0}
+    - target: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: gravityText
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 114802048345123098, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Gravitational Force:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114257713127871890, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "The option you will see below terrain types is the gravitational force
+        option. This option is fairly\r straightforward\u2014sliding the gravitational
+        force knob to the right increases the force applied to each\r\nbot and sliding
+        into the left decreases the gravitational force. This option allows you to
+        adjust the\r gravitational force as if you were on another planet with a different
+        gravitational force. One of the\r\ncool things about the gravitational force
+        is that you can see how decreasing it allows a bot to either\r find novel
+        ways of getting to its goal using fewer and fewer movements or allowing a
+        bot to carry\r\nmore and more weight for the same bot design.\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 114332982710955130, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114332982710955130, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Size
+      value: 0.39421815
+      objectReference: {fileID: 0}
+    - target: {fileID: 114332982710955130, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224950201544952678, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
   m_IsPrefabParent: 0
@@ -528,6 +800,256 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!1 &337944141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 337944142}
+  - component: {fileID: 337944144}
+  - component: {fileID: 337944143}
+  m_Layer: 5
+  m_Name: FitnessHeading
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &337944142
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 337944141}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1448136053}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &337944143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114802048345123098, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 337944141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 06aeae14bc9158141851416305e63220, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Fitness Vector:'
+--- !u!222 &337944144
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222782947260761872, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 337944141}
+--- !u!1 &408906874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 408906875}
+  - component: {fileID: 408906877}
+  - component: {fileID: 408906876}
+  m_Layer: 5
+  m_Name: SimulationSpeedText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &408906875
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 408906874}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1448136053}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &408906876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114257713127871890, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 408906874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: f67bd30f338f33a46b83b4ab9a8d5e51, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "The simulation speed option is the final option in the algorithm section.
+    This option changes\r the speed of each simulation run. It should be noted that
+    it doesn\u2019t actually make the bots faster, but\r rather acts more like\u2014
+    if you\u2019re old enough to remember VHS tapes\u2014a fast forward. A user can
+    still\r watch the scenes playing out before them, but simply at a faster pace.
+    Increasing this option can\r allow for more simulations per unit time and thus
+    better statistical results for a given time.\r\n\nNote: This option will probably
+    hit your computer\u2019s resources the most. If you have a slow\r computer, we
+    recommend using a slow simulation speed. This will lead to fewer simulations per
+    unit\r time but will give you more room to increase testing time per generation
+    and creatures per\r generation. For faster users, the risk is yours to take. Just
+    have fun with it."
+--- !u!222 &408906877
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222652808628325066, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 408906874}
+--- !u!1 &523325473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 523325474}
+  - component: {fileID: 523325476}
+  - component: {fileID: 523325475}
+  m_Layer: 5
+  m_Name: Heading5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &523325474
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523325473}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 579920909}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &523325475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114802048345123098, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523325473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 06aeae14bc9158141851416305e63220, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "Block Stability\r"
+--- !u!222 &523325476
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222782947260761872, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523325473}
+--- !u!224 &579920909 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224369792590436928, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 1991247139}
 --- !u!1 &603917212
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +1177,172 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &621689036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 621689037}
+  - component: {fileID: 621689039}
+  - component: {fileID: 621689038}
+  m_Layer: 5
+  m_Name: robotInfoText5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &621689037
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 621689036}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 579920909}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &621689038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114257713127871890, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 621689036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: f67bd30f338f33a46b83b4ab9a8d5e51, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "The block stability option manages the chance that a single block in the
+    bot will be stabilized. This means that the block will be constrained and not
+    able to rotate around any axis. This is a way to simulate gyroscopic stability
+    that some robots use in real life applications. The rotations are halted using
+    internal rotating disks.\r\n"
+--- !u!222 &621689039
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222652808628325066, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 621689036}
+--- !u!1 &750023331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 750023332}
+  - component: {fileID: 750023334}
+  - component: {fileID: 750023333}
+  m_Layer: 5
+  m_Name: robotInfoText4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &750023332
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 750023331}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 579920909}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &750023333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114257713127871890, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 750023331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: f67bd30f338f33a46b83b4ab9a8d5e51, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "The block density option controls how many blocks per unit of space will
+    be created in the void space. A smaller block density will lead to a decrease
+    in the number of a blocks directly connected and an increase in blocks connected
+    via joints. The reverse is true when you set the block density to a larger size.
+    Changing this option can allow for the creation of heavy tank-like bots or lightweight
+    bots more akin to a spider (or some sort of alien creature that doesn\u2019t look
+    like a tank).\r\n"
+--- !u!222 &750023334
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222652808628325066, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 750023331}
 --- !u!1 &817581912
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +1519,7 @@ Prefab:
     - target: {fileID: 224228005497476230, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -289
+      value: -89
       objectReference: {fileID: 0}
     - target: {fileID: 224228005497476230, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -841,12 +1529,12 @@ Prefab:
     - target: {fileID: 224228005497476230, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 520
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 224369792590436928, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 559
+      value: 938
       objectReference: {fileID: 0}
     - target: {fileID: 1091944024274940, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
       propertyPath: m_Name
@@ -860,7 +1548,7 @@ Prefab:
     - target: {fileID: 224397623459713074, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.53667265
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -875,7 +1563,7 @@ Prefab:
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -895,7 +1583,7 @@ Prefab:
     - target: {fileID: 224545407067992954, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224545407067992954, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -915,7 +1603,7 @@ Prefab:
     - target: {fileID: 224364158326911834, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224364158326911834, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -980,12 +1668,12 @@ Prefab:
     - target: {fileID: 224369792590436928, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 258.99997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224397623459713074, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.00000010918632
+      value: 0.68017054
       objectReference: {fileID: 0}
     - target: {fileID: 114193158633427606, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -1020,33 +1708,16 @@ Prefab:
     - target: {fileID: 114655982863749882, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_Text
-      value: 'Our Genetic Algorithm:'
+      value: 'The Genetic Algorithm:'
       objectReference: {fileID: 0}
     - target: {fileID: 114960902821164084, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_Text
-      value: "There are numerous settings that affect the process of creating bots.
-        These can be customized inside the simulation of iterBot. After estabolishing
-        the constraints, iterBot will begin the process of testing a random generation.
-        This process consists of allowing the physics engine to run for a set amount
-        of time. Each block of the bots has an initial position that is saved during
-        instantiation. After the testing time is completed, the final position of
-        the block is saved. From this a weighted score is determined based on the
-        direction that block moved.  The sum of these scores is the bot's total score.\n\nIf
-        the best score from the first generation is zero (No bot succeeded) then a
-        new randomized generation is created just as before. However, if a winning
-        bot was created in the first generation, then the process of mutation and
-        retesting begins. The best bot is recreated identically in position 0 (where
-        you can see it) and every other position is made from that same bot. All other
-        positions have slight alterations to the various features of the winning bot.
-        Perhaps its joint is a little faster, or a block is lighter. These alterations
-        allow iterbot to retest the generation and find a new highest score.\n\nBy
-        repeating the process above, the program is able to find better and better
-        mutations that allow the bot to achieve a higher and higher score. After a
-        number of generation a bot is created that is assumed to be the best for that
-        specific bot layout on the current terrain. \n\nDifferent terrains and different
-        settings all have an effect on what type of bot is successful. Try changing
-        a few of the settings and seeing how it affects the outcome!"
+      value: "The algorithm section of options probably represents the most important
+        aspect of our\r simulation. While it\u2019s true that the most obvious changes
+        will be seen by modifying the the block\r type or the size of the bot, the
+        algorithm section controls create much more subtle changes that can\r be seen
+        in the end result of a simulation run.\n"
       objectReference: {fileID: 0}
     - target: {fileID: 114960902821164084, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -1057,6 +1728,162 @@ Prefab:
         type: 2}
       propertyPath: m_FontData.m_MinSize
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375335276067848, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: algoIntroText
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074618690594090, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -158.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518938958302796, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -234.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 133
+      objectReference: {fileID: 0}
+    - target: {fileID: 114634217012898724, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Creatures per Generation:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 114160365109108560, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "The creatures per generation option is fairly straightforward. This
+        dropdown menu allows\r you to select how many creatures per generation are
+        created and tested. This option represents a\r tradeoff between finding better
+        possible solutions and system resource usage. As the bots per\r generation
+        increase, so does the amount of CPU and memory used by iterBot. This can be
+        offset\r somewhat by our next section: testing time.\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074618690594090, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: creaturesPerHeading
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518938958302796, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: creaturesPerTExt
+      objectReference: {fileID: 0}
+    - target: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -310.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -424.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 209
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: testingTime
+      objectReference: {fileID: 0}
+    - target: {fileID: 114802048345123098, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Testing Time per Generation:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114257713127871890, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "The testing time per generation option changes how much time each generation
+        of bots is\r tested before a winner is chosen. Increasing this time will give
+        bots more time to reach their\r respective goals before a new generation is
+        created. Decreasing this option does the opposite. Quirks\r in some bots that
+        give them a slow start might help them accelerate faster as time goes on.
+        A cool\r feature of this option is that it can be used in tandem with the
+        creatures per generation to allow a\r slower compute run more bots. For example,
+        increasing the amount of creatures per generation but\r shortening the testing
+        time per generation will mean that your computer spends overall less time
+        per\r simulation and reduces the risk of resource deadlock.\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 114332982710955130, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114332982710955130, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Size
+      value: 0.36407766
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
@@ -1094,6 +1921,170 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!1 &886618537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 886618538}
+  - component: {fileID: 886618540}
+  - component: {fileID: 886618539}
+  m_Layer: 5
+  m_Name: Heading6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &886618538
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 886618537}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 579920909}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &886618539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114802048345123098, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 886618537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 06aeae14bc9158141851416305e63220, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "Body Composition\r"
+--- !u!222 &886618540
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222782947260761872, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 886618537}
+--- !u!1 &1065155179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1065155180}
+  - component: {fileID: 1065155182}
+  - component: {fileID: 1065155181}
+  m_Layer: 5
+  m_Name: fitnessText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1065155180
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1065155179}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1448136053}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1065155181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114257713127871890, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1065155179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: f67bd30f338f33a46b83b4ab9a8d5e51, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'The fitness vector is the direction upon which the bots are graded. The
+    bots score points based on how far they travel in the direction of the fitness
+    vector. This vector can be controlled by the user with the x and y sliders in
+    the settings. The vector is represented on the terrain using a yellow ball. The
+    bots will score points based on the weight of the block, how far it travelled
+    towards the yellow ball, and it will lose points based on how far the bot strayed
+    from the fitness vector.
+
+'
+--- !u!222 &1065155182
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222652808628325066, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1065155179}
 --- !u!1 &1237534825
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,6 +2202,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4213629732845508, guid: b9fd049e2ca844522a64ad43bd50103f,
     type: 2}
   m_PrefabInternal: {fileID: 1502418506}
+--- !u!224 &1448136053 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224369792590436928, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 827864952}
 --- !u!1001 &1502418506
 Prefab:
   m_ObjectHideFlags: 0
@@ -1361,6 +2357,95 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &1889468082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1889468083}
+  - component: {fileID: 1889468085}
+  - component: {fileID: 1889468084}
+  m_Layer: 5
+  m_Name: robotInfoText6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1889468083
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1889468082}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 579920909}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1889468084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114257713127871890, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1889468082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: f67bd30f338f33a46b83b4ab9a8d5e51, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "The body composition option allows you to pick what shape you wish the
+    blocks of your bot to be. Currently we have only included two options: cuboid
+    and spherical. We chose these options as we felt like they would be representative
+    of the two most popular body shapes. The choice of shape can make or break a bot,
+    though. For example, imagine you wish to create a bot to climb steep hills or
+    mountains. Having spheres as your blocks might become a hinderance as you will
+    have less surface area\u2014and thus, less friction\u2014per blocks. The cuboid
+    blocks also have a key feature that the spherical blocks lack: edges. These edges
+    could \u201Ccatch\u201D on a sharp rock, similar to rock-climbing shoes, and allow
+    for a bot to pull itself over a feature. Try out the different shapes with some
+    of the obstacles and see if the cuboid blocks perform better than the spherical
+    ones\r.\n"
+--- !u!222 &1889468085
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222652808628325066, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1889468082}
 --- !u!1001 &1891543225
 Prefab:
   m_ObjectHideFlags: 0
@@ -1516,7 +2601,7 @@ Prefab:
     - target: {fileID: 224034646199409684, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 188.5
+      value: 230.25
       objectReference: {fileID: 0}
     - target: {fileID: 224452362783721332, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
@@ -1531,7 +2616,7 @@ Prefab:
     - target: {fileID: 224452362783721332, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 188.5
+      value: 230.25
       objectReference: {fileID: 0}
     - target: {fileID: 224524745266871908, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
@@ -1546,7 +2631,7 @@ Prefab:
     - target: {fileID: 224524745266871908, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 188.5
+      value: 230.25
       objectReference: {fileID: 0}
     - target: {fileID: 224344651678584426, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
@@ -1561,7 +2646,7 @@ Prefab:
     - target: {fileID: 224344651678584426, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 188.5
+      value: 230.25
       objectReference: {fileID: 0}
     - target: {fileID: 224897396759921832, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
@@ -1576,7 +2661,7 @@ Prefab:
     - target: {fileID: 224897396759921832, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 188.5
+      value: 230.25
       objectReference: {fileID: 0}
     - target: {fileID: 224929544361155186, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
@@ -1591,7 +2676,7 @@ Prefab:
     - target: {fileID: 224929544361155186, guid: 2b3315a5a41dd40bbac498b3797934e8,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 188.5
+      value: 230.25
       objectReference: {fileID: 0}
     - target: {fileID: 1117098985944476, guid: 2b3315a5a41dd40bbac498b3797934e8, type: 2}
       propertyPath: m_Name
@@ -2054,7 +3139,7 @@ Prefab:
     - target: {fileID: 224228005497476230, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -542
+      value: -143
       objectReference: {fileID: 0}
     - target: {fileID: 224228005497476230, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -2064,12 +3149,12 @@ Prefab:
     - target: {fileID: 224228005497476230, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 1026
+      value: 228
       objectReference: {fileID: 0}
     - target: {fileID: 224369792590436928, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 1065
+      value: 1122
       objectReference: {fileID: 0}
     - target: {fileID: 1091944024274940, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
       propertyPath: m_Name
@@ -2083,7 +3168,7 @@ Prefab:
     - target: {fileID: 224397623459713074, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.28169015
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -2098,7 +3183,7 @@ Prefab:
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -2118,7 +3203,7 @@ Prefab:
     - target: {fileID: 224545407067992954, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224545407067992954, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -2138,7 +3223,7 @@ Prefab:
     - target: {fileID: 224364158326911834, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 202.09998
+      value: 268.89996
       objectReference: {fileID: 0}
     - target: {fileID: 224364158326911834, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -2218,12 +3303,12 @@ Prefab:
     - target: {fileID: 224369792590436928, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 765
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224397623459713074, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.73262036
       objectReference: {fileID: 0}
     - target: {fileID: 114193158633427606, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -2259,44 +3344,7 @@ Prefab:
         blank or fill-in. iterBot then places blocks in the spaces marked as fill-in.
         Any blocks are directly adjacent to one other are connected without joints,
         and blocks that are close but not right up against each other are connected
-        via joints.\r\n\r\nOverview of Variables\r\nWhen you enter the simulation,
-        you will be presented with a control overlay panel on the left side of the
-        screen. Inside of this overlay, you will find several variables that will
-        affect your bots and their various components. In order from top-down, you
-        will find: individual size (X, Y, and Z axes), block density, block stability,
-        and body composition. \r\n\r\nIndividual Size\r\nThe individual size option
-        allows for the size change on three different axes: the x-axis, the yaxis,
-        and the z-axis. Each of these settings control the maximum\u2014but not necessarily
-        the mandatory \u2014amount of space that a bot can take up. Essentially you
-        control the dimensions of the void space and the algorithm then fills it in
-        accordingly. \r\nNote: Although you might be able to change the axes to a
-        allow for, say, a tall but thin bot, the way a bot moves is completely random.
-        This means that the top of the bot could very well become the front of the
-        bot, or vice-versa. Try out different variations of the axes sizes to see
-        this effect in action!\r\nBlock Density\r\nThe block density option controls
-        how many blocks per unit of space will be created in the void space. A smaller
-        block density will lead to a decrease in the number of a blocks directly connected
-        and an increase in blocks connected via joints. The reverse is true when you
-        set the block density to a larger size. Changing this option can allow for
-        the creation of heavy tank-like bots or lightweight bots more akin to a spider
-        (or some sort of alien creature that doesn\u2019t look like a tank).\r\nBlock
-        Stability\r\nThe block stability option manages the chance that a single block
-        in the bot will be stabilized. This means that the block will be constrained
-        and not able to rotate around any axis. This is a way to simulate gyroscopic
-        stability that some robots use in real life applications. The rotations are
-        halted using internal rotating disks.\r\nBody Composition\r\nThe body composition
-        option allows you to pick what shape you wish the blocks of your bot to be.
-        Currently we have only included two options: cuboid and spherical. We chose
-        these options as we felt like they would be representative of the two most
-        popular body shapes. The choice of shape can make or break a bot, though.
-        For example, imagine you wish to create a bot to climb steep hills or mountains.
-        Having spheres as your blocks might become a hinderance as you will have less
-        surface area\u2014and thus, less friction\u2014per blocks. The cuboid blocks
-        also have a key feature that the spherical blocks lack: edges. These edges
-        could \u201Ccatch\u201D on a sharp rock, similar to rock-climbing shoes, and
-        allow for a bot to pull itself over a feature. Try out the different shapes
-        with some of the obstacles and see if the cuboid blocks perform better than
-        the spherical ones\r\n"
+        via joints.\r\n"
       objectReference: {fileID: 0}
     - target: {fileID: 224987843216530552, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
@@ -2321,7 +3369,192 @@ Prefab:
     - target: {fileID: 114332982710955130, guid: 64f467b335a1546daa60124ceab5c4ac,
         type: 2}
       propertyPath: m_Size
-      value: 0.28169015
+      value: 0.26737967
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074618690594090, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -266.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224784951243158934, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 114634217012898724, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "Overview of Variables\r:"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518938958302796, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: robotInfoText2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518938958302796, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -333
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 114
+      objectReference: {fileID: 0}
+    - target: {fileID: 114160365109108560, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "When you enter the simulation, you will be presented with a control
+        overlay panel on the left side of the screen. Inside of this overlay, you
+        will find several variables that will affect your bots and their various components.
+        In order from top-down, you will find: individual size (X, Y, and Z axes),
+        block density, block stability, and body composition. \r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -399.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 114802048345123098, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "Individual Size\r:"
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_Name
+      value: robotInfoText3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1576144976304946, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -504
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 190
+      objectReference: {fileID: 0}
+    - target: {fileID: 114257713127871890, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Text
+      value: "The individual size option allows for the size change on three different
+        axes: the x-axis, the yaxis, and the z-axis. Each of these settings control
+        the maximum\u2014but not necessarily the mandatory \u2014amount of space that
+        a bot can take up. Essentially you control the dimensions of the void space
+        and the algorithm then fills it in accordingly. \r\nNote: Although you might
+        be able to change the axes to a allow for, say, a tall but thin bot, the way
+        a bot moves is completely random. This means that the top of the bot could
+        very well become the front of the bot, or vice-versa. Try out different variations
+        of the axes sizes to see this effect in action!\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 291.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 563
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224050189117878064, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224606838898768818, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114332982710955130, guid: 64f467b335a1546daa60124ceab5c4ac,
+        type: 2}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091944024274940, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64f467b335a1546daa60124ceab5c4ac, type: 2}
@@ -2564,17 +3797,17 @@ Prefab:
     - target: {fileID: 224102979578629040, guid: 465bbfc35e75249af831003e380bf7cd,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 175.90001
+      value: 192.60002
       objectReference: {fileID: 0}
     - target: {fileID: 224270110887971572, guid: 465bbfc35e75249af831003e380bf7cd,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 175.90001
+      value: 192.60002
       objectReference: {fileID: 0}
     - target: {fileID: 224291987873246088, guid: 465bbfc35e75249af831003e380bf7cd,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 175.90001
+      value: 192.60002
       objectReference: {fileID: 0}
     - target: {fileID: 224413984381637950, guid: 465bbfc35e75249af831003e380bf7cd,
         type: 2}
@@ -2584,12 +3817,12 @@ Prefab:
     - target: {fileID: 224743287324610970, guid: 465bbfc35e75249af831003e380bf7cd,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 175.90001
+      value: 192.60002
       objectReference: {fileID: 0}
     - target: {fileID: 224492880439407322, guid: 465bbfc35e75249af831003e380bf7cd,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 175.90001
+      value: 192.60002
       objectReference: {fileID: 0}
     - target: {fileID: 1029816939696632, guid: 465bbfc35e75249af831003e380bf7cd, type: 2}
       propertyPath: m_Name
@@ -2889,6 +4122,15 @@ Prefab:
       propertyPath: m_Text
       value: Quit
       objectReference: {fileID: 0}
+    - target: {fileID: 1989704840758850, guid: 465bbfc35e75249af831003e380bf7cd, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114642623056047888, guid: 465bbfc35e75249af831003e380bf7cd,
+        type: 2}
+      propertyPath: m_Text
+      value: Learn More
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114563052464424376, guid: 465bbfc35e75249af831003e380bf7cd, type: 2}
     - {fileID: 114252553740320862, guid: 465bbfc35e75249af831003e380bf7cd, type: 2}
@@ -2911,3 +4153,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53e63106f2d8413ab79ee889e13a378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2050768137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1700525950016344, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2050768138}
+  - component: {fileID: 2050768140}
+  - component: {fileID: 2050768139}
+  m_Layer: 5
+  m_Name: SimulationHeading
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2050768138
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224220638196893328, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2050768137}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1448136053}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2050768139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114802048345123098, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2050768137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 06aeae14bc9158141851416305e63220, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Simulation Speed: '
+--- !u!222 &2050768140
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222782947260761872, guid: 64f467b335a1546daa60124ceab5c4ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2050768137}

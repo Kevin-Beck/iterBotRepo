@@ -8,7 +8,6 @@ public class Run : MonoBehaviour {
     [Header("Time Factors")]
     public float timescale = 3; // default 2
     public int delay = 30; // default 14
-
     [Header("Terrain Factors")]
     public float scaleX = 220;
     public float scaleZ = 110;    
@@ -16,7 +15,6 @@ public class Run : MonoBehaviour {
     public GameObject[] SurfaceTypeList;
     public int SelectedSurfaceType = 0; // the selcted type off the list of types
     public float gravitationalForce = 1;
-
     [Header("Generational Data")]
     public int CurrentGenerationCount = 0; // must keep 0, first gen is 0, do not change
     public int NumberOfGenerationsToDo = 100; // number of generations ~50-100
@@ -44,10 +42,8 @@ public class Run : MonoBehaviour {
     public float jointMutationChance = 0.1f; 
     public int pickedWinnersEachGen = 1;
     public float maxDeviation = 50; // maximum we want the bots to be able to vary
-
     [Header("Menu Items")]
     public GameObject MenuController;
-
     [Header("GameObject Components")]
     // Editable members of the segment/joint population
     public GameObject[] SegmentTypeList;
@@ -198,7 +194,7 @@ public class Run : MonoBehaviour {
         {
             for (int j = 0; j < Mathf.Sqrt(numOfCreatures); j++)
             {
-                if(k == 0)
+                if(k == 0)  // this can be set to true and the joints will render for everything todo
                 {
                     Creatures[k].SetRenderJointObjects(true);
                 }

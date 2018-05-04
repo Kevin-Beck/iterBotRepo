@@ -60,13 +60,4 @@ public class FollowCamera : MonoBehaviour {
         // Always look at the target
         transform.LookAt(target);
     }
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

@@ -16,4 +16,8 @@ public class SceneManagement : MonoBehaviour {
     public void SwitchToBasicScene() {
         SceneManager.LoadScene(2);
     }
+    public void SwitchToDroneScene() {
+        SceneManager.LoadScene(3);
+        Screen.SetResolution(800, 600, false);
+    }
 }

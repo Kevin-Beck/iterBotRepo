@@ -8,6 +8,27 @@ public class RunMenu : MonoBehaviour {
     [Header("RunTimeConstants")]
     public GameObject RunController;
 
+    [Header("TextElements")]
+    public int TextSize;
+    public Text IndividualSizeText;
+    public Text IndividualSizeXText;
+    public Text IndividualSizeYText;
+    public Text IndividualSizeZText;
+    public Text BlockDensityText;
+    public Text BlockStabilityText;
+    public Text BodyCompositionText;
+    public Text BodyDropDownText;
+    public Text TerrainTypeText;
+    public Text TerrainDropDownText;
+    public Text GravitationalForceText;
+    public Text CreaturesPerGenText;
+    public Text CreaturesPerGenDropDownText;
+    public Text TestingTimePerGenText;
+    public Text FitnessVectorText;
+    public Text FitnessVectorXText;
+    public Text FitnessVectorYText;
+    public Text SimulationSpeedText;
+
     [Header("ConfigMenu")]
     public Button ConfigMenuButton;
     public GameObject ConfigMenu;
@@ -16,6 +37,7 @@ public class RunMenu : MonoBehaviour {
     public Button ConfigFullScreenButton;
     public Dropdown ResolutionDropdown;
     private bool fullscreenbool = true;
+    public Slider FontSizeSlider;
 
     [Header("Cameras")]
     public Camera Camera1;
@@ -108,7 +130,7 @@ public class RunMenu : MonoBehaviour {
         TipText.text = "Current value: " + YFitnessVectorSlider.value.ToString("F");
         UpdateFitnessMarker();
     }
-    void UpdateFitnessMarker() {
+    public void UpdateFitnessMarker() {
         Target.GetComponent<Transform>().position = new Vector3(175f, 25*YFitnessVectorSlider.value, -50 * XFitnessVectorSlider.value);
         RunController.GetComponent<Run>().fitnessVector = Target.GetComponent<Transform>().position;
     }
@@ -139,7 +161,28 @@ public class RunMenu : MonoBehaviour {
     public void TipTextGravitationalForceSlider() {
         EnableTipTextBackground();
         TipText.text = "Current value: " + GravitationalForceSlider.value.ToString("F");
-    }
+    }  
+    public void SetTextSize() {
+        TextSize = (int)FontSizeSlider.value;
+        IndividualSizeText.fontSize = TextSize;
+        IndividualSizeXText.fontSize = TextSize;
+        IndividualSizeYText.fontSize = TextSize;
+        IndividualSizeZText.fontSize = TextSize;
+        BlockDensityText.fontSize = TextSize;
+        BlockStabilityText.fontSize = TextSize;
+        BodyCompositionText.fontSize = TextSize;
+        BodyDropDownText.fontSize = TextSize - 3;
+        TerrainTypeText.fontSize = TextSize;
+        TerrainDropDownText.fontSize = TextSize - 3;
+        GravitationalForceText.fontSize = TextSize;
+        CreaturesPerGenText.fontSize = TextSize;
+        CreaturesPerGenDropDownText.fontSize = TextSize - 3;
+        TestingTimePerGenText.fontSize = TextSize;
+        FitnessVectorText.fontSize = TextSize;
+        FitnessVectorXText.fontSize = TextSize;
+        FitnessVectorYText.fontSize = TextSize;
+        SimulationSpeedText.fontSize = TextSize;
+}
     public void TipTextTestingTimeSlider() {
         EnableTipTextBackground();
         RunController.GetComponent<Run>().delay = (int)TestingTimeSlider.value;
@@ -168,19 +211,19 @@ public class RunMenu : MonoBehaviour {
         {
             try
             {
-                GameObject.Destroy(GameObject.Find("Terrain6"));
+                GameObject.Destroy(GameObject.Find("Terrain0"));
             }
             catch
             {
             }
             RunController.GetComponent<Run>().SelectedSurfaceType = TerrainTypeDropdown.value;
-            RunController.GetComponent<Run>().GenerateTerrainSurface(Vector3.zero, 6);
+            RunController.GetComponent<Run>().GenerateTerrainSurface(Vector3.zero, 0);
         }        
     }
     public void StartButtonClick() {
         try
         {
-            GameObject.Destroy(GameObject.Find("Terrain6"));
+            GameObject.Destroy(GameObject.Find("Terrain0"));
         }catch
         {
         }

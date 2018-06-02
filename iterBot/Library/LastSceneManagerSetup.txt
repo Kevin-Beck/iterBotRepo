@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Run Scene.unity
+- path: Assets/Drone.unity
   isLoaded: 1
   isActive: 1

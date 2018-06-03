@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/MainMenu.unity
     guid: fa546ec271f1bc848b39852e7af06ecd
-  - enabled: 1
+  - enabled: 0
     path: Assets/MenuScene.unity
     guid: f6e904062c94d4179b06e04b2c2ff89f
   - enabled: 1
@@ -20,3 +20,4 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Drone.unity
     guid: a803398e1ef2bdb4d8ace3d4edfed7ff
+  m_configObjects: {}

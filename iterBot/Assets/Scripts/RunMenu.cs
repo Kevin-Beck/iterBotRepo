@@ -220,6 +220,31 @@ public class RunMenu : MonoBehaviour {
             RunController.GetComponent<Run>().GenerateTerrainSurface(Vector3.zero, 0);
         }        
     }
+    public void DataScienceStartButtonClick() {
+        try
+        {
+            if (generationText.text == "Generation:")
+            {
+                GameObject.Destroy(GameObject.Find("Terrain0"));
+            }
+        }
+        catch
+        {
+        }
+        if (generationText.text != "Generation: 0")
+        {
+            SetSimulationData();            
+            UpdateWinnerFitnessText(0);
+
+            RunController.GetComponent<Run>().RestartSimulation();
+            RunController.GetComponent<DataManager>().DataCollection = true;
+            AlertText.text = "Data Collection Started";
+        }
+        else
+        {
+            AlertText.text = "Cannot Restart";
+        }
+    }
     public void StartButtonClick() {
         try
         {

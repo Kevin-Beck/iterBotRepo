@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using System.Text;
+using System.IO;
+using System.Collections.Generic;
 
 public class Run : MonoBehaviour {
 
@@ -87,6 +90,7 @@ public class Run : MonoBehaviour {
         GradeAllCreatures();
         if(Winners[0].GetFitness() == 0)
         {
+           GetComponentInParent<DataManager>().DeleteDB();
             MenuController.GetComponent<RunMenu>().AlertText.text = "No successful candidate created in Generation " + CurrentGenerationCount + ". \nReinitializing Base Model";
             CreateRandomGeneration();
         }
@@ -322,6 +326,20 @@ public class Run : MonoBehaviour {
                 MenuController.GetComponent<RunMenu>().UpdateWinnerFitnessText(winnerFitness);
                 OverallChampion = individual.Replicate("OverallChampion");
             }
+
+            //Save all relevant information about the bot and send it to the database
+            StringBuilder MasterBuilder = new StringBuilder();
+            foreach (Block blockObject in individual.arrayOfBlocks)
+            {
+                // get each blocks data, append it to the master builder
+                if (blockObject.GetBlockType() != null)
+                {
+                    MasterBuilder.Append(blockObject.Print());
+                    MasterBuilder.Append(",");
+                }
+            }
+            MasterBuilder.Append(individual.GetFitness().ToString());
+            GetComponentInParent<DataManager>().SaveLine(MasterBuilder.ToString());
             //Remove the individual after testing is completed
             individual.SelfDestruct();
         }

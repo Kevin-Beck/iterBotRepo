@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 
 public class Block{
     private string blockName;
@@ -15,7 +17,36 @@ public class Block{
     private Connection posXCon;
     private Connection posYCon;
     private Connection posZCon;
+    //Print
+    public string Print() {
+        string[] cols = new string[15];
+        // Block
+        cols[0] = blockPosition.ToString();
+      //  cols[1] = blockType.ToString();
+        cols[1] = blockWeight.ToString();
+        cols[2] = stabilized.ToString();
+        // XCON
+        cols[3] = posXCon.GetConAxis().ToString();
+        cols[4] = posXCon.GetConSpeed().ToString();
+        cols[5] = posXCon.GetConStr().ToString();
+        cols[6] = posXCon.GetIsFixedJoint().ToString();
+        // YCON
+        cols[7] = posYCon.GetConAxis().ToString();
+        cols[8] = posYCon.GetConSpeed().ToString();
+        cols[9] = posYCon.GetConStr().ToString();
+        cols[10] = posYCon.GetIsFixedJoint().ToString();
+        // ZCON
+        cols[11] = posZCon.GetConAxis().ToString();
+        cols[12] = posZCon.GetConSpeed().ToString();
+        cols[13] = posZCon.GetConStr().ToString();
+        cols[14] = posZCon.GetIsFixedJoint().ToString();
 
+        // Build a string that will represent the columns of the data
+        string delimiter = ",";
+        StringBuilder row = new StringBuilder();
+        row.Append(string.Join(delimiter, cols));
+        return row.ToString();
+    }
     // Constructor
     public Block() {
         blockPosition = Vector3.zero;
